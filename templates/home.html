@@ -1,1 +1,24 @@
-<!DOCTYPE html>
+{% extends "template.html" %}
+
+{% block content %}
+	
+			<div class="parallax-container">
+				<div class="parallax"><img src="{{ url_for('static', filename= 'libro.jpg') }}"></div>
+			</div>
+			<div class="section grey lighten-4">
+				<div class="row parallax-container">
+					<div class="container grey lighten-4">
+						<h2 style="text-align: center;">Rete CLIL</h2><br>
+					  	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem ipsum	lorem ipsum lorem ipsum lorem
+					</div>
+				</div>
+			</div>
+			<div class="parallax-container">
+				<div class="parallax"><img src="{{ url_for('static', filename= 'matite.jpg') }}"></div>
+			</div>
+			<script type="text/javascript">
+		    $(document).ready(function(){
+		      $('.parallax').parallax();
+		    });
+			</script>
+{% endblock %}
