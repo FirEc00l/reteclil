@@ -1,52 +1,54 @@
-<html>
-	<!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+{% extends "layout.html" %}<!--base.html -->
+{% block title %}Index{% endblock %}
 
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% block body %}
+ <ul id="dropdown1" class="dropdown-content">
+      <li><a href="#!" class="blue-text text-darken-3">Inglese</a></li>
+      <li><a href="#!" class="blue-text text-darken-3">Matematica</a></li>
+      <li class="divider"></li>
+      <li><a href="#!" class="blue-text text-darken-3">Fisica</a></li>
+    </ul>
+    <nav class="nav-extended light-blue darken-4">
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">Rete CLIL</a>
+          <ul class="right hide-on-med-and-down">
+          <li><a><i class="material-icons">search</i></a></li>
+          <li><a>Home</a></li>
+          <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Documenti<i class="material-icons right">arrow_drop_down</i></a></li>
+        </ul>
+      </div>
+    </nav>
 
-	<head>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		
-	</head>
-	<body>
-    	<ul id="dropdown1" class="dropdown-content">
-			<li><a href="#!" class="blue-text text-darken-3">Inglese</a></li>
-			<li><a href="#!" class="blue-text text-darken-3">Matematica</a></li>
-			<li class="divider"></li>
-			<li><a href="#!" class="blue-text text-darken-3">Fisica</a></li>
-		</ul>
-		<nav class="nav-extended light-blue darken-4">
-    	<div class="nav-wrapper">
-	     	<a href="#!" class="brand-logo">Rete CLIL</a>
-	      	<ul class="right hide-on-med-and-down">
-	      	<li><a><i class="material-icons">search</i></a></li>
-	        <li><a>Home</a></li>
-	        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Documenti<i class="material-icons right">arrow_drop_down</i></a></li>
-	      </ul>
-	    </div>
-	  </nav>
-
-		<div class="row" >
-    		<form >
-    			<div class="row" >
-        			<div class="input-field col s6">
-          				<i class="material-icons prefix">account_circle</i>
-          				<input id="icon_prefix" type="text" class="validate">
-          				<label for="icon_prefix">User Name</label>
-       				</div>
-       			</div>
-       			<div class="row">
-        			<div class="input-field col s6">
-        				<i class="material-icons prefix">vpn_key</i>
-            			<input id="icon_telephone" type="tel" class="validate">
-            			<label for="icon_telephone">Password</label>
-            		</div>
-        		</div>
-    		</form>
-    		<a class="waves-effect waves-light btn light-blue darken-4">button</a>
-    	</div>	
-	</body>
-</html>
+    <div class="row" >
+        <form >
+          <div class="row" >
+              <div class="input-field col s6">
+                  <i class="material-icons prefix">account_circle</i>
+                  <input id="icon_prefix" type="text" class="validate">
+                  <label for="icon_prefix">User Name</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="material-icons prefix">vpn_key</i>
+                  <input id="icon_telephone" type="tel" class="validate">
+                  <label for="icon_telephone">Password</label>
+                </div>
+            </div>
+        </form>
+         <div class="row">
+        <div class="col s12 m7">
+          <div class="card light-blue darken-4">
+              <span class="card-title">UTENTE ERRATO</span>
+            <div class="card-content">
+              <p>Login o password errate</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Riprova</a>
+            </div>
+          </div>
+        </div>
+      </div>
+        <a class="waves-effect waves-light btn light-blue darken-4">button</a>
+      </div>  
+{% endblock %}
