@@ -1,6 +1,6 @@
-def upload(request):
+def upload(request, session):
 	if 'user_id' in session:
-		if request.methon == 'POST':
+		if request.method == 'POST':
 			pass
 		else:
 			return render_template("upload.html")
