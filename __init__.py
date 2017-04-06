@@ -1,12 +1,13 @@
 '''
 __init__.py
-@author: Nicholas Sollazz
+@author: Nicholas Sollazzo
 @version: 1.1
 @date: 6/04/17
 '''
 
-from flask import Flask
-from flask import request
+from flask import Flask, request, url_for, redirect, session, make_response, g
+import sqlite3
+import backend.upload as upload
 
 app = Flask(__name__)
 
@@ -32,7 +33,7 @@ def route_recovery():
 
 @app.route("/upload")
 def route_upload():
-    upload(request)
+    upload.upload(request,session)
     pass
 
 @app.route("/account")
