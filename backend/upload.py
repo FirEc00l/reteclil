@@ -7,4 +7,4 @@ def upload(request, session):
 		else:
 			return render_template("upload.html")
 	else:
-		return redirect(url_for('home'))
+		return redirect(url_for('route_home'))
