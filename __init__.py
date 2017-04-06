@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def route_home():
-    home(request)
+    home()
     pass
 
 @app.route("/section/<section>")
