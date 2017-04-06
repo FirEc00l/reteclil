@@ -1,11 +1,11 @@
 '''
 __init__.py
 @author: Nicholas Sollazzo
-@version: 1.1
+@version: 1.2
 @date: 6/04/17
 '''
 
-from flask import Flask, request, url_for, redirect, session, make_response, g
+from flask import Flask, request, session, g
 import sqlite3
 import backend.upload as upload
 
