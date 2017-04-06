@@ -1,75 +1,68 @@
 '''
 __init__.py
 @author: Nicholas Sollazz
-@version: 1.0
-@date: 3/04/17
+@version: 1.1
+@date: 6/04/17
 '''
 
 from flask import Flask
+from flask import request
+
 app = Flask(__name__)
 
 @app.route("/")
-def home():
-    # lista di stringhe contenente i nomi delle sezioni
-    sections
-
-    # True se è presente una sessione
-    # False se non è presente una sessione
-    logged #boolean
-
-    # nome utente dell’utente loggato [se presente in sessione]
-    username
+def route_home():
+    home(request)
     pass
 
 @app.route("/section/<section>")
-def section(section):
+def route_section(section):
+    section(request)
     pass
 
 @app.route("/login")
-def login(request):
+def route_login():
+    login(request)
     pass
 
 @app.route("/recovery")
-def recovery(request):
+def route_recovery():
+    recovery(request)
     pass
 
 @app.route("/upload")
-def upload(request):
+def route_upload():
+    upload(request)
     pass
 
 @app.route("/account")
-def account(request):
-    # email dell’user corrente
-    email
+def route_account():
+    account(request)
     pass
 
 @app.route("/manage")
-def manage(request):
+def route_manage():
+    manage(request)
     pass
 
 @app.route("/logout")
-def logout(request):
+def route_logout():
+    logout(request)
     pass
 
 @app.route("/forum")
-def forum(requst):
-    # lista dei thread, ogni thread ha titolo (title) e autore (author)
-    thread_list
+def route_forum():
+    forum(request)
     pass
 
 @app.route("/forum/<thread_id>")
-def thread(request):
-    # titolo thread
-    title
-
-    # lista dei post associati al thread, ogni post ha data (date), titolo (title) e testo(text)
-    post_list
+def route_thread():
+    thread(request)
     pass
 
 @app.route("/search/<search_key>")
-def search(request):
-    # chiave di ricerca
-    search_key
+def route_search():
+    search(request)
     pass
 
 if __name__ == "__main__":
