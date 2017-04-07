@@ -7,7 +7,7 @@ __init__.py
 from flask import render_template
 import json
 
-def home():
+def home(session):
     # liks :list of dictionary, logged :bool, description :str -> render_template()
 
     if 'user_id' in session:
