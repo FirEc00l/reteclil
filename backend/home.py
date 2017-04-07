@@ -21,4 +21,4 @@ def home(session):
         description = json.loads(data_str)['description']
 
 
-    return render_template('home.html', links, description)
+    return render_template('home.html', links=links, description=description)
