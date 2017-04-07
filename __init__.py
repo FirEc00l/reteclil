@@ -1,76 +1,60 @@
 '''
 __init__.py
-@author: Nicholas Sollazz
-@version: 1.0
-@date: 3/04/17
+@author: Nicholas Sollazzo
+@version: 1.2
+@date: 6/04/17
 '''
 
-from flask import Flask
+from flask import Flask, request, session, g
+import sqlite3
+import backend.upload as upload
+import backend.login as login
+
 app = Flask(__name__)
 
 @app.route("/")
-def home():
-    # lista di stringhe contenente i nomi delle sezioni
-    sections
-
-    # True se è presente una sessione
-    # False se non è presente una sessione
-    logged #boolean
-
-    # nome utente dell’utente loggato [se presente in sessione]
-    username
-    pass
+def route_home():
+    return home(session)
 
 @app.route("/section/<section>")
-def section(section):
-    pass
+def route_section(section):
+    return section(request)
 
 @app.route("/login")
-def login(request):
-    pass
+def route_login():
+    return login.login(request, session)
 
 @app.route("/recovery")
-def recovery(request):
-    pass
+def route_recovery():
+    return recovery(request)
 
 @app.route("/upload")
-def upload(request):
-    pass
+def route_upload():
+    return upload.upload(request,session)
 
 @app.route("/account")
-def account(request):
-    # email dell’user corrente
-    email
-    pass
+def route_account():
+    return account(request)
 
 @app.route("/manage")
-def manage(request):
-    pass
+def route_manage():
+    return manage(request)
 
 @app.route("/logout")
-def logout(request):
-    pass
+def route_logout():
+    return logout(request)
 
 @app.route("/forum")
-def forum(requst):
-    # lista dei thread, ogni thread ha titolo (title) e autore (author)
-    thread_list
-    pass
+def route_forum():
+    return forum(request)
 
 @app.route("/forum/<thread_id>")
-def thread(request):
-    # titolo thread
-    title
-
-    # lista dei post associati al thread, ogni post ha data (date), titolo (title) e testo(text)
-    post_list
-    pass
+def route_thread():
+    return thread(request)
 
 @app.route("/search/<search_key>")
-def search(request):
-    # chiave di ricerca
-    search_key
-    pass
+def route_search():
+    return search(request)
 
 if __name__ == "__main__":
     app.run()
