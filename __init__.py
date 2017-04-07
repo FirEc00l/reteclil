@@ -9,12 +9,13 @@ from flask import Flask, request, session, g
 import sqlite3
 import backend.upload as upload
 import backend.login as login
+import backend.home as home
 
 app = Flask(__name__)
 
 @app.route("/")
 def route_home():
-    return home(session)
+    return home.home(session)
 
 @app.route("/section/<section>")
 def route_section(section):
