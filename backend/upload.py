@@ -5,6 +5,7 @@ def upload(request, session):
 		if request.method == 'POST':
 			pass
 		else:
-			return render_template("upload.html")
+			sections = ["Section 1", "Section 2", "Section 3"] #Prenderle dal db
+			return render_template("upload.html", sections=sections)
 	else:
 		abort(403)

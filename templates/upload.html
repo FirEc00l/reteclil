@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block body %}
+{% block content %}
 	<form action="/upload" method="POST">
 		<div class="file-field input-field">
 		  <div class="btn">
@@ -14,9 +14,9 @@
 		<div class="input-field col s12">
 			<select>
 				<option value="" disabled selected>Sezione</option>
-				<option value="1">Option 1</option>
-				<option value="2">Option 2</option>
-				<option value="3">Option 3</option>
+				{% for section in sections %}
+					<option value="{{ section }}">{{ section }}</option>
+				{% endfor %}
 			</select>
 			<label>Materialize Select</label>
 		 </div>
