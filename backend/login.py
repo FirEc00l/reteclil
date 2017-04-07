@@ -1,14 +1,10 @@
-#controllare se la richiesta è post, se lo è fare login 
-#altrimenti renderizzare il template login.html
+#from flask import Flask, request, render_template
+#app = Flask(__name__)
 
-from flask import Flask, request, render_template
-app = Flask(__name__)
-
-@app.route("/login")
+#@app.route("/login", methods=['GET', 'POST'])
 
 def login():
-    if methods=='POST' :
-        #garau deve fare il login in sql ciao
-       
-    else :
-         return render_template("login.html")
+    if 'user_id' not in session:
+        if methods=='POST' :
+            session['user_id'] = 1 
+    return redirect(url_for('home'))
