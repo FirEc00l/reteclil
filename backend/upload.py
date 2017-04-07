@@ -1,4 +1,4 @@
-from  flask import render_template, url_for, redirect
+from  flask import render_template, url_for, redirect, abort
 
 def upload(request, session):
 	if 'user_id' in session:
@@ -7,4 +7,4 @@ def upload(request, session):
 		else:
 			return render_template("upload.html")
 	else:
-		return redirect(url_for('route_home'))
+		abort(403)
