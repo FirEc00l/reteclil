@@ -1,5 +1,5 @@
 '''
-__init__.py
+home.py
 @author: Nicholas Sollazzo
 @version: 1.1
 @date: 7/04/17
