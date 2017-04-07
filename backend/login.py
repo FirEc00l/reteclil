@@ -3,8 +3,8 @@
 
 #@app.route("/login", methods=['GET', 'POST'])
 
-def login():
+def login(request, session):
     if 'user_id' not in session:
-        if methods=='POST' :
+        if request.method=='POST' :
             session['user_id'] = 1 
     return redirect(url_for('home'))
