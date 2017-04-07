@@ -9,5 +9,5 @@ def login(request, session):
         if request.method=='POST' :
             session['user_id'] = 1
         else:
-            return render_temeplate("login.html")
+            return render_template("login.html")
     return redirect(url_for('home'))
