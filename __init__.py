@@ -8,63 +8,53 @@ __init__.py
 from flask import Flask, request, session, g
 import sqlite3
 import backend.upload as upload
+import backend.login as login
 
 app = Flask(__name__)
 
 @app.route("/")
 def route_home():
-    home()
-    pass
+    return home(session)
 
 @app.route("/section/<section>")
 def route_section(section):
-    section(request)
-    pass
+    return section(request)
 
 @app.route("/login")
 def route_login():
-    login(request)
-    pass
+    return login.login(request, session)
 
 @app.route("/recovery")
 def route_recovery():
-    recovery(request)
-    pass
+    return recovery(request)
 
 @app.route("/upload")
 def route_upload():
-    upload.upload(request,session)
-    pass
+    return upload.upload(request,session)
 
 @app.route("/account")
 def route_account():
-    account(request)
-    pass
+    return account(request)
 
 @app.route("/manage")
 def route_manage():
-    manage(request)
-    pass
+    return manage(request)
 
 @app.route("/logout")
 def route_logout():
-    logout(request)
-    pass
+    return logout(request)
 
 @app.route("/forum")
 def route_forum():
-    forum(request)
-    pass
+    return forum(request)
 
 @app.route("/forum/<thread_id>")
 def route_thread():
-    thread(request)
-    pass
+    return thread(request)
 
 @app.route("/search/<search_key>")
 def route_search():
-    search(request)
-    pass
+    return search(request)
 
 if __name__ == "__main__":
     app.run()
