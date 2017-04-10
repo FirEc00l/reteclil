@@ -2,7 +2,7 @@ import sqlite3
 
 class pysqlite3(object):
         def __init__(self):
-                self.conn = sqlite3.connect('../data/database.sqlite3.db')
+                self.conn = sqlite3.connect('../../data/database.sqlite3.db')
 
         def get_db(self):
                 conn = sqlite3.connect(self.dbname)
