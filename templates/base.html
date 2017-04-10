@@ -33,15 +33,13 @@
             <div class="row">
               <div class="col l6 s12">
                 <h5 class="white-text"><a class="grey-text text-lighten-3" href="file:///N:/5CI/parallax/index.html">Rete CLIL</a></h5>
-                <p class="grey-text text-lighten-4">Dettagli del footer</p>
               </div>
               <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Link Utili</h5>
                 <ul>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                {% for link in links %}
+                  <li><a class="grey-text text-lighten-3" href="{{link.url}}" target="_blank">{{link.title}}</a></li>
+                {% endfor %}
                 </ul>
               </div>
             </div>
