@@ -1,16 +1,15 @@
 import sqlite3
 
 class pysqlite3(object):
-        def __init__(self, dbname):
-                self.dbname = dbname
-                self.conn = sqlite3.connect(self.dbname + '.db')
+        def __init__(self):
+                self.conn = sqlite3.connect('../data/database.sqlite3.db')
 
         def get_db(self):
-                conn = sqlite3.connect(self.dbname + '.db')
+                conn = sqlite3.connect(self.dbname)
                 self.conn = conn
 
         def query_db(self, query):
-                print 'esecuzione query'
+                #print 'esecuzione query'
                 cursor = self.conn.execute(query)
                 self.conn.commit()
                 result = cursor.fetchall()
@@ -21,8 +20,9 @@ class pysqlite3(object):
 
         def close_db(self):
                 self.conn.close()
+
 '''
-db = pysqlite3('garau')
+db = pysqlite3()
 
 query = """
 SELECT *
