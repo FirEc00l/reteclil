@@ -8,7 +8,7 @@ class pysqlite3(object):
                 conn = sqlite3.connect(self.dbname)
                 self.conn = conn
 
-        def query_db(self, query):
+        def query_db(self, query): #Lancia query
                 #print 'esecuzione query'
                 cursor = self.conn.execute(query)
                 self.conn.commit()
@@ -22,6 +22,10 @@ class pysqlite3(object):
                 self.conn.close()
 
 '''
+ESEMPI:
+
+QUERY generica
+
 db = pysqlite3()
 
 query = """
@@ -30,6 +34,7 @@ FROM event
 """
 
 result = db.query_db(query)
-print result
+print result  # ritorna una lista (Matrice a due dimensioni)
+
 db.close_db()
 '''
