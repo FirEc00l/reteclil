@@ -17,10 +17,10 @@ def login(request, session):
                        WHERE User.username=%s""" % request.form['username']
             result = db.query_db(query)
             
-            if(result==None):
+            if result==None :
                 print "login fallito, l'utente non esiste"
                 
-            else if(request.form['password']==result[0][1]):
+            elif request.form['password']==result[0][1] :
                 print "login effettuato"
                 session['user_id'] = result[0][2]
                 return redirect(url_for('home'))
