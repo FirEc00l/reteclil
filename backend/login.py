@@ -1,4 +1,5 @@
 #from flask import Flask
+import clil_utils.db
 from flask import render_template, url_for, redirect
 #app = Flask(__name__)
 
