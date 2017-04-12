@@ -1,5 +1,5 @@
 #from flask import Flask
-import clil_utils.db
+import clil_utils.db as utils
 from flask import render_template, url_for, redirect
 #app = Flask(__name__)
 
@@ -12,7 +12,7 @@ def login(request, session):
         if request.method=='POST' :
             
             
-            db =  pysqlite3()
+            db =  utils.pysqlite3()
             query = """SELECT User.username User.password User.id_user
                        FROM User
                        WHERE User.username=%s""" % request.form['username']
