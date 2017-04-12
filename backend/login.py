@@ -2,7 +2,6 @@
 import clil_utils.db as utils
 from flask import render_template, url_for, redirect
 #app = Flask(__name__)
-
 #@app.route("/login", methods=['GET', 'POST'])
 
 def login(request, session):
@@ -19,15 +18,14 @@ def login(request, session):
             result = db.query_db(query)
             
             if result==None :
-                print "login fallito, l'utente non esiste"
+                return render_template("login.html", error = "Nome utente o password errata")
                 
             elif request.form['password']==result[0][1] :
-                print "login effettuato"
                 session['user_id'] = result[0][2]
                 return redirect(url_for('home'))
             
             else:
-                print "login fallito, password errata"
+                return render_template("login.html", error = "Nome utente o password errata")
         else:
             return render_template("login.html")
     return redirect(url_for('home'))
