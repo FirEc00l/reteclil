@@ -14,9 +14,9 @@ def account(request, session):
     if 'user_id' in session:
         if request.method=='POST' :
             if request.action=='password':
-                query = """SELECT User.password
+                query = """SELECT password
                         FROM User
-                        WHERE User.id_user=%s
+                        WHERE id_user=%s
                         """ % session['user_id']
                 result=db.query_db(query)
                 password=result[0][4]
@@ -24,14 +24,14 @@ def account(request, session):
                     newPassword=request.form['newpassword']
                     query = """UPDATE User
                         SET password=%s
-                        WHERE User.id_user=%s
+                        WHERE id_user=%s
                         """ % newPassword, session['user_id']
                 else:
                     #errore
             if request.action=='email':
-                query = """SELECT User.email
+                query = """SELECT email
                         FROM User
-                        WHERE User.id_user=%s
+                        WHERE id_user=%s
                         """ % session['user_id']
                 result=db.query_db(query)
                 mail=result[0][6]
@@ -46,9 +46,9 @@ def account(request, session):
                     
                 
         else:
-            query = """SELECT User.email
+            query = """SELECT email
                         FROM User
-                        WHERE User.id_user=%s
+                        WHERE id_user=%s
                         """ % session['user_id']
             result=db.query_db(query)
             mail=result[0][6]
