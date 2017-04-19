@@ -12,9 +12,9 @@ def login(request, session):
             
             
             db =  utils.pysqlite3()
-            query = """SELECT User.username User.password User.id_user
+            query = """SELECT username, password, id_user
                        FROM User
-                       WHERE User.username=%s""" % request.form['username']
+                       WHERE User.username="%s\"""" % request.form['username']
             result = db.query_db(query)
             
             if result==None :
