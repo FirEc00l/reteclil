@@ -1,24 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
+	<br>
+	<br>
+	<h2 align="center">Upload file</h2>
+	<br>
 	<form action="/upload" method="POST">
-		<div class="file-field input-field">
-		  <div class="btn">
-			<span>File</span>
-			<input type="file" name="file">
-		  </div>
-		  <div class="file-path-wrapper">
-			<input class="file-path validate" type="text">
-		  </div>
+		<div class="row">
+			<div class="file-field input-field col s6 offset-m3">
+			  <div class="btn">
+				<span>File</span>
+				<input type="file" name="file">
+			  </div>
+			  <div class="file-path-wrapper">
+				<input class="file-path validate" type="text">
+			  </div>
+			</div>
 		</div>
-		<div class="input-field col s12">
-			<select>
-				<option value="" disabled selected>Sezione</option>
-				{% for section in sections %}
-					<option value="{{ section }}">{{ section }}</option>
-				{% endfor %}
-			</select>
-			<label>Materialize Select</label>
-		 </div>
+		<div class="row">
+			<div class="input-field col s6 offset-m3">
+				<select>
+					<option value="" disabled selected>Sezione</option>
+					{% for section in sections %}
+						<option value="{{ section }}">{{ section }}</option>
+					{% endfor %}
+				</select>
+				<label>Sezione</label>
+			</div>
+		</div>
+		<div class="center-align">
+			<button type="submit" class="waves-effect waves-light btn light-blue darken-3">login</button>
+		</div>
 	  </form>
+
+	  <script type="text/javascript">
+  	 	$(document).ready(function() {
+	    	$('select').material_select();
+	  	});
+	  </script>
 {% endblock %}

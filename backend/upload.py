@@ -1,7 +1,7 @@
 from  flask import render_template, url_for, redirect, abort
 
 def upload(request, session):
-	if 'user_id' in session:
+	if 'user_id' not in session:
 		if request.method == 'POST':
 			pass
 		else:
