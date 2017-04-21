@@ -1,7 +1,7 @@
 '''
 __init__.py
 @author: Nicholas Sollazzo
-@version: 1.4
+@version: 1.5
 @date: 21/04/17
 '''
 
@@ -21,7 +21,7 @@ def route_home():
 
 @app.route("/section/<section>", methods = ['GET','POST'])
 def route_section(section):
-    return section(request)
+    return section.section(request)
 
 @app.route("/login", methods = ['GET','POST'])
 def route_login():
@@ -29,7 +29,7 @@ def route_login():
 
 @app.route("/recovery", methods = ['GET','POST'])
 def route_recovery():
-    return recovery(request, session)
+    return recovery.recovery(request, session)
 
 @app.route("/upload", methods = ['GET','POST'])
 def route_upload():
@@ -37,27 +37,27 @@ def route_upload():
 
 @app.route("/account", methods = ['GET','POST'])
 def route_account():
-    return account(request, session)
+    return account.account(request, session)
 
 @app.route("/manage", methods = ['GET','POST'])
 def route_manage():
-    return manage(request)
+    return manage.manage(request)
 
 @app.route("/logout")
 def route_logout():
-    return logout(request)
+    return logout.logout(request)
 
 @app.route("/forum", methods = ['GET','POST'])
 def route_forum():
-    return forum(request)
+    return forum.forum(request)
 
 @app.route("/forum/<thread_id>", methods = ['GET','POST'])
 def route_thread():
-    return thread(request)
+    return thread.thread(request)
 
 @app.route("/search/<search_key>", methods = ['GET','POST'])
 def route_search():
-    return search(request)
+    return search.search(request)
 
 if __name__ == "__main__":
     app.run()
