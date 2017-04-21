@@ -1,12 +1,10 @@
-#from flask import Flask
 from flask import render_template
-#app=flask(__name__)
-#@app.route('/')
+import clil_utils.db as utils
+
 
 def account(request, session):
-    db = pysqlite3()
+    db = utils.pysqlite3()
     if 'user_id' in session:
-        
         query = """SELECT password
                         FROM User
                         WHERE id_user="%s"
@@ -31,9 +29,9 @@ def account(request, session):
                         """ % newPassword, session['user_id']
                     return render_template("account.html",email=mail)
                 else:
-                     return render_template("account.html",email=mail,error="Password errata")
+                    return render_template("account.html",email=mail,error="Password errata")
             if request.action=='email':
-                if password==request.form['password'] :
+                if password==request.form['password']:
                     newMail=request.form['newemail']
                     query = """UPDATE User
                         SET email="%s"
@@ -42,10 +40,16 @@ def account(request, session):
                     return render_template("account.html",email=mail)
                 else:
                    return render_template("account.html",email=mail,error="Password errata")
-                    
         else:
             return render_template("account.html",email=mail)
             
-            
-            
-        
+    
+    else:
+    	query = """SELECT email
+                        FROM User
+                        WHERE id_user="%s"
+                        """ % session['user_id']
+        result=db.query_db(query)
+        mail=result[0][6]
+        return render_template("account.html",email=mail)
+       
