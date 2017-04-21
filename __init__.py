@@ -1,8 +1,8 @@
 '''
 __init__.py
 @author: Nicholas Sollazzo
-@version: 1.3
-@date: 10/04/17
+@version: 1.4
+@date: 21/04/17
 '''
 
 from flask import Flask, request, session, g
@@ -10,6 +10,8 @@ import sqlite3
 import backend.upload as upload
 import backend.login as login
 import backend.home as home
+import backend.account as account
+import backend.manage as manage
 
 app = Flask(__name__)
 
