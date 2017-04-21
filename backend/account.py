@@ -1,5 +1,5 @@
 #from flask import Flask
-from flask import render_tempalte
+from flask import render_template
 #app=flask(__name__)
 #@app.route('/')
 
@@ -29,9 +29,9 @@ def account(request, session):
                         SET password="%s"
                         WHERE id_user="%s"
                         """ % newPassword, session['user_id']
-                    return render_template("..\templates\account.html",email=mail)
+                    return render_template("account.html",email=mail)
                 else:
-                     return render_template("..\templates\account.html",email=mail,error="Password errata")
+                     return render_template("account.html",email=mail,error="Password errata")
             if request.action=='email':
                 if password==request.form['password'] :
                     newMail=request.form['newemail']
@@ -39,12 +39,12 @@ def account(request, session):
                         SET email="%s"
                         WHERE User.id_user="%s"
                         """ % newMail, session['user_id']
-                    return render_template("..\templates\account.html",email=mail)
+                    return render_template("account.html",email=mail)
                 else:
-                   return render_template("..\templates\account.html",email=mail,error="Password errata")
+                   return render_template("account.html",email=mail,error="Password errata")
                     
         else:
-            return render_template("..\templates\account.html",email=mail)
+            return render_template("account.html",email=mail)
             
             
             
