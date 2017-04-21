@@ -25,7 +25,7 @@ processare la richiesta di aggiornamento dati:
 from flask import request
 
 def manage(request):
-	if request.methods == 'POST':
+	if request.method == 'POST':
 		return render_template('manage.html',)
 
 	else:
