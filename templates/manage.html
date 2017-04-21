@@ -1,1 +1,31 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<h2 align="center">MANAGE</h2>
+<br>
+<div class="row">
+	<div class="col s6 offset-m3">
+		<ul class="collapsible" data-collapsible="accordion">
+			<li>
+				<div class="collapsible-header"><i class="medium material-icons">description</i>Descrizione</div>
+				<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="medium material-icons">place</i>Links</div>
+				<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="medium material-icons">perm_identity</i>Utenti</div>
+				<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="medium material-icons">perm_media</i>Files</div>
+				<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+			</li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
