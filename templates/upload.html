@@ -20,16 +20,26 @@
 		<div class="row">
 			<div class="input-field col s6 offset-m3">
 				<select>
-					<option value="" disabled selected>Sezione</option>
+					<option value="" disabled selected>Seleziona una sezione</option>
 					{% for section in sections %}
-						<option value="{{ section }}">{{ section }}</option>
+						<optgroup label="{{section.name}}">
+							{% for sub_section in section.list %}
+								<option value="{{sub_section[1]}}">{{sub_section[0]}}</option>
+							{% endfor %}
+						</optgroup>
 					{% endfor %}
 				</select>
 				<label>Sezione</label>
 			</div>
 		</div>
+		<div class="row">
+			<div class="input-field col s6 offset-m3">
+				<textarea id="description" class="materialize-textarea"></textarea>
+				<label>Descrizione</label>
+			</div>
+		</div>
 		<div class="center-align">
-			<button type="submit" class="waves-effect waves-light btn light-blue darken-3">login</button>
+			<button type="submit" class="waves-effect waves-light btn light-blue darken-3">carica</button>
 		</div>
 	  </form>
 
