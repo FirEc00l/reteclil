@@ -12,6 +12,7 @@ import backend.login as login
 import backend.home as home
 import backend.account as account
 import backend.manage as manage
+import backend.logout as logout
 
 app = Flask(__name__)
 
@@ -45,7 +46,7 @@ def route_manage():
 
 @app.route("/logout")
 def route_logout():
-    return logout.logout(request)
+    return logout.logout(session)
 
 @app.route("/forum", methods = ['GET','POST'])
 def route_forum():
