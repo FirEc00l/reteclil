@@ -22,11 +22,14 @@ processare la richiesta di aggiornamento dati:
 ================================================
 '''
 
-from flask import request
+from flask import request, render_template
 
 def manage(request):
 	if request.method == 'POST':
 		return render_template('manage.html',)
 
 	else:
+                user_list = []
+                file_list = []
+                section_list = []
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list)
