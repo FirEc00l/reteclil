@@ -22,10 +22,10 @@ def login(request, session):
 
             elif request.form['password']==result[0][1] :
                 session['user_id'] = result[0][2]
-                return redirect(url_for('home'))
+                return redirect(url_for('route_home'))
 
             else:
                 return render_template("login.html", error = "Nome utente o password errata")
         else:
             return render_template("login.html")
-    return redirect(url_for('home'))
+    return redirect(url_for('route_home'))
