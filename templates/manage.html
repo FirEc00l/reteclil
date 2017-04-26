@@ -11,19 +11,32 @@
 		<ul class="collapsible" data-collapsible="accordion">
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">description</i>Descrizione</div>
-				<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				<div class="collapsible-body">
+					<span>
+						<form action="/manage" method="POST">
+							<div class="row">
+								<div class="input-field">
+									<i class="material-icons prefix">mode_edit</i>
+									<textarea id="icon_prefix2" class="materialize-textarea">{{description}}</textarea>
+									<label for="icon_prefix2">Descrizione</label>
+									<button type="submit" class="waves-effect waves-light btn">modifica</button>
+								</div>
+							</div>
+						</form>
+					</span>
+				</div>
 			</li>
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">place</i>Links</div>
-				<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				<div class="collapsible-body"><span>{{links}}</span></div>
 			</li>
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_identity</i>Utenti</div>
-				<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				<div class="collapsible-body"><span>{{users}}</span></div>
 			</li>
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_media</i>Files</div>
-				<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				<div class="collapsible-body"><span>{{files}}</span></div>
 			</li>
 		</ul>
 	</div>
