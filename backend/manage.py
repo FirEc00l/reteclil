@@ -33,8 +33,8 @@ def manage(request):
 
 	else:
 		user_list = []
-        file_list = []
-        section_list = []
+		file_list = []
+		section_list = []
 
 		action()
 
