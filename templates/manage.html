@@ -20,7 +20,7 @@
 									<i class="material-icons prefix">mode_edit</i>
 									<textarea name="new_description" id="icon_prefix2" class="materialize-textarea">{{description}}</textarea>
 									<label for="icon_prefix2">Descrizione</label>
-									<button type="submit" class="waves-effect waves-light btn">modifica</button>
+									<button type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
 								</div>
 							</div>
 						</form>
@@ -32,7 +32,7 @@
 				<div class="collapsible-body">
 					<span>
 						<ul class="collection with-header">
-							<li class="collection-header"><h4>Links</h4></li>
+							<!--<li class="collection-header"><h4>Links</h4></li>-->
 							<li class="collection-item">
 								{% for link in links %}
 								<div>
@@ -48,11 +48,41 @@
 			</li>
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_identity</i>Utenti</div>
-				<div class="collapsible-body"><span>{{users}}</span></div>
+				<div class="collapsible-body">
+					<span>
+						<ul class="collection with-header">
+							<!--<li class="collection-header"><h4>Users</h4></li>-->
+							<li class="collection-item">
+								{% for user in users %}
+								<div>
+									<a href="{{ link.link }}">{{user.user_text}}</a>
+									<a href="#!" class="secondary-content"><i class="material-icons">mode_edit</i></a>
+									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+								</div>
+								{% endfor %}
+							</li>
+						</ul>
+					</span>
+				</div>
 			</li>
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_media</i>Files</div>
-				<div class="collapsible-body"><span>{{files}}</span></div>
+				<div class="collapsible-body">
+					<span>
+						<ul class="collection with-header">
+							<!--<li class="collection-header"><h4>Filess</h4></li>-->
+							<li class="collection-item">
+								{% for file in files %}
+								<div>
+									<a href="{{ link.link }}">{{file.file_text}}</a>
+									<a href="#!" class="secondary-content"><i class="material-icons">mode_edit</i></a>
+									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+								</div>
+								{% endfor %}
+							</li>
+						</ul>
+					</span>
+				</div>
 			</li>
 		</ul>
 	</div>
