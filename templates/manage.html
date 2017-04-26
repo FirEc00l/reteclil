@@ -14,10 +14,11 @@
 				<div class="collapsible-body">
 					<span>
 						<form action="/manage" method="POST">
+							<input type="hidden" value="edit_description">
 							<div class="row">
 								<div class="input-field">
 									<i class="material-icons prefix">mode_edit</i>
-									<textarea id="icon_prefix2" class="materialize-textarea">{{description}}</textarea>
+									<textarea name="new_description" id="icon_prefix2" class="materialize-textarea">{{description}}</textarea>
 									<label for="icon_prefix2">Descrizione</label>
 									<button type="submit" class="waves-effect waves-light btn">modifica</button>
 								</div>
@@ -28,7 +29,22 @@
 			</li>
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">place</i>Links</div>
-				<div class="collapsible-body"><span>{{links}}</span></div>
+				<div class="collapsible-body">
+					<span>
+						<ul class="collection with-header">
+							<li class="collection-header"><h4>Links</h4></li>
+							<li class="collection-item">
+								{% for link in links %}
+								<div>
+									<a href="{{ link.link }}">{{link.link_text}}</a>
+									<a href="#!" class="secondary-content"><i class="material-icons">mode_edit</i></a>
+									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+								</div>
+								{% endfor %}
+							</li>
+						</ul>
+					</span>
+				</div>
 			</li>
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_identity</i>Utenti</div>
