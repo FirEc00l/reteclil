@@ -32,7 +32,7 @@ def manage(request):
 		return render_template('manage.html',)
 
 	else:
-        user_list = []
+		user_list = []
         file_list = []
         section_list = []
 
