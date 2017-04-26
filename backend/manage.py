@@ -28,28 +28,8 @@ import json
 import os
 
 def manage(request):
-	if request.method == 'POST':
-		return render_template('manage.html',)
 
-	else:
-		user_list = []
-		file_list = []
-		section_list = []
-
-		action()
-
-		#passare sempre links e description
-
-		with open('data/data.json') as data_file:
-	        data_str = data_file.read()
-	        links = json.loads(data_str)['links']
-	        description = json.loads(data_str)['description']
-
-		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
-								description=description, links=links)
-
-
-	def action(action=request.form[action]):
+	def action():
 	    switcher = {
 	        'create_user': create_user(),
 			'delete_user': delete_user(),
@@ -79,8 +59,8 @@ def manage(request):
 		    json_data = json.load(f)
 		    json_data[description] = new_description
 
-		with open('data/data_tmp.json', 'w') as f # temporary json with new changes
-		    f.write(json.dumps(json_data))
+		with open('data/data_tmp.json', 'w') as f: # temporary json with new changes
+			f.write(json.dumps(json_data))
 
 		os.rename('data/data_tmp.json', 'data/data.json') # rename the temporary file onto the original file
 		pass
@@ -105,3 +85,23 @@ def manage(request):
 
 	def rename_file(arg):
 		pass
+
+	if request.method == 'POST':
+		return render_template('manage.html',)
+
+	else:
+		user_list = []
+		file_list = []
+		section_list = []
+
+		action(request.form[action])
+
+		#passare sempre links e description
+
+		with open('data/data.json') as data_file:
+			data_str = data_file.read()
+			links = json.loads(data_str)['links']
+			description = json.loads(data_str)['description']
+
+		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
+								description=description, links=links)
