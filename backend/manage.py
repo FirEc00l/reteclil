@@ -66,6 +66,7 @@ def manage(request):
 		with open('data/data_tmp.json', 'w') as f: # temporary json with new changes
 			f.write(json.dumps(json_data))
 
+		os.remove('data/data.json')
 		os.rename('data/data_tmp.json', 'data/data.json') # rename the temporary file onto the original file
 
 	def update_user_password():
