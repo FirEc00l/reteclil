@@ -26,23 +26,78 @@ from flask import request
 from flask import render_template
 import json
 import os
+import string
 
 def manage(request):
-	if request.method != 'POST':
-		return render_template('manage.html',)
 
-	else:
+	def getAction(requestAction):
+		switcher = {
+	        'create_user': create_user,
+			'delete_user': delete_user,
+	        'delete_file': delete_file,
+	        'edit_description': edit_description,
+			'update_user_password': update_user_password,
+			'create_link': create_link,
+			'delete_link': delete_link,
+			'create_section': create_section,
+			'delete_section': delete_section,
+			'change_section': change_section,
+			'rename_file': rename_file
+	    }
+
+		function = switcher[requestAction]
+		function()
+
+	def create_user():
+		pass
+
+	def delete_user():
+		pass
+
+	def delete_file():
+		pass
+
+	def edit_description():
+		new_description = request.form['new_description']
+		with open('data/data.json', 'r') as f:
+			json_data = json.load(f)
+			json_data['description'] = new_description
+
+		with open('data/data_tmp.json', 'w') as f: # temporary json with new changes
+			f.write(json.dumps(json_data))
+
+		os.remove('data/data.json')
+		os.rename('data/data_tmp.json', 'data/data.json') # rename the temporary file onto the original file
+
+	def update_user_password():
+		pass
+
+	def create_link():
+		pass
+
+	def delete_link():
+		pass
+
+	def create_section():
+		pass
+
+	def delete_section():
+		pass
+
+	def change_section():
+		pass
+
+	def rename_file():
+		pass
+
+	if request.method != 'POST':
+
 		user_list = []
 		file_list = []
 		section_list = []
-
-
-		print('ciao:', request.form['action'])
-
-		action(request.form['action'])
+		description = None
 
 		#passare sempre links e description
-
 		with open('data/data.json') as data_file:
 			data_str = data_file.read()
 			links = json.loads(data_str)['links']
@@ -51,59 +106,19 @@ def manage(request):
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
 								description=description, links=links)
 
-def action():
-    switcher = {
-        'create_user': create_user(),
-		'delete_user': delete_user(),
-        'delete_file': delete_file(),
-        'edit_description': edit_description(),
-		'update_user_password': update_user_password(),
-		'create_link': create_link(),
-		'delete_link': delete_link(),
-		'create_section': create_section(),
-		'delete_section': delete_section(),
-		'change_section': change_section(),
-		'rename_file': rename_file()
-    }
-    return switcher.get(action, 'error')
+	else:
+		user_list = []
+		file_list = []
+		section_list = []
+		description = None
 
-def create_user(arg):
-	pass
+		getAction(request.form['action'])
 
-def delete_user(arg):
-	pass
+		#passare sempre links e description
+		with open('data/data.json') as data_file:
+			data_str = data_file.read()
+			links = json.loads(data_str)['links']
+			description = json.loads(data_str)['description']
 
-def delete_file(arg):
-	pass
-
-def edit_description(new_description):
-	with open('data/data.json', 'r') as f:
-	    json_data = json.load(f)
-	    json_data[description] = new_description
-
-	with open('data/data_tmp.json', 'w') as f: # temporary json with new changes
-		f.write(json.dumps(json_data))
-
-	os.rename('data/data_tmp.json', 'data/data.json') # rename the temporary file onto the original file
-	pass
-
-def update_user_password(arg):
-	pass
-
-def create_link(arg):
-	pass
-
-def delete_link(arg):
-	pass
-
-def create_section(arg):
-	pass
-
-def delete_section(arg):
-	pass
-
-def change_section(arg):
-	pass
-
-def rename_file(arg):
-	pass
+		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
+								description=description, links=links)
