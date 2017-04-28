@@ -1,21 +1,28 @@
 '''
 __init__.py
 @author: Nicholas Sollazzo
-@version: 1.5
+@version: 1.7
 @date: 21/04/17
 '''
 
-from flask import Flask, request, session, g
+from flask import Flask
+from flask import request
+from flask import session
+from flask import g
+
 import sqlite3
-import backend.upload as upload
-import backend.login as login
+
 import backend.home as home
+import backend.section as section
+import backend.login as login
+import backend.recovery as recovery
+import backend.upload as upload
 import backend.account as account
 import backend.manage as manage
 import backend.logout as logout
-import backend.recovery as recovery
-
-app = Flask(__name__)
+import backend.forum as forum
+import backend.thread as thread
+import backend.search as search
 
 @app.route("/")
 def route_home():
