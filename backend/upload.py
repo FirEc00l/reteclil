@@ -18,9 +18,15 @@ def upload(request, session):
 
 		if request.method == 'POST':
 			f = request.files['file']
-			#COntrollare estensione, dimensione file
-			#COntrollare nome file nel db, se c'e gia aggiungere qualchecos
-			f.save('./files/' + secure_filename(f.filename))
+			#Controllare estensione, dimensione file
+			ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
+			if f and allowed_file(f.filename):
+				f.save('./files/' + secure_filename(f.filename))
+			else:
+				return "error"
+			#Controllare nome file nel db, se ce gia aggiungere qualchecos
+
+
 			return render_template("upload.html", sections=sections)
 		else:
 			sections_dict = []
