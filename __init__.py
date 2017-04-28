@@ -13,6 +13,7 @@ import backend.home as home
 import backend.account as account
 import backend.manage as manage
 import backend.logout as logout
+import backend.recovery as recovery
 
 app = Flask(__name__)
 

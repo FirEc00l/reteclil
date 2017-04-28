@@ -16,7 +16,7 @@ from email.mime.text import MIMEText as mt
 
 import random
 
-def recovery(request):
+def recovery(request,session):
 
     if request.method == 'POST':
         return render_template('recovery.html')
@@ -35,7 +35,7 @@ def recovery(request):
         fp.close()
         '''
 
-        msg = mt('La tua nuova password è:' + onetimePSW)
+        msg = mt('La tua nuova password e\':' + onetimePSW)
 
         me = 'noReply@reteclil.org' # the sender's email address
 

@@ -19,7 +19,7 @@ def upload(request, session):
 		if request.method == 'POST':
 			f = request.files['file']
 			#COntrollare estensione, dimensione file
-			#COntrollare nome file nel db, se c'è già aggiungere qualchecos
+			#COntrollare nome file nel db, se c'e gia aggiungere qualchecos
 			f.save('./files/' + secure_filename(f.filename))
 			return render_template("upload.html", sections=sections)
 		else:
