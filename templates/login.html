@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<h2 align="center">Accedi</h2>
+<br>
+<form action="/login" method="POST">
+		<div class="row">
+		  <div class="input-field col s6 offset-m3">
+			<i class="material-icons prefix">account_circle</i>
+			<input name="username" id="icon_prefix" type="text" class="validate">
+			<label for="icon_prefix">Login</label>
+		  </div>
+		</div>
+		
+		<div class="row">
+		  <div class="input-field col s6 offset-m3">
+			<i class="material-icons prefix">vpn_key</i>
+			<input name="password" id="password" type="password" class="validate">
+			<label for="password">Password</label>
+		  </div>
+		</div> 
+		<br>     
+		{% if error %}
+		<div class="row">
+		  <div class="input-field col s6 offset-m3">
+			<blockquote>
+			  <h5>ERRORE</h5>
+			  <p>{{error}}</p>
+			</blockquote>  
+		  </div>
+		</div>
+		{% endif %}
+		<br>
+		<div class="row">
+			<div class="center-align">
+				<button type="submit" class="waves-effect waves-light btn light-blue darken-3">login</button>
+			</div>
+		</div>
+</form>
+
+{% endblock %}

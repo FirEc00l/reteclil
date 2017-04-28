@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<br><br>
+<h2 align="center">Gestione Rete CLIL</h2><br>
+<div class="row">
+	<div class="col s6 offset-m3">
+		<ul class="collapsible" data-collapsible="accordion">
+			<li>
+				<div class="collapsible-header"><i class="medium material-icons">description</i>Descrizione</div>
+				<div class="collapsible-body">
+					<span>
+						<form action="/manage" method="POST">
+							<input type="hidden" name="action" value="edit_description">
+							<div class="row">
+								<div class="input-field">
+									<i class="material-icons prefix">mode_edit</i>
+									<textarea name="new_description" id="icon_prefix2" class="materialize-textarea">{{description}}</textarea>
+									<label for="icon_prefix2">Descrizione</label>
+									<button type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+								</div>
+							</div>
+						</form>
+					</span>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="medium material-icons">place</i>Links</div>
+				<div class="collapsible-body">
+					<span>
+						<ul class="collection with-header">
+							<!--<li class="collection-header"><h4>Links</h4></li>-->
+							<li class="collection-item">
+								{% for link in links %}
+								<div>
+									<a href="{{ link.url }}">{{link.title}}</a>
+									<a href="#modal_link" class="secondary-content"><i class="material-icons">mode_edit</i></a>
+									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+								</div>
+								{% endfor %}
+							</li>
+						</ul>
+					</span>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="medium material-icons">perm_identity</i>Utenti</div>
+				<div class="collapsible-body">
+					<span>
+						<ul class="collection with-header">
+							<!--<li class="collection-header"><h4>Users</h4></li>-->
+							<li class="collection-item">
+								{% for user in users %}
+								<div>
+									<a href="{{ link.link }}">{{user.user_text}}</a>
+									<a href="#modal_users" class="secondary-content"><i class="material-icons">mode_edit</i></a>
+									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+								</div>
+								{% endfor %}
+							</li>
+						</ul>
+					</span>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="medium material-icons">perm_media</i>Files</div>
+				<div class="collapsible-body">
+					<span>
+						<ul class="collection with-header">
+							<!--<li class="collection-header"><h4>Filess</h4></li>-->
+							<li class="collection-item">
+								{% for file in files %}
+								<div>
+									<a href="{{ link.link }}">{{file.file_text}}</a>
+									<a href="#!" class="secondary-content"><i class="material-icons">mode_edit</i></a>
+									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+								</div>
+								{% endfor %}
+							</li>
+						</ul>
+					</span>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="medium material-icons">subject</i>Sezioni Files</div>
+				<div class="collapsible-body">
+					<span>
+						<ul class="collapsible" data-collapsible="accordion">
+							<li>
+								<div class="collapsible-header"><i class="material-icons">label_outline</i>First</div>
+								<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+							</li>
+							<li>
+								<div class="collapsible-header"><i class="material-icons">label_outline</i>Second</div>
+								<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+							</li>
+							<li>
+								<div class="collapsible-header"><i class="material-icons">label_outline</i>Third</div>
+								<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+							</li>
+						</ul>
+					</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<div id="modal_link" class="modal">
+	<div class="modal-content">
+		<h4 style="margin-left: 33%; color: #0277bd;">Modifica LINK</h4>
+		<form>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="testo_link" type="text" class="validate">
+					<label class="active" for="testo_link">Testo Link</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="new_link" type="text" class="validate">
+					<label class="active" for="new_link">Link</label>
+				</div>
+			</div>
+			<button type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+		</form>
+	</div>
+</div>
+<div id="modal_users" class="modal">
+	<div class="modal-content">
+		<h4 style="margin-left: 33%; color: #0277bd;">Modifica Utente</h4>
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="user_name" type="text" class="validate">
+						<label class="active" for="user_name">Nome Utente</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="user_surname" type="text" class="validate">
+						<label class="active" for="user_surname">Cognome Utente</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="e_mail" type="text" class="validate">
+						<label class="active" for="e_mail">E-mail</label>
+					</div>
+				</div>
+				<div class="input-field col s6">															
+					<select>
+						<option value="" disabled selected>Scegli il tipo dell'utente</option>
+						<option value="1">Commun</option>
+						<option value="2">Teacher</option>
+					</select>	
+					<label>Tipo Utente</label><br>
+					<a class="waves-effect waves-light btn light-blue darken-3"><i class="material-icons left">vpn_key</i>Genera Password</a><br><br>
+					<button type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script >
+	$('.modal').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .5, // Opacity of modal background
+      inDuration: 300, // Transition in duration
+      outDuration: 200, // Transition out duration
+      startingTop: '4%', // Starting top style attribute
+      endingTop: '10%', // Ending top style attribute
+  }
+  );
+	$('.dropdown-button').dropdown({
+		inDuration: 300,
+		outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+  }
+  );
+	$(document).ready(function() {
+		$('select').material_select();
+	});
+</script>
+{% endblock %}
