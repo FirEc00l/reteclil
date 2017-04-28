@@ -3,9 +3,9 @@
 {% block content %}
 	<br>
 	<br>
-	<h2 align="center">Upload file</h2>
+	<h2 align="center">Carica documento</h2>
 	<br>
-	<form action="/upload" method="POST">
+	<form action="/upload" method="POST" enctype="multipart/form-data">
 		<div class="row">
 			<div class="file-field input-field col s6 offset-m3">
 			  <div class="btn">
@@ -41,7 +41,7 @@
 		<div class="center-align">
 			<button type="submit" class="waves-effect waves-light btn light-blue darken-3">carica</button>
 		</div>
-	  </form>
+	</form>
 
 	  <script type="text/javascript">
   	 	$(document).ready(function() {
