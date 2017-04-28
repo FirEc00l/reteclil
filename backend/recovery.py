@@ -18,10 +18,10 @@ import random
 
 def recovery(request,session):
 
-    if request.method == 'POST':
+    if request.method != 'POST':
         return render_template('recovery.html')
     else:
-        email = request.form['email']
+        email = request.form['user']
 
         onetimePSW = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
 
