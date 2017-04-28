@@ -36,7 +36,7 @@
 							<li class="collection-item">
 								{% for link in links %}
 								<div>
-									<a href="{{ link.link }}">{{link.link_text}}</a>
+									<a href="{{ link.url }}">{{link.title}}</a>
 									<a href="#modal1" class="secondary-content"><i class="material-icons">mode_edit</i>
 										<div id="modal1" class="modal">
 											<div class="modal-content">
@@ -76,7 +76,43 @@
 								{% for user in users %}
 								<div>
 									<a href="{{ link.link }}">{{user.user_text}}</a>
-									<a href="#!" class="secondary-content"><i class="material-icons">mode_edit</i></a>
+									<a href="#modal2" class="secondary-content"><i class="material-icons">mode_edit</i>
+										<div id="modal2" class="modal">
+											<div class="modal-content">
+												<h4 style="margin-left: 33%; color: #0277bd;">Modifica Utente</h4>
+												<div class="row">
+													<form class="col s12">
+														<div class="row">
+															<div class="input-field col s6">
+																<input id="user_name" type="text" class="validate">
+																<label class="active" for="user_name">Nome Utente</label>
+															</div>
+														</div>
+														<div class="row">
+															<div class="input-field col s6">
+																<input id="user_surname" type="text" class="validate">
+																<label class="active" for="user_surname">Cognome Utente</label>
+															</div>
+														</div>
+														<div class="row">
+															<div class="input-field col s6">
+																<input id="e_mail" type="text" class="validate">
+																<label class="active" for="e_mail">E-mail</label>
+															</div>
+														</div>
+														<div class="input-field col s6">
+															<label>Tipo Utente</label>
+															<select>
+																<option value="" disabled selected>Scegli il tipo dell'utente</option>
+																<option value="1">Commun</option>
+																<option value="2">Teacher</option>
+															</select>	
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</a>
 									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
 								</div>
 								{% endfor %}
@@ -138,5 +174,28 @@
       endingTop: '10%', // Ending top style attribute
   }
   );
+	$('.moda2').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .5, // Opacity of modal background
+      inDuration: 300, // Transition in duration
+      outDuration: 200, // Transition out duration
+      startingTop: '4%', // Starting top style attribute
+      endingTop: '10%', // Ending top style attribute
+  }
+  );
+	$('.dropdown-button').dropdown({
+		inDuration: 300,
+		outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+  }
+  );
+	$(document).ready(function() {
+		$('select').material_select();
+	});
 </script>
 {% endblock %}
