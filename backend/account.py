@@ -28,7 +28,7 @@ def account(request, session):
                         WHERE id_user=%s
                         """ % (newPassword, session['user_id'])
                     db.query_db(query)
-                    return render_template("account.html",email=mail)
+                    return render_template("account.html",email=mail,success="modifica effettuata")
                 else:
                     return render_template("account.html",email=mail,error="Password errata")
             if request.form['action']=='email':
@@ -39,7 +39,7 @@ def account(request, session):
                         WHERE User.id_user=%s
                         """ % (newMail, session['user_id'])
                     db.query_db(query)
-                    return render_template("account.html",email=mail)
+                    return render_template("account.html",email=mail,success="modifica effettuata")
                 else:
                    return render_template("account.html",email=mail,error="Password errata")
         else:
