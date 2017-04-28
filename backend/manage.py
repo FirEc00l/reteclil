@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 0.4
-@date: 26/04/17
+@version: 0.5
+@date: 28/04/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
