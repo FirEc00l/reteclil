@@ -1,7 +1,7 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 0.5
+@version: 0.1
 @date: 28/04/17
 ===============================================
 manage(request):
@@ -35,7 +35,7 @@ def manage(request):
 	        'create_user': create_user,
 			'delete_user': delete_user,
 	        'delete_file': delete_file,
-	        'edit_description': edit_description,
+	        'edit_description': edit_description, #WORKING!
 			'update_user_password': update_user_password,
 			'create_link': create_link,
 			'delete_link': delete_link,
@@ -66,7 +66,6 @@ def manage(request):
 		with open('data/data_tmp.json', 'w') as f: # temporary json with new changes
 			f.write(json.dumps(json_data))
 
-		os.remove('data/data.json')
 		os.rename('data/data_tmp.json', 'data/data.json') # rename the temporary file onto the original file
 
 	def update_user_password():
