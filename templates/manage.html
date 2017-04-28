@@ -37,27 +37,7 @@
 								{% for link in links %}
 								<div>
 									<a href="{{ link.url }}">{{link.title}}</a>
-									<a href="#modal1" class="secondary-content"><i class="material-icons">mode_edit</i>
-										<div id="modal1" class="modal">
-											<div class="modal-content">
-												<h4 style="margin-left: 33%; color: #0277bd;">Modifica LINK</h4>
-												<form>
-													<div class="row">
-														<div class="input-field col s6">
-															<input id="testo_link" type="text" class="validate">
-															<label class="active" for="testo_link">Testo Link</label>
-														</div>
-													</div>
-													<div class="row">
-														<div class="input-field col s6">
-															<input id="new_link" type="text" class="validate">
-															<label class="active" for="new_link">Link</label>
-														</div>
-													</div>
-												</form>
-											</div>
-										</div>
-									</a>
+									<a href="#modal_link" class="secondary-content"><i class="material-icons">mode_edit</i></a>
 									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
 								</div>
 								{% endfor %}
@@ -76,43 +56,7 @@
 								{% for user in users %}
 								<div>
 									<a href="{{ link.link }}">{{user.user_text}}</a>
-									<a href="#modal2" class="secondary-content"><i class="material-icons">mode_edit</i>
-										<div id="modal2" class="modal">
-											<div class="modal-content">
-												<h4 style="margin-left: 33%; color: #0277bd;">Modifica Utente</h4>
-												<div class="row">
-													<form class="col s12">
-														<div class="row">
-															<div class="input-field col s6">
-																<input id="user_name" type="text" class="validate">
-																<label class="active" for="user_name">Nome Utente</label>
-															</div>
-														</div>
-														<div class="row">
-															<div class="input-field col s6">
-																<input id="user_surname" type="text" class="validate">
-																<label class="active" for="user_surname">Cognome Utente</label>
-															</div>
-														</div>
-														<div class="row">
-															<div class="input-field col s6">
-																<input id="e_mail" type="text" class="validate">
-																<label class="active" for="e_mail">E-mail</label>
-															</div>
-														</div>
-														<div class="input-field col s6">
-															<label>Tipo Utente</label>
-															<select>
-																<option value="" disabled selected>Scegli il tipo dell'utente</option>
-																<option value="1">Commun</option>
-																<option value="2">Teacher</option>
-															</select>	
-														</div>
-													</form>
-												</div>
-											</div>
-										</div>
-									</a>
+									<a href="#modal_users" class="secondary-content"><i class="material-icons">mode_edit</i></a>
 									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
 								</div>
 								{% endfor %}
@@ -164,17 +108,63 @@
 		</ul>
 	</div>
 </div>
+<div id="modal_link" class="modal">
+	<div class="modal-content">
+		<h4 style="margin-left: 33%; color: #0277bd;">Modifica LINK</h4>
+		<form>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="testo_link" type="text" class="validate">
+					<label class="active" for="testo_link">Testo Link</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="new_link" type="text" class="validate">
+					<label class="active" for="new_link">Link</label>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div id="modal_users" class="modal">
+	<div class="modal-content">
+		<h4 style="margin-left: 33%; color: #0277bd;">Modifica Utente</h4>
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="user_name" type="text" class="validate">
+						<label class="active" for="user_name">Nome Utente</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="user_surname" type="text" class="validate">
+						<label class="active" for="user_surname">Cognome Utente</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="e_mail" type="text" class="validate">
+						<label class="active" for="e_mail">E-mail</label>
+					</div>
+				</div>
+				<div class="input-field col s6">															
+					<select>
+						<option value="" disabled selected>Scegli il tipo dell'utente</option>
+						<option value="1">Commun</option>
+						<option value="2">Teacher</option>
+					</select>	
+					<label>Tipo Utente</label>
+					<a class="waves-effect waves-light btn light-blue darken-3"><i class="material-icons left">vpn_key</i>Genera Password</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <script >
 	$('.modal').modal({
-      dismissible: true, // Modal can be dismissed by clicking outside of the modal
-      opacity: .5, // Opacity of modal background
-      inDuration: 300, // Transition in duration
-      outDuration: 200, // Transition out duration
-      startingTop: '4%', // Starting top style attribute
-      endingTop: '10%', // Ending top style attribute
-  }
-  );
-	$('.moda2').modal({
       dismissible: true, // Modal can be dismissed by clicking outside of the modal
       opacity: .5, // Opacity of modal background
       inDuration: 300, // Transition in duration
@@ -198,4 +188,5 @@
 		$('select').material_select();
 	});
 </script>
+
 {% endblock %}
