@@ -1,19 +1,13 @@
-<html>
-	<head>
-		<script
-  		src="https://code.jquery.com/jquery-3.2.1.js"
-  		integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
- 		crossorigin="anonymous"></script>
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-		<title>Account</title>
+{% extends "base.html" %}
+{% block title %}ReteCLIL - Account{% endblock %}
 
-	</head>
-	<body>
-		
+{% block content %}
+		<br>
+		<br>
+		<h2 align="center">Account</h2>
+		<br>
 		<div class="row">
-			<div class="col s6">
+			<div class="col s6 offset-m3">
 				<ul class="collapsible" data-collapsible="accordion">
 					<li>
 		    			<div class="collapsible-header"><i class="material-icons">vpn_key</i>Modifica password</div>
@@ -43,7 +37,7 @@
 				      					<div class="row">
 				      						<div class col="s12">
 												<div class="error" style="display:none" id="error">
-												   	
+
 												</div>
 					      					</div>
 				      					</div>
@@ -87,7 +81,7 @@
 				      					<div class="row">
 				      						<div class col="s12">
 												<div class="errore" style="display:none" id="errore">
-												   	
+
 												</div>
 					      					</div>
 				      					</div>
@@ -101,6 +95,15 @@
 				</ul>
 			</div>
 		</div>
+		{% if error %}
+		<div class="row">
+			<div class="col s6 offset-m3">
+				<div class="error" id="error">
+					<blockquote> <h5>Errore</h5> {{error}} </blockquote>
+				</div>
+			</div>
+		</div>
+		{% endif %}
 		<script type="text/javascript">
 		$(document).ready(function(){
 		    $("#psw").click(function(){
@@ -127,8 +130,8 @@
 				    }
 		    });
 		});
-		 
-        
+
+
 		</script>
 
 		{% if success == "password" %}
@@ -138,6 +141,4 @@
 		{% elif success == "email" %}
 
 		{% endif %}
-	</body>
-
-</html>
+{% endblock %}
