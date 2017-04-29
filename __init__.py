@@ -2,7 +2,7 @@
 __init__.py
 @author: Nicholas Sollazzo
 @version: 1.7
-@date: 21/04/17
+@date: 29/04/17
 '''
 
 from flask import Flask
@@ -23,6 +23,8 @@ import backend.logout as logout
 import backend.forum as forum
 import backend.thread as thread
 import backend.search as search
+
+app = Flask("__name__")
 
 @app.route("/")
 def route_home():
