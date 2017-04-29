@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
-{% block body %}
+{% block content %}
 	<div class="row">
       <div class="input-field col s4">
-        <i class="material-icons prefix">vpn_key</i>
-        <input name="email" type="text" class="validate">
-        <label for="icon_prefix">Username</label>
-        <br>
-        <br>
-        <button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Recupera</button>
+        <form action="/recovery" method="POST">
+			<i class="material-icons prefix">vpn_key</i>
+			<input name="user" type="text" class="validate">
+			<label for="icon_prefix">Username</label>
+			<br>
+			<br>
+			<button class="btn waves-effect waves-light light-blue darken-3" type="submit" name="action">Recupera</button>
+		</form>
       </div>
     </div>
 {% endblock %}
