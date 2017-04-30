@@ -11,6 +11,7 @@ from werkzeug.utils import secure_filename
 
 def upload(request, session):
 	if 'user_id' in session:
+		logged = session['user_type']
 		db =  utils.pysqlite3()
 
 		query = "SELECT section_name, id_section FROM section"
@@ -39,6 +40,6 @@ def upload(request, session):
 
 			sections = sections_dict
 
-			return render_template("upload.html", sections=sections)
+			return render_template("upload.html", sections=sections, logged=logged)
 	else:
 		abort(403)

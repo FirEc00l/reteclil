@@ -11,7 +11,7 @@ def home(session):
     # liks :list of dictionary, logged :bool, description :str -> render_template()
 
     if 'user_id' in session:
-        logged = True
+        logged = session['user_type']
     else:
         logged = False
 
@@ -19,6 +19,5 @@ def home(session):
         data_str = data_file.read()
         links = json.loads(data_str)['links']
         description = json.loads(data_str)['description']
-
 
     return render_template('home.html', links=links, description=description, logged=logged)

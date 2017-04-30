@@ -3,6 +3,7 @@ import backend.clil_utils.db as utils
 
 
 def account(request, session):
+    logged = session['user_type']
     db = utils.pysqlite3()
     if 'user_id' in session:
         query = """SELECT password
@@ -11,7 +12,7 @@ def account(request, session):
                         """ % session['user_id']
         result=db.query_db(query)
         password=result[0][0]
-        
+
         query = """SELECT email
                         FROM User
                         WHERE id_user=%s
@@ -28,9 +29,9 @@ def account(request, session):
                         WHERE id_user=%s
                         """ % (newPassword, session['user_id'])
                     db.query_db(query)
-                    return render_template("account.html",email=mail,success="modifica effettuata")
+                    return render_template("account.html",email=mail,success="modifica effettuata", logged=logged)
                 else:
-                    return render_template("account.html",email=mail,error="Password errata")
+                    return render_template("account.html",email=mail,error="Password errata", logged=logged)
             if request.form['action']=='email':
                 if password==request.form['password']:
                     newMail=request.form['newemail']
@@ -39,13 +40,13 @@ def account(request, session):
                         WHERE User.id_user=%s
                         """ % (newMail, session['user_id'])
                     db.query_db(query)
-                    return render_template("account.html",email=mail,success="modifica effettuata")
+                    return render_template("account.html",email=mail,success="modifica effettuata", logged=logged)
                 else:
-                   return render_template("account.html",email=mail,error="Password errata")
+                   return render_template("account.html",email=mail,error="Password errata", logged=logged)
         else:
-            return render_template("account.html",email=mail)
-            
-    
+            return render_template("account.html",email=mail, logged=logged)
+
+
     else:
     	query = """SELECT email
                         FROM User
@@ -53,5 +54,4 @@ def account(request, session):
                         """ % session['user_id']
         result=db.query_db(query)
         mail=result[0][0]
-        return render_template("account.html",email=mail)
-       
+        return render_template("account.html",email=mai, logged=loggedl)

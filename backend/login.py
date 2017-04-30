@@ -12,7 +12,7 @@ def login(request, session):
 
 
             db =  utils.pysqlite3()
-            query = """SELECT username, password, id_user
+            query = """SELECT username, password, id_user, user_type
                        FROM User
                        WHERE User.username="%s\"""" % request.form['username']
             result = db.query_db(query)
@@ -22,10 +22,11 @@ def login(request, session):
 
             elif request.form['password']==result[0][1] :
                 session['user_id'] = result[0][2]
+                session['user_type'] = result[0][3]
                 return redirect(url_for('route_home'))
 
             else:
                 return render_template("login.html", error = "Nome utente o password errata")
         else:
-            return render_template("login.html")
+            return render_template("login.html", logged=False)
     return redirect(url_for('route_home'))
