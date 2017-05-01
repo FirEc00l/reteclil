@@ -9,6 +9,7 @@ from flask import Flask
 from flask import request
 from flask import session
 from flask import g
+from flask import render_template
 
 import sqlite3
 
@@ -25,6 +26,22 @@ import backend.thread as thread
 import backend.search as search
 
 app = Flask("__name__")
+
+@app.errorhandler(403)
+def permission_denied(e):
+    if 'user_id' in session:
+        logged = session['user_type']
+    else:
+        logged = False
+    return render_template('403.html', logged=logged), 403
+
+@app.errorhandler(404)
+def page_not_found(e):
+    if 'user_id' in session:
+        logged = session['user_type']
+    else:
+        logged = False
+    return render_template('404.html', logged=logged), 404
 
 @app.route("/")
 def route_home():
