@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, abort
 import backend.clil_utils.db as utils
 
 
@@ -48,10 +48,4 @@ def account(request, session):
 
 
     else:
-    	query = """SELECT email
-                        FROM User
-                        WHERE id_user=%s
-                        """ % session['user_id']
-        result=db.query_db(query)
-        mail=result[0][0]
-        return render_template("account.html",email=mai, logged=loggedl)
+        abort(403)
