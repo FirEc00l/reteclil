@@ -3,9 +3,9 @@ import backend.clil_utils.db as utils
 
 
 def account(request, session):
-    logged = session['user_type']
     db = utils.pysqlite3()
     if 'user_id' in session:
+        logged = session['user_type']
         query = """SELECT password
                         FROM User
                         WHERE id_user=%s

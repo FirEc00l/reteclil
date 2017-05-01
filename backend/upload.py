@@ -12,8 +12,10 @@ from werkzeug.utils import secure_filename
 def upload(request, session):
 	if 'user_id' in session:
 		logged = session['user_type']
-		db =  utils.pysqlite3()
+		if logged < 2:
+			abort(403)
 
+		db =  utils.pysqlite3()
 		query = "SELECT section_name, id_section FROM section"
 		sections = db.query_db(query)
 
