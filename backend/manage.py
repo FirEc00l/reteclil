@@ -24,11 +24,12 @@ processare la richiesta di aggiornamento dati:
 
 from flask import request
 from flask import render_template
+from flask import abort
 import json
 import os
 import string
 
-def manage(request):
+def manage(request, session):
 
 	def getAction(requestAction):
 		switcher = {
@@ -45,8 +46,8 @@ def manage(request):
 			'rename_file': rename_file
 	    }
 
-		function = switcher[requestAction]
-		function()
+		funAction = switcher[requestAction]
+		funAction()
 
 	def create_user():
 		pass
@@ -90,6 +91,13 @@ def manage(request):
 	def rename_file():
 		pass
 
+	if 'user_id' in session:
+		logged = session['user_type']
+		if logged != 3:
+			abort(403)
+	else:
+		abort(403)
+
 	if request.method != 'POST':
 
 		user_list = []
@@ -97,15 +105,13 @@ def manage(request):
 		section_list = []
 		description = None
 
-		#passare sempre links e description
 		with open('data/data.json') as data_file:
 			data_str = data_file.read()
 			links = json.loads(data_str)['links']
 			description = json.loads(data_str)['description']
 
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
-								description=description, links=links)
-
+								description=description, links=links, logged=logged)
 	else:
 		user_list = []
 		file_list = []
@@ -114,11 +120,10 @@ def manage(request):
 
 		getAction(request.form['action'])
 
-		#passare sempre links e description
 		with open('data/data.json') as data_file:
 			data_str = data_file.read()
 			links = json.loads(data_str)['links']
 			description = json.loads(data_str)['description']
 
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
-								description=description, links=links)
+								description=description, links=links, logged=logged)

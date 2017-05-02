@@ -69,7 +69,7 @@ def route_account():
 
 @app.route("/manage", methods = ['GET','POST'])
 def route_manage():
-    return manage.manage(request)
+    return manage.manage(request, session)
 
 @app.route("/logout")
 def route_logout():
