@@ -1,1 +1,33 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<html>
+	<head> 
+	 	<script src="https://code.jquery.com/jquery-3.2.1.js"
+ 			 integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  			 crossorigin="anonymous">
+  			
+   		</script>
+  		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+		<title></title>
+	</head>
+	<body>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <i class="material-icons prefix">search</i>
+            <input id="search_key" type="text" class="validate">
+            <label for="icon_prefix">Cerca</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <button id="search" class="btn waves-effect waves-light light-blue darken-3" type="button" name="action">Cerca</button>
+  </body>
+
+  </html>
+
+  {% endblock %}
