@@ -40,7 +40,7 @@ def account(request, session):
                         WHERE User.id_user=%s
                         """ % (newMail, session['user_id'])
                     db.query_db(query)
-                    return render_template("account.html",email=mail,success="modifica effettuata", logged=logged)
+                    return render_template("account.html",email=newMail,success="modifica effettuata", logged=logged)
                 else:
                    return render_template("account.html",email=mail,error="Password errata", logged=logged)
         else:
