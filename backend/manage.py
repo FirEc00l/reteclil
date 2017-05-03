@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 0.1
-@date: 28/04/17
+@version: 0.1.1
+@date: 2/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -74,6 +74,7 @@ def manage(request, session):
 		pass
 
 	def create_link():
+
 		pass
 
 	def delete_link():
@@ -111,7 +112,7 @@ def manage(request, session):
 			description = json.loads(data_str)['description']
 
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
-								description=description, links=links, logged=logged)
+								description=description, links=links, logged=logged) #Passare lista utenti e file da DB
 	else:
 		user_list = []
 		file_list = []
