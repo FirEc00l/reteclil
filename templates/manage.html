@@ -18,7 +18,7 @@
 									<i class="material-icons prefix">mode_edit</i>
 									<textarea name="new_description" id="icon_prefix2" class="materialize-textarea">{{description}}</textarea>
 									<label for="icon_prefix2">Descrizione</label>
-									<button type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+									<button type="submit" id="mod_description"class="waves-effect waves-light btn light-blue darken-3">modifica</button>
 								</div>
 							</div>
 						</form>
@@ -51,9 +51,10 @@
 						<ul class="collection with-header">
 							<!--<li class="collection-header"><h4>Users</h4></li>-->
 							<li class="collection-item">
-								{% for user in users %}
+								{% for user in user_list %}
 								<div>
-									<a href="{{ link.link }}">{{user.user_text}}</a>
+									{{user.user_name}}
+									{{user.user_surname}}
 									<a href="#modal_users" class="secondary-content"><i class="material-icons">mode_edit</i></a>
 									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
 								</div>
@@ -70,10 +71,10 @@
 						<ul class="collection with-header">
 							<!--<li class="collection-header"><h4>Filess</h4></li>-->
 							<li class="collection-item">
-								{% for file in files %}
+								{% for file in file_list %}
 								<div>
-									<a href="{{ link.link }}">{{file.file_text}}</a>
-									<a href="#!" class="secondary-content"><i class="material-icons">mode_edit</i></a>
+									{{file.file_name}}
+									<a href="#modal_file" class="secondary-content"><i class="material-icons">mode_edit</i></a>
 									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
 								</div>
 								{% endfor %}
@@ -122,7 +123,7 @@
 					<label class="active" for="new_link">Link</label>
 				</div>
 			</div>
-			<button type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+			<button id="mod_link" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
 		</form>
 	</div>
 </div>
@@ -156,11 +157,35 @@
 						<option value="2">Teacher</option>
 					</select>	
 					<label>Tipo Utente</label><br>
-					<a class="waves-effect waves-light btn light-blue darken-3"><i class="material-icons left">vpn_key</i>Genera Password</a><br><br>
-					<button type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+					<a id="psw_gen"class="waves-effect waves-light btn light-blue darken-3"><i class="material-icons left">vpn_key</i>Genera Password</a><br><br>
+					<button id="mod_user" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
 				</div>
 			</form>
 		</div>
+	</div>
+</div>
+<div id="modal_file" class="modal">
+	<div class="modal-content">
+		<h4 style="margin-left: 33%; color: #0277bd;">Modifica FILE</h4>
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="testo_link" type="text" class="validate">
+						<label class="active" for="testo_link">Nome File</label>
+					</div>
+					<div class="input-field col s6">															
+						<select>
+							<option value="" disabled selected>Scegli il tipo dell'file</option>
+							<option value="1">Commun</option>
+							<option value="2">Teacher</option>
+						</select>	
+						<label>Tipo File</label><br>
+					</div>
+				</div>
+			</div>
+			<button id="mod_file" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+		</form>
 	</div>
 </div>
 <script >
