@@ -6,7 +6,7 @@ recovery.py
 @note: non testato
 '''
 
-from flask import request, render_template
+from flask import request, render_template, abort
 
 # Import smtplib for the actual sending function
 import smtplib
@@ -17,9 +17,12 @@ from email.mime.text import MIMEText as mt
 import random
 
 def recovery(request,session):
-
+    if 'user_id' in session:
+        abort(403)
+    else:
+        logged = False
     if request.method != 'POST':
-        return render_template('recovery.html')
+        return render_template('recovery.html', logged=logged)
     else:
         email = request.form['user']
 

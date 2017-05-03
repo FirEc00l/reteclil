@@ -11,25 +11,30 @@
 		  <div class="input-field col s6 offset-m3">
 			<i class="material-icons prefix">account_circle</i>
 			<input name="username" id="icon_prefix" type="text" class="validate">
-			<label for="icon_prefix">Login</label>
+			<label for="icon_prefix">Nome utente</label>
 		  </div>
 		</div>
-		
+
 		<div class="row">
 		  <div class="input-field col s6 offset-m3">
 			<i class="material-icons prefix">vpn_key</i>
 			<input name="password" id="password" type="password" class="validate">
 			<label for="password">Password</label>
 		  </div>
-		</div> 
-		<br>     
+		</div>
+		<div class="row">
+			<div class="input-field col s6 offset-m3">
+				<a href="/recovery">Recupera password</a>
+			</div>
+		</div>
+		<br>
 		{% if error %}
 		<div class="row">
 		  <div class="input-field col s6 offset-m3">
 			<blockquote>
 			  <h5>ERRORE</h5>
 			  <p>{{error}}</p>
-			</blockquote>  
+			</blockquote>
 		  </div>
 		</div>
 		{% endif %}

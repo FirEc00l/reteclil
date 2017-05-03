@@ -18,7 +18,7 @@ def login(request, session):
             result = db.query_db(query)
 
             if result==None :
-                return render_template("login.html", error = "Nome utente o password errata")
+                return render_template("login.html", error = "Nome utente o password errata", logged=False)
 
             elif request.form['password']==result[0][1] :
                 session['user_id'] = result[0][2]
@@ -26,7 +26,7 @@ def login(request, session):
                 return redirect(url_for('route_home'))
 
             else:
-                return render_template("login.html", error = "Nome utente o password errata")
+                return render_template("login.html", error = "Nome utente o password errata", logged=False)
         else:
             return render_template("login.html", logged=False)
     return redirect(url_for('route_home'))
