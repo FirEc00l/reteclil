@@ -53,8 +53,8 @@
 							<li class="collection-item">
 								{% for user in user_list %}
 								<div>
-									{{user.user_name}}
-									{{user.user_surname}}
+									{{user.name}}
+									{{user.surname}}
 									<a href="#modal_users" class="secondary-content"><i class="material-icons">mode_edit</i></a>
 									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
 								</div>
@@ -109,16 +109,16 @@
 </div>
 <div id="modal_link" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #0277bd;">Modifica LINK</h4>
-		<form>
+		<h4 style="margin-left: 33%; color: #212121;">Modifica LINK</h4>
+		<form class="col s12">
 			<div class="row">
-				<div class="input-field col s6">
+				<div class="input-field col s12">
 					<input id="testo_link" type="text" class="validate">
 					<label class="active" for="testo_link">Testo Link</label>
 				</div>
 			</div>
 			<div class="row">
-				<div class="input-field col s6">
+				<div class="input-field col s12">
 					<input id="new_link" type="text" class="validate">
 					<label class="active" for="new_link">Link</label>
 				</div>
@@ -129,23 +129,23 @@
 </div>
 <div id="modal_users" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #0277bd;">Modifica Utente</h4>
+		<h4 style="margin-left: 33%; color: ##212121;">Modifica Utente</h4>
 		<div class="row">
 			<form class="col s12">
 				<div class="row">
-					<div class="input-field col s6">
+					<div class="input-field col s12">
 						<input id="user_name" type="text" class="validate">
 						<label class="active" for="user_name">Nome Utente</label>
 					</div>
 				</div>
 				<div class="row">
-					<div class="input-field col s6">
+					<div class="input-field col s12">
 						<input id="user_surname" type="text" class="validate">
 						<label class="active" for="user_surname">Cognome Utente</label>
 					</div>
 				</div>
 				<div class="row">
-					<div class="input-field col s6">
+					<div class="input-field col s12">
 						<input id="e_mail" type="text" class="validate">
 						<label class="active" for="e_mail">E-mail</label>
 					</div>
@@ -166,7 +166,7 @@
 </div>
 <div id="modal_file" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #0277bd;">Modifica FILE</h4>
+		<h4 style="margin-left: 33%; color: #212121;">Modifica FILE</h4>
 		<div class="row">
 			<form class="col s12">
 				<div class="row">
