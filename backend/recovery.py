@@ -1,9 +1,8 @@
 '''
 recovery.py
-@author: Nicholas Sollazzo
-@
-@version: 0.9
-@date: 7/04/17
+@author: Nicholas Sollazzo,Alesandro Capici
+@version: 1.0
+@date: 3/05/17
 @note: non testato
 '''
 
