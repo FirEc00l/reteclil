@@ -21,5 +21,5 @@ def section(request, session, section=None):
                 WHERE Section.id_section="%s\"""" % section
         result = db.query_db(query)
 
-        return render_template("section.html", logged=logged, result)
+        return render_template("section.html", logged=logged, result=result)
             
