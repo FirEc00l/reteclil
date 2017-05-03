@@ -1,8 +1,8 @@
 '''
 __init__.py
 @author: Nicholas Sollazzo
-@version: 1.7
-@date: 29/04/17
+@version: 1.8
+@date: 2/05/17
 '''
 
 from flask import Flask
