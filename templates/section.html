@@ -1,59 +1,27 @@
-<html>
-<head>
-	<script
-	src="https://code.jquery.com/jquery-3.2.1.js"
-	integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-	crossorigin="anonymous"></script>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-	<title>Sezione</title>
-	<style>
-		a:link, a:visited {
-			text-decoration: underline;
-			color: white;
-		}
-		a:hover, a:active {
-			text-decoration: underline;
-			color: white;
-		}
-		#laterale {
-			position: fixed;
-			height: 100%;
-			z-index=2;
-		}
-	</style>
-</head>
+{% extends "base.html" %}
+{% block title %}ReteCLIL - Account{% endblock %}
 
-<body>
+{% block content %}
 
-	<div class="row" >
-		<div class="col s3 blue darken-2">
-			<ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
-				<li class="bold active"><a class="collapsible-header active waves-effect waves-teal">JavaScript</a>
-					<div class="collapsible-body" style="display: block;">
-						<ul>
-							<li><a href="carousel.html">Carousel</a></li>
-							<li><a href="collapsible.html">Collapsible</a></li>
-							<li><a href="dialogs.html">Dialogs</a></li>
-							<li><a href="dropdown.html">Dropdown</a></li>
-							<li><a href="feature-discovery.html">FeatureDiscovery</a></li>
-							<li><a href="media.html">Media</a></li>
-							<li><a href="modals.html">Modals</a></li>
-							<li><a href="parallax.html">Parallax</a></li>
-							<li><a href="pushpin.html">Pushpin</a></li>
-							<li><a href="scrollfire.html">ScrollFire</a></li>
-							<li><a href="scrollspy.html">Scrollspy</a></li>
-							<li class="active"><a href="side-nav.html">SideNav</a></li>
-							<li><a href="tabs.html">Tabs</a></li>
-							<li><a href="transitions.html">Transitions</a></li>
-							<li><a href="waves.html">Waves</a></li>
-						</ul>
-					</div>
-				</li>
-			</ul>
-		</li>
-	</ul>
+<div class="row" >
+	<div class="col s3">
+		<ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+			<li class="bold active"><a class="collapsible-header active waves-effect waves-teal">JavaScript</a>
+				<div class="collapsible-body" style="display: block;">
+					<ul>
+						{% for section in sections %}
+						<optgroup label="{{section.name}}">
+							{% for sub_section in section.list %}
+								<option value="{{sub_section[1]}}">{{sub_section[0]}}</option>
+							{% endfor %}
+						</optgroup>
+					{% endfor %}
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</li>
+</ul>
 </div>
 <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>	
 
@@ -99,6 +67,20 @@
 	</div>
 </div>
 </div>
-</body>
 
-</html>
+<style>
+	a:link, a:visited {
+		text-decoration: underline;
+		color: white;
+	}
+	a:hover, a:active {
+		text-decoration: underline;
+		color: white;
+	}
+	#laterale {
+		position: fixed;
+		height: 100%;
+		z-index=2;
+	}
+</style>
+{% endblock %}
