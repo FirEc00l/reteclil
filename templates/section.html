@@ -4,8 +4,8 @@
 {% block content %}
 
 <div class="row" >
-	<div class="col s3">
-		<ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+	<div class="col s3 fixed">
+		<ul id="nav-mobile" class="fixed" style="transform: translateX(0%);">
 			<li class="bold active"><a class="collapsible-header active waves-effect waves-teal">JavaScript</a>
 				<div class="collapsible-body" style="display: block;">
 					<ul>
@@ -23,7 +23,6 @@
 	</li>
 </ul>
 </div>
-<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>	
 
 {% for item in navigation %}
 <div class="col s2 m3">
@@ -67,20 +66,4 @@
 	</div>
 </div>
 </div>
-
-<style>
-	a:link, a:visited {
-		text-decoration: underline;
-		color: white;
-	}
-	a:hover, a:active {
-		text-decoration: underline;
-		color: white;
-	}
-	#laterale {
-		position: fixed;
-		height: 100%;
-		z-index=2;
-	}
-</style>
 {% endblock %}
