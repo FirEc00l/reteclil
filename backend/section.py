@@ -11,7 +11,7 @@ def section(request, session, section=None):
     else:
         logged = False
     
-    if id_sezione==None:
+    if section==None:
         return render_template("section.html", logged=logged)
 
     else:

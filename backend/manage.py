@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 0.1
-@date: 28/04/17
+@version: 0.1.1
+@date: 2/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -22,9 +22,12 @@ processare la richiesta di aggiornamento dati:
 ================================================
 '''
 
+import backend.clil_utils.db as utils
+
 from flask import request
 from flask import render_template
 from flask import abort
+
 import json
 import os
 import string
@@ -74,6 +77,7 @@ def manage(request, session):
 		pass
 
 	def create_link():
+
 		pass
 
 	def delete_link():
@@ -91,6 +95,42 @@ def manage(request, session):
 	def rename_file():
 		pass
 
+	db =  utils.pysqlite3()
+
+	query = '''
+            SELECT *
+            FROM user
+            '''
+
+	user_list = db.query_db(query)
+
+	if user_list is not None:
+		user_list = list(user_list)
+	else:
+		user_list = []
+		print 'Query returned no result'
+
+	user_list = list( db.query_db(query) )
+
+	query = '''
+            SELECT *
+            FROM file
+            '''
+
+	file_list = db.query_db(query)
+
+	if file_list is not None:
+		file_list = list(file_list)
+	else:
+		file_list = []
+		print 'Query returned no result'
+
+	if file_list is None:
+		print('NONE')
+
+	section_list = []
+	description = None
+
 	if 'user_id' in session:
 		logged = session['user_type']
 		if logged != 3:
@@ -100,23 +140,14 @@ def manage(request, session):
 
 	if request.method != 'POST':
 
-		user_list = []
-		file_list = []
-		section_list = []
-		description = None
-
 		with open('data/data.json') as data_file:
 			data_str = data_file.read()
 			links = json.loads(data_str)['links']
 			description = json.loads(data_str)['description']
 
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
-								description=description, links=links, logged=logged)
+								description=description, links=links, logged=logged) #Passare lista utenti e file da DB
 	else:
-		user_list = []
-		file_list = []
-		section_list = []
-		description = None
 
 		getAction(request.form['action'])
 
