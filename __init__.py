@@ -43,13 +43,21 @@ def page_not_found(e):
         logged = False
     return render_template('404.html', logged=logged), 404
 
+@app.errorhandler(413)
+def too_long(e):
+    return "request_too_long", 413
+
 @app.route("/")
 def route_home():
     return home.home(session)
 
+@app.route("/section", methods = ['GET','POST'])
+def route_section_key():
+    return section.section(request, session)
+
 @app.route("/section/<section>", methods = ['GET','POST'])
 def route_section(section):
-    return section.section(request)
+    return section.section(request, session, section=section)
 
 @app.route("/login", methods = ['GET','POST'])
 def route_login():
