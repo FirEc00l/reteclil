@@ -1,6 +1,6 @@
 from flask import render_template, abort
 import backend.clil_utils.db as utils
-from werkzeug.security import generate_password_hash, \ check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 def account(request, session):
