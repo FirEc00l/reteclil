@@ -3,7 +3,7 @@ recovery.py
 @author: Nicholas Sollazzo,Alesandro Capici
 @version: 1.0
 @date: 3/05/17
-@note: non testato
+@note: testato ma non funzionante
 '''
 
 from flask import request, render_template, abort
@@ -33,7 +33,7 @@ def recovery(request,session):
         result=db.query_db(query)
         ReciveMail=result[0][0]
         onetimePSW = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
-
+        ReciveMail= 'alessandrocapici.ac@gmail.com'
         '''
         @TODO: messaggino carino
         # Open a plain text file for reading.  For this example, assume that
@@ -43,16 +43,20 @@ def recovery(request,session):
         msg = MIMEText(fp.read())
         fp.close()
         '''
-        SendMail = "noreply@reteclil.it"
+        SendMail = 'reteclilpavia@gmail.com'
+        username = 'reteclilpavia@gmail.com'  
+        password = 'robot1ca'
 
-        msg = mt('La tua nuova password e\':' + onetimePSW)
+        msg = "La tua nuova password e' " + onetimePSW
         
-        msg['Subject'] = 'Recupero password'
-        msg['From'] = SendMail
-        msg['To'] = ReciveMail
+##        msg['Subject'] = 'Recupero password'
+##        msg['From'] = SendMail
+##        msg['To'] = ReciveMail
 
         # Send the message via our own SMTP server, but don't include the
         # envelope header.
         s = smtplib.SMTP('smtp.gmail.com:587')
-        s.sendmail(SendMail, ReciveMail, msg.as_string())
+        s.starttls()
+        s.login(username,password) 
+        s.sendmail(SendMail, ReciveMail, msg)
         s.quit()
