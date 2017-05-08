@@ -27,6 +27,8 @@ import backend.search as search
 
 app = Flask("__name__")
 
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+
 @app.errorhandler(403)
 def permission_denied(e):
     if 'user_id' in session:

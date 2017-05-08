@@ -63,7 +63,6 @@
 
 					$('form').ajaxForm({
 							beforeSend: function() {
-									status.empty();
 									var percentVal = '0%';
 
 									percent.css("width", percentVal);
@@ -74,33 +73,10 @@
 									percent.css("width", percentVal);
 							},
 							complete: function(xhr) {
-									//status.html(xhr.responseText);
+									console.log(xhr.responseText);
 							}
 					});
 			});
-			$(function() {
 
-			    var bar = $('.bar');
-
-			    var percent = $('.determinate');
-			    var status = $('#status');
-
-			    $('form').ajaxForm({
-			        beforeSend: function() {
-			            status.empty();
-			            var percentVal = '0%';
-
-			            percent.css("width", percentVal);
-			        },
-			        uploadProgress: function(event, position, total, percentComplete) {
-			            var percentVal = percentComplete + '%';
-
-			            percent.css("width", percentVal);
-			        },
-			        complete: function(xhr) {
-			            status.html(xhr.responseText);
-			        }
-			    });
-			});
 	  </script>
 {% endblock %}
