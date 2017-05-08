@@ -13,8 +13,27 @@
 <div class="row" >
 	<div class="col s3 fixed">
 		<ul id="nav-mobile" class="fixed" style="transform: translateX(0%);">
-			<li class="bold active"><a class="collapsible-header active waves-effect waves-teal">JavaScript</a>
+				<!--  layout per nav
+				<div class="divider"></div>
+					  <div class="section">
+					    <h5>Section 1</h5>
+					    <p>Stuff</p>
+					  </div>
+					  <div class="divider"></div>
+					  <div class="section">
+					    <h5>Section 2</h5>
+					    <p>Stuff</p>
+					  </div>
+					  <div class="divider"></div>
+					  <div class="section">
+					    <h5>Section 3</h5>
+					    <p>Stuff</p>
+					</div>-->
+
+
+
 				<div class="collapsible-body" style="display: block;">
+					<a class="collapsible-header  waves-effect waves-teal">CSS</a>
 					<ul>
 						{% for section in sections %}
 						<optgroup label="{{section.name}}">
@@ -25,52 +44,43 @@
 					{% endfor %}
 					</ul>
 				</div>
+				<ul>
+					<li>
+						
+					</li>
+				</ul>
 			</li>
 		</ul>
 	</li>
 </ul>
 </div>
+{% set count = 0 %}
 
 {% for item in navigation %}
+{%if count == 3%}
+<div class="row">
+<!-- da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
+	<div class="col s9 offset-s9"><</div>
+    </div>
+</div>
+{% endif%}
 <div class="col s2 m3">
 	<div class="card">
 		<div class="card-image">
-			<img src="Desert.jpg">
-			<span class="card-title blue-text text-darken-4">Card Title</span>
+			<img src="{{Card.image}}">
+			<span class="card-title blue-text text-darken-4">{{Card.title}}</span>
 			<a class="btn-floating halfway-fab waves-effect waves-light light-blue darken-3"><i class="material-icons">vertical_align_bottom</i></a>
 		</div>
 		<div class="card-content">
-			<p>Descrizione del file</p>
+			<p>{{Card.description}}</p>
 		</div>
 	</div>
 </div>
+{% set count = count+1%}
 {% endfor %}
 
-<div class="col s2 m3">
-	<div class="card">
-		<div class="card-image">
-			<img src="Desert.jpg">
-			<span class="card-title">Card Title</span>
-			<a class="btn-floating halfway-fab waves-effect waves-light light-blue darken-3"><i class="material-icons">vertical_align_bottom</i></a>
-		</div>
-		<div class="card-content">
-			<p>Descrizione del file</p>
-		</div>
-	</div>
-</div>
 
 
-<div class="col s2 m3">
-	<div class="card ">
-		<div class="card-image ">
-			<img src="Desert.jpg">
-			<span class="card-title">Card Title</span>
-			<a class="btn-floating halfway-fab waves-effect waves-light light-blue darken-3"><i class="material-icons">vertical_align_bottom</i></a>
-		</div>
-		<div class="card-content">
-			<p>Descrizione del file</p>
-		</div>
-	</div>
-</div>
+
 </div>
 {% endblock %}
