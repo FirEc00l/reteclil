@@ -10,7 +10,7 @@ from flask import request, render_template, abort
 
 # Import smtplib for the actual sending function
 import smtplib
-
+import backend.clil_utils.db as utils
 # Import the email modules we'll need
 from email.mime.text import MIMEText as mt
 
@@ -27,8 +27,8 @@ def recovery(request,session):
         db = utils.pysqlite3()
         user = request.form['user']
         query = """SELECT email
-                        FROM User
-                        WHERE id_user=%s
+                        FROM user
+                        WHERE "username"=%s
                         """ % user
         result=db.query_db(query)
         ReciveMail=result[0][0]
