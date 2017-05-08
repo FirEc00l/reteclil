@@ -1,3 +1,8 @@
+'''
+account.py
+@author: Alesandro Capici
+@date: 8/5/17
+'''
 from flask import render_template, abort
 import backend.clil_utils.db as utils
 from werkzeug.security import generate_password_hash, \

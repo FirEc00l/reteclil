@@ -1,4 +1,8 @@
-#FILE EDIT BY Vincenzo Di Pietro
+'''
+login.py
+@author: Vincenzo Di Pietro ,Alesandro Capici
+@date: 8/5/17
+'''
 
 #from flask import Flask
 import backend.clil_utils.db as utils
