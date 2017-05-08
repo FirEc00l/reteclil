@@ -18,15 +18,15 @@ def search(request, session, search_key=None):
                 SELECT name
                 FROM file
                 WHERE name LIKE '%{}%'""".format(search_key)
+
         print query
         result = db.query_db(query)
-        print result
         
         if result == None:
-            return render_template("home.html", error = "Criterio di ricerca errato", logged=logged)
+            return render_template("search.html", logged=logged)
         else:
             #mostra i risultati
-            return render_template("search.html", error = "Criterio di ricerca errato", logged=logged)
             print result
+            return render_template("search.html", logged=logged)
     else:
         return render_template("search.html", logged=logged)
