@@ -2,17 +2,31 @@
 {% block title %}ReteCLIL - Search{% endblock %}
 
 {% block content %}
-<br>
-<br>
-<h2 align="center">Ricerca documenti</h2>
-<br>
-<form method="POST" action="/search">
-  <div class="row">
-    <div class="input-field col s6 offset-m3">
-      <i class="material-icons prefix">search</i>
-      <input id="search_key" type="text" class="validate">
-      <label for="icon_prefix">Cerca</label>
+	<script>
+	var a;
+	$(document).ready(function(){
+		$("#search_key").bind("enterKey",function(e){
+			a=$("#search_key").val();
+			$(location).attr('href', '/section/'+a);
+		});
+		$("#search_key").keyup(function(e){
+		    if(e.keyCode == 13)
+		    {
+		        $(this).trigger("enterKey");
+		    }
+		});
+	});
+	</script>
+
+	<br>
+	<br>
+	<h2 align="center">Ricerca documenti</h2>
+	<br>
+	<div class="row">
+		<div class="input-field col s6 offset-m3">
+			<i class="material-icons prefix">search</i>
+			<input id="search_key" type="text" class="validate">
+			<label for="icon_prefix">Cerca</label>
+    	</div>
     </div>
-  </div>
-</form>
-  {% endblock %}
+{% endblock %}
