@@ -28,7 +28,7 @@ def recovery(request,session):
         user = request.form['user']
         query = """SELECT email
                         FROM user
-                        WHERE "username"=%s
+                        WHERE username="%s"
                         """ % user
         result=db.query_db(query)
         ReciveMail=result[0][0]
