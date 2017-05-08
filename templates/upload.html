@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+	<script src="http://malsup.github.com/jquery.form.js"></script>
 	<br>
 	<br>
 	<h2 align="center">Carica documento</h2>
@@ -38,6 +39,13 @@
 				<label>Descrizione</label>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col s6 offset-m3">
+				<div class="progress" width>
+				    <div class="determinate" style="width: 0%"></div>
+				</div>
+			</div>
+		</div>
 		<div class="center-align">
 			<button type="submit" class="waves-effect waves-light btn light-blue darken-3">carica</button>
 		</div>
@@ -47,5 +55,52 @@
   	 	$(document).ready(function() {
 	    	$('select').material_select();
 	  	});
+			$(function() {
+
+					var bar = $('.bar');
+
+					var percent = $('.determinate');
+
+					$('form').ajaxForm({
+							beforeSend: function() {
+									status.empty();
+									var percentVal = '0%';
+
+									percent.css("width", percentVal);
+							},
+							uploadProgress: function(event, position, total, percentComplete) {
+									var percentVal = percentComplete + '%';
+
+									percent.css("width", percentVal);
+							},
+							complete: function(xhr) {
+									//status.html(xhr.responseText);
+							}
+					});
+			});
+			$(function() {
+
+			    var bar = $('.bar');
+
+			    var percent = $('.determinate');
+			    var status = $('#status');
+
+			    $('form').ajaxForm({
+			        beforeSend: function() {
+			            status.empty();
+			            var percentVal = '0%';
+
+			            percent.css("width", percentVal);
+			        },
+			        uploadProgress: function(event, position, total, percentComplete) {
+			            var percentVal = percentComplete + '%';
+
+			            percent.css("width", percentVal);
+			        },
+			        complete: function(xhr) {
+			            status.html(xhr.responseText);
+			        }
+			    });
+			});
 	  </script>
 {% endblock %}
