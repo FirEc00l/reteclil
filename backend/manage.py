@@ -23,14 +23,16 @@ processare la richiesta di aggiornamento dati:
 '''
 
 import backend.clil_utils.db as utils
+from backend.clil_utils.pyJson import pyJson as pj
 
 from flask import request
 from flask import render_template
 from flask import abort
 
-import json
 import os
 import string
+
+DATA = pj('data/data.json')
 
 def manage(request, session):
 
@@ -39,9 +41,9 @@ def manage(request, session):
 	        'create_user': create_user,
 			'delete_user': delete_user,
 	        'delete_file': delete_file,
-	        'edit_description': edit_description, #WORKING!
+	        'edit_description': edit_description, #DONE!
 			'update_user_password': update_user_password,
-			'create_link': create_link,
+			'create_link': create_link, # dev
 			'delete_link': delete_link,
 			'create_section': create_section,
 			'delete_section': delete_section,
@@ -62,23 +64,16 @@ def manage(request, session):
 		pass
 
 	def edit_description():
-		new_description = request.form['new_description']
-		with open('data/data.json', 'r') as f:
-			json_data = json.load(f)
-			json_data['description'] = new_description
-
-		with open('data/data_tmp.json', 'w') as f: # temporary json with new changes
-			f.write(json.dumps(json_data))
-
-		os.remove('data/data.json')
-		os.rename('data/data_tmp.json', 'data/data.json') # rename the temporary file onto the original file
+		DATA.edit('description', request.form['new_description'])
 
 	def update_user_password():
 		pass
 
 	def create_link():
+		title = request.form['link_title']
+		url = request.form['link_url']
 
-		pass
+		# pensavo a fare un COPY e poi boh magari non funge
 
 	def delete_link():
 		pass
@@ -123,7 +118,7 @@ def manage(request, session):
 		file_list = list(file_list)
 	else:
 		file_list = []
-		print 'Query returned no result'
+		print 'file_list: Query returned no result'
 
 	if file_list is None:
 		print('NONE')
