@@ -1,21 +1,40 @@
+<!--
+### 
+### Responsabile: Andronio
+### Ultima modifica di: Perini 08/05
+###
+-->
+
 {% extends "base.html" %}
 {% block title %}ReteCLIL - Search{% endblock %}
 
 {% block content %}
-    <div class="row">
-	    <div class="col s6 offset-m3">
-	      <form class="col s12">
-	        <div class="row">
-	          <div class="input-field col s6">
-	            <i class="material-icons prefix">search</i>
-	            <input id="search_key" type="text" class="validate">
-	            <label for="icon_prefix">Cerca</label>
-	          </div>
-	        </div>
-	      </form>
-	    </div>
-    </div>
-    <button id="search" class="btn waves-effect waves-light light-blue darken-3" type="button" name="action">Cerca</button>
-  
+	<title>Rete CLIL - Search</title>
+	<script>
+	var a;
+	$(document).ready(function(){
+		$("#search_key").bind("enterKey",function(e){
+			a=$("#search_key").val();
+			$(location).attr('href', '/section/'+a);
+		});
+		$("#search_key").keyup(function(e){
+		    if(e.keyCode == 13)
+		    {
+		        $(this).trigger("enterKey");
+		    }
+		});
+	});
+	</script>
 
-  {% endblock %}
+	<br>
+	<br>
+	<h2 align="center">Ricerca documenti</h2>
+	<br>
+	<div class="row">
+		<div class="input-field col s6 offset-m3">
+			<i class="material-icons prefix">search</i>
+			<input id="search_key" type="text" class="validate">
+			<label for="icon_prefix">Cerca</label>
+    	</div>
+    </div>
+{% endblock %}

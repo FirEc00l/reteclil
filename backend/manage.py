@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 0.1
-@date: 28/04/17
+@version: 1.2
+@date: 9/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -22,12 +22,17 @@ processare la richiesta di aggiornamento dati:
 ================================================
 '''
 
+import backend.clil_utils.db as utils
+from backend.clil_utils.pyJson import pyJson as pj
+
 from flask import request
 from flask import render_template
 from flask import abort
-import json
+
 import os
 import string
+
+DATA = pj('data/data.json')
 
 def manage(request, session):
 
@@ -36,9 +41,9 @@ def manage(request, session):
 	        'create_user': create_user,
 			'delete_user': delete_user,
 	        'delete_file': delete_file,
-	        'edit_description': edit_description, #WORKING!
+	        'edit_description': edit_description, #DONE!
 			'update_user_password': update_user_password,
-			'create_link': create_link,
+			'create_link': create_link, # dev
 			'delete_link': delete_link,
 			'create_section': create_section,
 			'delete_section': delete_section,
@@ -59,22 +64,16 @@ def manage(request, session):
 		pass
 
 	def edit_description():
-		new_description = request.form['new_description']
-		with open('data/data.json', 'r') as f:
-			json_data = json.load(f)
-			json_data['description'] = new_description
-
-		with open('data/data_tmp.json', 'w') as f: # temporary json with new changes
-			f.write(json.dumps(json_data))
-
-		os.remove('data/data.json')
-		os.rename('data/data_tmp.json', 'data/data.json') # rename the temporary file onto the original file
+		DATA.edit('description', request.form['new_description'])
 
 	def update_user_password():
 		pass
 
 	def create_link():
-		pass
+		title = request.form['link_title']
+		url = request.form['link_url']
+
+		# pensavo a fare un COPY e poi boh magari non funge
 
 	def delete_link():
 		pass
@@ -91,6 +90,42 @@ def manage(request, session):
 	def rename_file():
 		pass
 
+	db =  utils.pysqlite3()
+
+	query = '''
+            SELECT *
+            FROM user
+            '''
+
+	user_list = db.query_db(query)
+
+	if user_list is not None:
+		user_list = list(user_list)
+	else:
+		user_list = []
+		print 'Query returned no result'
+
+	user_list = list( db.query_db(query) )
+
+	query = '''
+            SELECT *
+            FROM file
+            '''
+
+	file_list = db.query_db(query)
+
+	if file_list is not None:
+		file_list = list(file_list)
+	else:
+		file_list = []
+		print 'file_list: Query returned no result'
+
+	if file_list is None:
+		print('NONE')
+
+	section_list = []
+	description = None
+
 	if 'user_id' in session:
 		logged = session['user_type']
 		if logged != 3:
@@ -98,32 +133,16 @@ def manage(request, session):
 	else:
 		abort(403)
 
+	links = DATA.read('links')
+	description = DATA.read('description')
+
 	if request.method != 'POST':
 
-		user_list = []
-		file_list = []
-		section_list = []
-		description = None
-
-		with open('data/data.json') as data_file:
-			data_str = data_file.read()
-			links = json.loads(data_str)['links']
-			description = json.loads(data_str)['description']
-
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
-								description=description, links=links, logged=logged)
+								description=description, links=links, logged=logged) #Passare lista utenti e file da DB
 	else:
-		user_list = []
-		file_list = []
-		section_list = []
-		description = None
 
 		getAction(request.form['action'])
-
-		with open('data/data.json') as data_file:
-			data_str = data_file.read()
-			links = json.loads(data_str)['links']
-			description = json.loads(data_str)['description']
 
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
 								description=description, links=links, logged=logged)

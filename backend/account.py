@@ -1,5 +1,12 @@
+'''
+account.py
+@author: Alesandro Capici
+@date: 8/5/17
+'''
 from flask import render_template, abort
 import backend.clil_utils.db as utils
+from werkzeug.security import generate_password_hash, \
+     check_password_hash
 
 
 def account(request, session):
@@ -22,8 +29,9 @@ def account(request, session):
 
         if request.method=='POST' :
             if request.form['action']=='password':
-                if password==request.form['oldpassword']:
+                if check_password_hash(password,request.form['oldpassword']):
                     newPassword=request.form['newpassword']
+                    newPassword=generate_password_hash(newPassword)
                     query = """UPDATE User
                         SET password="%s"
                         WHERE id_user=%s
@@ -33,7 +41,7 @@ def account(request, session):
                 else:
                     return render_template("account.html",email=mail,error="Password errata", logged=logged)
             if request.form['action']=='email':
-                if password==request.form['password']:
+                if check_password_hash(password,request.form['password']):
                     newMail=request.form['newemail']
                     query = """UPDATE User
                         SET email="%s"

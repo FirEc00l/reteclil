@@ -27,6 +27,8 @@ import backend.search as search
 
 app = Flask("__name__")
 
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+
 @app.errorhandler(403)
 def permission_denied(e):
     if 'user_id' in session:
@@ -43,13 +45,21 @@ def page_not_found(e):
         logged = False
     return render_template('404.html', logged=logged), 404
 
+@app.errorhandler(413)
+def too_long(e):
+    return "request_too_long", 413
+
 @app.route("/")
 def route_home():
     return home.home(session)
 
+@app.route("/section", methods = ['GET','POST'])
+def route_section_key():
+    return section.section(request, session)
+
 @app.route("/section/<section>", methods = ['GET','POST'])
 def route_section(section):
-    return section.section(request)
+    return section.section(request, session, section=section)
 
 @app.route("/login", methods = ['GET','POST'])
 def route_login():
@@ -83,13 +93,13 @@ def route_forum():
 def route_thread():
     return thread.thread(request)
 
-@app.route("/search", methods = ['GET','POST'])
-def route_search():
-    return search.search(request, session)
-
 @app.route("/search/<search_key>", methods = ['GET','POST'])
 def route_search_key(search_key):
     return search.search(request, session, search_key)
+
+@app.route("/search", methods = ['GET','POST'])
+def route_search():
+    return search.search(request, session)
 
 app.secret_key = '\xd7\x9b\xe4\xa2\xa4\x0b\xb5\xd7\xa6}\x1c\xd2\xb6\x1b_\xd9\x12\xdd\xa5\t\xf7\xd5%n'
 if __name__ == "__main__":
