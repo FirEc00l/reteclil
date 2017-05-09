@@ -1,11 +1,14 @@
 '''
 home.py
 @author: Nicholas Sollazzo
-@version: 1.5
-@date: 19/04/17
+@version: 1.6
+@date: 8/05/17
 '''
 from flask import render_template
-import json
+
+from backend.clil_utils.pyJson import pyJson as pj
+
+DATA = pj('data/data.json')
 
 def home(session):
     # liks :list of dictionary, logged :bool, description :str -> render_template()
@@ -15,9 +18,8 @@ def home(session):
     else:
         logged = False
 
-    with open('data/data.json') as data_file:
-        data_str = data_file.read()
-        links = json.loads(data_str)['links']
-        description = json.loads(data_str)['description']
+
+    links = DATA.read('links')
+    description = DATA.read('description')
 
     return render_template('home.html', links=links, description=description, logged=logged)
