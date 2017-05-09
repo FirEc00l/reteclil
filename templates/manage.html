@@ -1,15 +1,7 @@
-<!--
-### 
-### Responsabile: Vladyka
-### Ultima modifica di: Perini 08/05
-###
--->
-
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
 
 {% block content %}
-<title>Rete CLIL - Manage</title>
 <br><br>
 <h2 align="center">Gestione Rete CLIL</h2><br>
 <div class="row">
@@ -50,7 +42,7 @@
 								</div>
 								{% endfor %}
 								<br>
-								<button type="submit" id="create_link"class="waves-effect waves-light btn light-blue darken-3"><i class="material-icons left">add</i>Add</button>
+								<a href="#modal_link_add" id="create_link" class="btn-floating btn-medium light-blue darken-3"><i class="material-icons">add</i></a>
 							</li>
 						</ul>
 					</span>
@@ -197,6 +189,26 @@
 				</div>
 			</div>
 			<button id="mod_file" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+		</form>
+	</div>
+</div>
+<div id="modal_link_add" class="modal">
+	<div class="modal-content">
+		<h4 style="margin-left: 33%; color: #212121;">Agiungi LINK</h4>
+		<form class="col s12">
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="link_title" type="text" class="validate">
+					<label class="active" for="testo_link">Titolo Link</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="link_url" type="text" class="validate">
+					<label class="active" for="new_link">URL</label>
+				</div>
+			</div>
+			<button id="mod_link" type="submit" class="waves-effect waves-light btn light-blue darken-3">add</button>
 		</form>
 	</div>
 </div>
