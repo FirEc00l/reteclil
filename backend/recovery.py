@@ -7,9 +7,11 @@ recovery.py
 '''
 
 from flask import request, render_template, abort
-
+from werkzeug.security import generate_password_hash, \
+     check_password_hash
 # Import smtplib for the actual sending function
 import smtplib
+import socks
 import backend.clil_utils.db as utils
 # Import the email modules we'll need
 from email.mime.text import MIMEText as mt
