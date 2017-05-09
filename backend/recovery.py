@@ -10,7 +10,6 @@ from flask import request, render_template, abort
 
 # Import smtplib for the actual sending function
 import smtplib
-import socks
 import backend.clil_utils.db as utils
 # Import the email modules we'll need
 from email.mime.text import MIMEText as mt
