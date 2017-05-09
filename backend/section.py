@@ -1,3 +1,5 @@
+#FILE EDIT BY Vincenzo Di Pietro
+
 import backend.clil_utils.db as utils
 from flask import render_template, url_for, redirect
 
@@ -16,10 +18,17 @@ def section(request, session, section=None):
 
     else:
         db =  utils.pysqlite3()
-        query = """SELECT *
-                FROM Section
-                WHERE Section.id_section="%s\"""" % section
-        result = db.query_db(query)
+	query = "SELECT section_name, id_section FROM section"
+	sections = db.query_db(query)
+        sections_dict = []
+        for section in sections:
+                query = """SELECT sub_name, id_sub
+                FROM sub_section
+                WHERE id_section="%s\"""" % str(section[1])
+                result = db.query_db(query)
+                sections_dict.append( {'name': section[0], 'list': result} )
 
-        return render_template("section.html", logged=logged, result=result)
+	sections = sections_dict
+			
+        return render_template("section.html", logged=logged, sections=sections)
             

@@ -1,5 +1,5 @@
-.pyc
-.DS_store
+*.pyc
+*.DS_store
 libro.jpg
 matite.jpg
 flag.jpg

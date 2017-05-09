@@ -27,6 +27,8 @@ import backend.search as search
 
 app = Flask("__name__")
 
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+
 @app.errorhandler(403)
 def permission_denied(e):
     if 'user_id' in session:
@@ -91,13 +93,13 @@ def route_forum():
 def route_thread():
     return thread.thread(request)
 
-@app.route("/search", methods = ['GET','POST'])
-def route_search():
-    return search.search(request, session)
-
 @app.route("/search/<search_key>", methods = ['GET','POST'])
 def route_search_key(search_key):
     return search.search(request, session, search_key)
+
+@app.route("/search", methods = ['GET','POST'])
+def route_search():
+    return search.search(request, session)
 
 app.secret_key = '\xd7\x9b\xe4\xa2\xa4\x0b\xb5\xd7\xa6}\x1c\xd2\xb6\x1b_\xd9\x12\xdd\xa5\t\xf7\xd5%n'
 if __name__ == "__main__":
