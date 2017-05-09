@@ -24,7 +24,6 @@ def login(request, session):
                        FROM User
                        WHERE User.username="%s\"""" % request.form['username']
             result = db.query_db(query)
-            print check_password_hash(request.form['password'],result[0][1])
             if result==None :
                 return render_template("login.html", error = "Nome utente o password errata", logged=False)
         
