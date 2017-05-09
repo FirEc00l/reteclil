@@ -61,9 +61,10 @@ def recovery(request,session):
         s.login(username,password) 
         s.sendmail(SendMail, ReciveMail, msg)
         s.quit()
+
         onetimePSW=generate_password_hash(onetimePSW)
         query = """UPDATE User
                         SET password="%s"
-                        WHERE id_user=%s
+                        WHERE username="%s"
                         """ % (onetimePSW,user)
         db.query_db(query)
