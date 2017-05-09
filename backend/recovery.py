@@ -12,9 +12,6 @@ from werkzeug.security import generate_password_hash, \
 # Import smtplib for the actual sending function
 import smtplib
 import backend.clil_utils.db as utils
-# Import the email modules we'll need
-from email.mime.text import MIMEText as mt
-
 import random
 
 def recovery(request,session):
@@ -33,38 +30,32 @@ def recovery(request,session):
                         """ % user
         result=db.query_db(query)
         ReciveMail=result[0][0]
-        onetimePSW = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
-        ReciveMail= 'alessandrocapici.ac@gmail.com'
-        '''
-        @TODO: messaggino carino
-        # Open a plain text file for reading.  For this example, assume that
-        # the text file contains only ASCII characters.
-        fp = open(textfile, 'rb')"noreply@reteclil.it"
-        # Create a text/plain message
-        msg = MIMEText(fp.read())
-        fp.close()
-        '''
-        SendMail = 'reteclilpavia@gmail.com'
-        username = 'reteclilpavia@gmail.com'  
-        password = 'robot1ca'
-
-        msg = "La tua nuova password e' " + onetimePSW
         
-##        msg['Subject'] = 'Recupero password'
-##        msg['From'] = SendMail
-##        msg['To'] = ReciveMail
-
-        # Send the message via our own SMTP server, but don't include the
-        # envelope header.
+        #creazione nuova psw
+        onetimePSW = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
+        
+        SendMail = 'reteclilpavia@gmail.com' 
+        password = 'robot1ca'
+        
+        #formattazzione messaggio
+        FormatoMessaggio = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s"
+        msg= "La tua  nuova password Provvisoria e' : "+ onetimePSW
+        Oggetto="Recupero password"
+        messaggio = FormatoMessaggio%(SendMail, ReciveMail, Oggetto, msg)
+        
+        #invio mail con nuova password
         s = smtplib.SMTP('smtp.gmail.com:587')
         s.starttls()
-        s.login(username,password) 
-        s.sendmail(SendMail, ReciveMail, msg)
+        s.login(SendMail,password) 
+        s.sendmail(SendMail,ReciveMail,messaggio)
         s.quit()
-
+        
+        #inserimento password db
         onetimePSW=generate_password_hash(onetimePSW)
         query = """UPDATE User
                         SET password="%s"
                         WHERE username="%s"
                         """ % (onetimePSW,user)
         db.query_db(query)
+        return render_template("recovery.html",success="modifica effettuata",logged=logged)
+        
