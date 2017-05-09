@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 0.1.1
-@date: 2/05/17
+@version: 1.2
+@date: 9/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -133,23 +133,16 @@ def manage(request, session):
 	else:
 		abort(403)
 
-	if request.method != 'POST':
+	links = DATA.read('links')
+	description = DATA.read('description')
 
-		with open('data/data.json') as data_file:
-			data_str = data_file.read()
-			links = json.loads(data_str)['links']
-			description = json.loads(data_str)['description']
+	if request.method != 'POST':
 
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
 								description=description, links=links, logged=logged) #Passare lista utenti e file da DB
 	else:
 
 		getAction(request.form['action'])
-
-		with open('data/data.json') as data_file:
-			data_str = data_file.read()
-			links = json.loads(data_str)['links']
-			description = json.loads(data_str)['description']
 
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
 								description=description, links=links, logged=logged)
