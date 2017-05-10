@@ -196,15 +196,17 @@
 	<div class="modal-content">
 		<h4 style="margin-left: 33%; color: #212121;">Agiungi LINK</h4>
 		<form class="col s12">
+			<input type="hidden" name="action" value="create_link">
 			<div class="row">
+
 				<div class="input-field col s12">
-					<input id="link_title" type="text" class="validate">
+					<input name="link_title" type="text" class="validate">
 					<label class="active" for="testo_link">Titolo Link</label>
 				</div>
 			</div>
 			<div class="row">
 				<div class="input-field col s12">
-					<input id="link_url" type="text" class="validate">
+					<input name="link_url" type="text" class="validate">
 					<label class="active" for="new_link">URL</label>
 				</div>
 			</div>
