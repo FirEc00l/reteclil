@@ -25,7 +25,7 @@ def section(request, session, section=None):
         logged = False
     
     if section==None:
-        return render_template("section.html", logged=logged, sections=sections)
+        return render_template("section.html", logged=logged, sections=sections, card=None)
 
     else:
 
@@ -36,7 +36,7 @@ def section(request, session, section=None):
         card_dict = []
 
         if result_card == None :
-            return render_template("section.html", logged=logged, sections=sections)
+            return render_template("section.html", logged=logged, sections=sections, card=None)
         
         else:
                 
