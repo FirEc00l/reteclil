@@ -35,13 +35,6 @@
 						<div class="collapsible-body" style="display: block;">
 							<a class="collapsible-header  waves-effect waves-teal"></a>
 							<ul>
-								{% for section in sections %}
-								<optgroup label="{{section.name}}">
-									{% for sub_section in section.list %}
-									<option value="{{sub_section[1]}}">{{}}</option>
-									{% endfor %}
-								</optgroup>
-								{% endfor %}
 
 
 								{% for section in sections %}
