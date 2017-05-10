@@ -1,7 +1,7 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 1.2
+@version: 1.3
 @date: 9/05/17
 ===============================================
 manage(request):
@@ -32,19 +32,22 @@ from flask import abort
 import os
 import string
 
+# Costants
 DATA = pj('data/data.json')
+DB =  utils.pysqlite3()
 
 def manage(request, session):
 
 	def getAction(requestAction):
+		# print 'requestAction:', requestAction
 		switcher = {
 	        'create_user': create_user,
 			'delete_user': delete_user,
 	        'delete_file': delete_file,
-	        'edit_description': edit_description, #DONE!
+	        'edit_description': edit_description, # DONE!
 			'update_user_password': update_user_password,
-			'create_link': create_link, # dev
-			'delete_link': delete_link,
+			'create_link': create_link, # DONE!
+			'delete_link': delete_link, # developing...
 			'create_section': create_section,
 			'delete_section': delete_section,
 			'change_section': change_section,
@@ -73,7 +76,17 @@ def manage(request, session):
 		title = request.form['link_title']
 		url = request.form['link_url']
 
-		# pensavo a fare un COPY e poi boh magari non funge
+		inUse = False
+
+		for link in DATA.read('links'):
+			if title in link.values():
+				inUse = True
+
+		if not inUse:
+			new_link = {'title' : title, 'url' : url}
+			DATA.add('links', new_link)
+		else:
+			print 'title already in use'
 
 	def delete_link():
 		pass
@@ -90,14 +103,12 @@ def manage(request, session):
 	def rename_file():
 		pass
 
-	db =  utils.pysqlite3()
-
 	query = '''
             SELECT *
             FROM user
             '''
 
-	user_list = db.query_db(query)
+	user_list = DB.query_db(query)
 
 	if user_list is not None:
 		user_list = list(user_list)
@@ -105,14 +116,14 @@ def manage(request, session):
 		user_list = []
 		print 'Query returned no result'
 
-	user_list = list( db.query_db(query) )
+	user_list = list( DB.query_db(query) )
 
 	query = '''
             SELECT *
             FROM file
             '''
 
-	file_list = db.query_db(query)
+	file_list = DB.query_db(query)
 
 	if file_list is not None:
 		file_list = list(file_list)
@@ -142,6 +153,7 @@ def manage(request, session):
 								description=description, links=links, logged=logged) #Passare lista utenti e file da DB
 	else:
 
+		# print 'requestForm:', request.form
 		getAction(request.form['action'])
 
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
