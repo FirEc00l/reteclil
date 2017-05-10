@@ -15,10 +15,10 @@
 							<input type="hidden" name="action" value="edit_description">
 							<div class="row">
 								<div class="input-field">
-									<i class="material-icons prefix">mode_edit</i>
+									<i class="material-icons prefix light-blue-text darken-3">mode_edit</i>
 									<textarea name="new_description" id="icon_prefix2" class="materialize-textarea">{{description}}</textarea>
 									<label for="icon_prefix2">Descrizione</label>
-									<button type="submit" id="mod_description"class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+									<button type="submit" id="mod_description" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
 								</div>
 							</div>
 						</form>
@@ -36,8 +36,10 @@
 								<div class="row">
 									<div class="input-field">
 										<a href="{{ link.url }}">{{link.title}}</a>
-										<a href="#modal_link" class="secondary-content"><i class="material-icons">mode_edit</i></a>
-										<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+										<div class="light-blue darken-3">
+											<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons light-blue-text darken-3">delete</i></a>
+											<a href="#modal_link" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>	
+										</div>
 									</div>
 								</div>
 								{% endfor %}
@@ -59,8 +61,8 @@
 								<div>
 									{{user.name}}
 									{{user.surname}}
-									<a href="#modal_users" class="secondary-content"><i class="material-icons">mode_edit</i></a>
-									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons light-blue-text darken-3">delete</i></a>
+									<a href="#modal_users" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>	
 								</div>
 								{% endfor %}
 							</li>
@@ -78,8 +80,8 @@
 								{% for file in file_list %}
 								<div >
 									{{file.file_name}}
-									<a href="#modal_file" class="secondary-content"><i class="material-icons">mode_edit</i></a>
-									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons light-blue-text darken-3">delete</i></a>
+									<a href="#modal_file" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>	
 								</div>
 								{% endfor %}
 							</li>
