@@ -24,7 +24,7 @@ def search(request, session, search_key=None):
         print result
         
         if result == None:
-            return render_template("search.html", logged=logged)
+            return render_template("search.html", logged=logged, search_key=query)
         else:
             #mostra i risultati
             print result
