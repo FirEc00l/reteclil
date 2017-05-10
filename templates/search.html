@@ -15,7 +15,7 @@
 	$(document).ready(function(){
 		$("#search_key").bind("enterKey",function(e){
 			a=$("#search_key").val();
-			$(location).attr('href', '/section/'+a);
+			$(location).attr('href', '/search/'+a);
 		});
 		$("#search_key").keyup(function(e){
 		    if(e.keyCode == 13)

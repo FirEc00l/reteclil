@@ -21,6 +21,7 @@ def search(request, session, search_key=None):
 
         print query
         result = db.query_db(query)
+        print result
         
         if result == None:
             return render_template("search.html", logged=logged)
