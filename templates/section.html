@@ -8,86 +8,87 @@
 {% extends "base.html" %}
 
 {% block content %}
-<title>Rete CLIL - Documents</title>
+	<title>Rete CLIL - Documents</title>
 
-<div class="row" >
-	<div class="col s3 fixed">
-		<ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
-				<!--  layout per nav
-				<div class="divider"></div>
-					  <div class="section">
-					    <h5>Section 1</h5>
-					    <p>Stuff</p>
-					  </div>
-					  <div class="divider"></div>
-					  <div class="section">
-					    <h5>Section 2</h5>
-					    <p>Stuff</p>
-					  </div>
-					  <div class="divider"></div>
-					  <div class="section">
-					    <h5>Section 3</h5>
-					    <p>Stuff</p>
-					</div>-->
+	<div class="row" >
+		<div class="col s3 fixed">
+			<ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+					<!--  layout per nav
+					<div class="divider"></div>
+						  <div class="section">
+						    <h5>Section 1</h5>
+						    <p>Stuff</p>
+						  </div>
+						  <div class="divider"></div>
+						  <div class="section">
+						    <h5>Section 2</h5>
+						    <p>Stuff</p>
+						  </div>
+						  <div class="divider"></div>
+						  <div class="section">
+						    <h5>Section 3</h5>
+						    <p>Stuff</p>
+						</div>-->
 
 
 
-					<div class="collapsible-body" style="display: block;">
-						<a class="collapsible-header  waves-effect waves-teal">CSS</a>
-						<ul>
-							{% for section in sections %}
-							<optgroup label="{{section.name}}">
-								{% for sub_section in section.list %}
-								<option value="{{sub_section[1]}}">{{sub_section[0]}}</option>
+						<div class="collapsible-body" style="display: block;">
+							<a class="collapsible-header  waves-effect waves-teal"></a>
+							<ul>
+								{% for section in sections %}
+								<optgroup label="{{section.name}}">
+									{% for sub_section in section.list %}
+									<option value="{{sub_section[1]}}">{{}}</option>
+									{% endfor %}
+								</optgroup>
 								{% endfor %}
-							</optgroup>
-							{% endfor %}
 
 
-							{% for section in sections %}
-							<li class="bold"><a href="about.html" class="waves-effect waves-teal">{{section.name}}</a></li>
-							<a href="about.html" class="waves-effect waves-teal">{{sub_section[1]}}</a>
+								{% for section in sections %}
+								<li class="bold"><a href="about.html" class="waves-effect waves-teal">{{section.name}}</a></li>
+								<a href="about.html" class="waves-effect waves-teal">{{card[0]}}{{card[1]}}</a>
+								{% endfor %}
+							</li>
+
+						</ul>
+					</div>
+					<ul>
+						<li>
+							
 						</li>
-
 					</ul>
-				</div>
-				<ul>
-					<li>
-						
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</li>
-</ul>
-</div>
-{% set count = 0 %}
-
-{% for item in navigation %}
-{%if count == 3%}
-<div class="row">
-	<!-- da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
-	<div class="col s9 offset-s9"><</div>
-</div>
-</div>
-{% endif %}
-<div class="col s2 m3">
-	<div class="card">
-		<div class="card-image">
-			<img src="{{Card.image}}">
-			<span class="card-title blue-text text-darken-4">{{Card.title}}</span>
-			<a class="btn-floating halfway-fab waves-effect waves-light light-blue darken-3"><i class="material-icons">vertical_align_bottom</i></a>
-		</div>
-		<div class="card-content">
-			<p>{{Card.description}}</p>
-		</div>
+				</li>
+			</ul>
+		</li>
+	</ul>
 	</div>
-</div>
-{% set count = count+1 %}
-{% endfor %}
+	{% set count = 0 %}
+
+	{% for item in navigation %}
+		{%if count == 3%}
+		<div class="row">
+			<!-- da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
+			<div class="col s9 offset-s9"><</div>
+		</div>
+		</div>
+		{% endif %}
+		<div class="col s2 m3">
+			<div class="card">
+				<div class="card-image">
+					<img src="{{Card.image}}">
+					<span class="card-title blue-text text-darken-4">{{Card.title}}</span>
+					<a class="btn-floating halfway-fab waves-effect waves-light light-blue darken-3"><i class="material-icons">vertical_align_bottom</i></a>
+				</div>
+				<div class="card-content">
+					<p>{{Card.description}}</p>
+						</div>
+			</div>
+		</div>
+		{% set count = count+1 %}
+	{% endfor %}
 
 
 
 
-</div>
+	</div>
 {% endblock %}
