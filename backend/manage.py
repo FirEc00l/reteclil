@@ -89,7 +89,9 @@ def manage(request, session):
 			print 'title already in use'
 
 	def delete_link():
-		pass
+		title = request.form['title']
+		
+		DATA.remove('links',title)
 
 	def create_section():
 		pass
