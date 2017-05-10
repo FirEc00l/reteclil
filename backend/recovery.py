@@ -1,6 +1,6 @@
 '''
 recovery.py
-@author: Nicholas Sollazzo,Alesandro Capici
+@author: Nicholas Sollazzo,Alesandro Capici,Cristian Garau
 @version: 1.0
 @date: 3/05/17
 @note: testato ma non funzionante
@@ -9,6 +9,7 @@ recovery.py
 from flask import request, render_template, abort
 from werkzeug.security import generate_password_hash, \
      check_password_hash
+from email.mime.text import MIMEText as mt
 # Import smtplib for the actual sending function
 import smtplib
 import backend.clil_utils.db as utils
@@ -36,18 +37,36 @@ def recovery(request,session):
         
         SendMail = 'reteclilpavia@gmail.com' 
         password = 'robot1ca'
+
+##        # Open a plain text file for reading.  For this example, assume that
+##        # the text file contains only ASCII characters.
+##        fp = open(textfile, 'rb')"noreply@reteclil.it"
+##        # Create a text/plain message
+##        msg = MIMEText(fp.read())
+##        fp.close()
         
         #formattazzione messaggio
         FormatoMessaggio = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s"
         msg= "La tua  nuova password Provvisoria e' : "+ onetimePSW
         Oggetto="Recupero password"
         messaggio = FormatoMessaggio%(SendMail, ReciveMail, Oggetto, msg)
+
+        '''
+        fp = open(textfile, 'rb')
+        html = fp.read()
+        part1 = MIMEText(messaggio, 'plain')
+        part2 = MIMEText(html, 'html')
+        msg.attach(part1)
+        msg.attach(part2)
+        
+        '''
         
         #invio mail con nuova password
         s = smtplib.SMTP('smtp.gmail.com:587')
         s.starttls()
         s.login(SendMail,password) 
         s.sendmail(SendMail,ReciveMail,messaggio)
+        #s.sendmail(SendMail,ReciveMail,msg.as_string())
         s.quit()
         
         #inserimento password db
