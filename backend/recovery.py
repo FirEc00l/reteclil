@@ -15,7 +15,7 @@ import smtplib
 import backend.clil_utils.db as utils
 import random
 
-def recovery(request,session):
+def recovery(request,session,key=None):
     if 'user_id' in session:
         abort(403)
     else:
@@ -34,20 +34,14 @@ def recovery(request,session):
         
         #creazione nuova psw
         onetimePSW = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
-        
+        link=''
         SendMail = 'reteclilpavia@gmail.com' 
         password = 'robot1ca'
 
-##        # Open a plain text file for reading.  For this example, assume that
-##        # the text file contains only ASCII characters.
-##        fp = open(textfile, 'rb')"noreply@reteclil.it"
-##        # Create a text/plain message
-##        msg = MIMEText(fp.read())
-##        fp.close()
         
         #formattazzione messaggio
         FormatoMessaggio = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s"
-        msg= "La tua  nuova password Provvisoria e' : "+ onetimePSW
+        msg= "E' stata ricevuta una richiesta di reimpostazione password, per cambiarla accedere al link seguente : "+ link
         Oggetto="Recupero password"
         messaggio = FormatoMessaggio%(SendMail, ReciveMail, Oggetto, msg)
 
@@ -68,13 +62,15 @@ def recovery(request,session):
         s.sendmail(SendMail,ReciveMail,messaggio)
         #s.sendmail(SendMail,ReciveMail,msg.as_string())
         s.quit()
-        
-        #inserimento password db
-        onetimePSW=generate_password_hash(onetimePSW)
-        query = """UPDATE User
-                        SET password="%s"
-                        WHERE username="%s"
-                        """ % (onetimePSW,user)
-        db.query_db(query)
+        if key!=None:
+
+            #inserimento password db
+            onetimePSW=generate_password_hash(onetimePSW)
+            query = """UPDATE User
+                       SET password="%s"
+                       WHERE username="%s"
+                            """ % (onetimePSW,user)
+            db.query_db(query)
+            
         return render_template("recovery.html",success="modifica effettuata",logged=logged)
         
