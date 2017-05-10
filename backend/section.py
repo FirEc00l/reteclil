@@ -28,11 +28,17 @@ def section(request, session, section=None):
         return render_template("section.html", logged=logged, sections=sections)
 
     else:
-        query = """SELECT *
+
+        query = """SELECT name, description
                 FROM file
                 WHERE id_sub="%s\"""" % section
-        card = db.query_db(query)
-        card = card.tolist();
+        result_card = db.query_db(query)
+        card_dict = []
+        
+        for sub_section in result_card:
+                card_dict.append( {'title': sub_section[0], 'description' : sub_section[1]} )
+                
+        card = card_dict
 			
         return render_template("section.html", logged=logged, sections=sections, card=card)
             
