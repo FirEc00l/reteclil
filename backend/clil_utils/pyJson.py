@@ -15,19 +15,28 @@ class pyJson(object):
         super(pyJson, self).__init__()
         self.path = path
 
-    def read(self, key):
+    def read(self, key=None):
         with open(self.path, 'r') as tmpj:
             data_str = tmpj.read()
 
-        return json.loads(data_str)[key]
+        if key is None:
+            return json.loads(data_str) # return all the json
+        else:
+            return json.loads(data_str)[key]
 
-    def write(self, args):
-        with open(self.path, 'w') as f:
-            json.dump(args,f)
+    def write(self, args, path=None):
+        if path is None:
+            with open(self.path, 'w') as f:
+                f.write(json.dump(args,f))
+        else:
+            with open(path, 'w') as f:
+                f.write(json.dump(args,f))
 
-    def copy(self, path, ext='.copy'):
+    def copy(self, ext='copy'):
         with open(self.path, 'r') as f:
             json_data = json.load(f)
+
+        ext = '.' + ext
 
         newPath = self.path + ext
 
@@ -37,21 +46,20 @@ class pyJson(object):
         with open(newPath, 'w') as f:
             f.write(json.dumps(json_data))
 
-    def edit(self, key, newVal):
+        return newPath
+
+    def edit(self, key, new_val):
         with open(self.path, 'r') as f:
             json_data = json.load(f)
-            json_data[key] = newVal
+            json_data[key] = new_val
 
-        newPath = self.path + '.tmp'
+        new_path = self.copy('tmp')
 
-        if os.path.isfile(newPath):
-            os.remove(newPath)
-
-        with open(newPath, 'w') as f: # temporary json with new changes
+        with open(new_path, 'w') as f: # temporary json with new changes
             f.write(json.dumps(json_data))
 
         os.remove(self.path)
-        os.rename(newPath, self.path) # rename the temporary file onto the original file
+        os.rename(new_path, self.path) # rename the temporary file onto the original file
 
     def add(self, key, args):
         with open(self.path, 'r') as f:
@@ -63,29 +71,25 @@ class pyJson(object):
         self.edit(key, json_elements)
 
     def remove(self, key, arg): # developing
-        with open(self.path, 'r') as f:
-            json_data = json.load(f)
-            json_elements = json_data[key]
 
-        print 'before:' , json_elements[1]
+        data = self.read()
 
-        for element in json_elements:
-            element.pop(arg,None)
+        i = -1
+        for element in data[key]:
+            i+=1
+            if arg in element.values():
+                del data[key][i]
+                break
 
-        with open(self.path, 'w') as f:
-            json_data = json.dump(json_data, f)
-
-        print 'after:' , json_elements
+        self.edit(key, data[key])
 
 '''
 test
 
-{"url": "test.com", "title": "test"}
-
-# read
+# edit
 jay = pyJson('../../data/data.json')
 jay.edit('description', 'description test')
-print jsn.read('description')
+print jay.read('description')
 
 # read a specific element
 print jay.read('links')[0]['url']
