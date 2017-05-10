@@ -31,14 +31,19 @@ def section(request, session, section=None):
 
         query = """SELECT name, description
                 FROM file
-                WHERE id_sub="%s\"""" % section
+                WHERE id_sub="%s\"""" % str(section)
         result_card = db.query_db(query)
         card_dict = []
+
+        if result_card == None :
+            return render_template("section.html", logged=logged, sections=sections)
         
-        for sub_section in result_card:
-                card_dict.append( {'title': sub_section[0], 'description' : sub_section[1]} )
+        else:
                 
-        card = card_dict
-			
-        return render_template("section.html", logged=logged, sections=sections, card=card)
+            for sub_section in result_card:
+                    card_dict.append( {'title': sub_section[0], 'description' : sub_section[1]} )
+                    
+            card = card_dict
+                            
+            return render_template("section.html", logged=logged, sections=sections, card=card)
             
