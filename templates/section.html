@@ -32,16 +32,23 @@
 
 
 
-				<div class="collapsible-body" style="display: block;">
-					<a class="collapsible-header  waves-effect waves-teal">CSS</a>
-					<ul>
-						{% for section in sections %}
-						<optgroup label="{{section.name}}">
-							{% for sub_section in section.list %}
+					<div class="collapsible-body" style="display: block;">
+						<a class="collapsible-header  waves-effect waves-teal">CSS</a>
+						<ul>
+							{% for section in sections %}
+							<optgroup label="{{section.name}}">
+								{% for sub_section in section.list %}
 								<option value="{{sub_section[1]}}">{{sub_section[0]}}</option>
+								{% endfor %}
+							</optgroup>
 							{% endfor %}
-						</optgroup>
-					{% endfor %}
+
+
+							{% for section in sections %}
+							<li class="bold"><a href="about.html" class="waves-effect waves-teal">{{section.name}}</a></li>
+							<a href="about.html" class="waves-effect waves-teal">{{sub_section[1]}</a>
+						</li>
+
 					</ul>
 				</div>
 				<ul>
@@ -59,9 +66,9 @@
 {% for item in navigation %}
 {%if count == 3%}
 <div class="row">
-<!-- da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
+	<!-- da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
 	<div class="col s9 offset-s9"><</div>
-    </div>
+</div>
 </div>
 {% endif%}
 <div class="col s2 m3">
