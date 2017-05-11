@@ -22,11 +22,12 @@ def search(request, session, search_key=None):
         files = db.query_db(query)
         
         if files == None:
-            return render_template("search.html", logged=logged, search_key=query)
+            return render_template("search.html", logged=logged, error=True)
         else:
             dict_files = []
             for files in files:
                 dict_files.append({'name': files[0], 'description': files[1]})
+            print dict_files
             return render_template("search.html", logged=logged, dict_files=dict_files)
     else:
         return render_template("search.html", logged=logged)
