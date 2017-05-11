@@ -15,19 +15,18 @@ def search(request, session, search_key=None):
         db = utils.pysqlite3()
 
         query = """
-                SELECT name
+                SELECT name, description
                 FROM file
                 WHERE name LIKE '%{}%'""".format(search_key)
 
-        print query
-        result = db.query_db(query)
-        print result
+        files = db.query_db(query)
         
-        if result == None:
+        if files == None:
             return render_template("search.html", logged=logged, search_key=query)
         else:
-            #mostra i risultati
-            print result
-            return render_template("search.html", logged=logged)
+            dict_files = []
+            for files in files:
+                dict_files.append({'name': files[0], 'description': files[1]})
+            return render_template("search.html", logged=logged, dict_files=dict_files)
     else:
         return render_template("search.html", logged=logged)
