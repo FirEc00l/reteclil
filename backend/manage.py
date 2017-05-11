@@ -2,7 +2,7 @@
 manage.py
 @author: Nicholas Sollazzo
 @version: 1.3
-@date: 9/05/17
+@date: 10/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -35,6 +35,7 @@ import string
 # Costants
 DATA = pj('data/data.json')
 DB =  utils.pysqlite3()
+RESULT = 'Success'
 
 def manage(request, session):
 
@@ -47,7 +48,7 @@ def manage(request, session):
 	        'edit_description': edit_description, # DONE!
 			'update_user_password': update_user_password,
 			'create_link': create_link, # DONE!
-			'delete_link': delete_link, # developing...
+			'delete_link': delete_link, # ToBeTested
 			'create_section': create_section,
 			'delete_section': delete_section,
 			'change_section': change_section,
@@ -76,21 +77,20 @@ def manage(request, session):
 		title = request.form['link_title']
 		url = request.form['link_url']
 
-		inUse = False
+		in_use = False
 
 		for link in DATA.read('links'):
 			if title in link.values():
-				inUse = True
+				in_use = True
 
-		if not inUse:
+		if not in_use:
 			new_link = {'title' : title, 'url' : url}
 			DATA.add('links', new_link)
 		else:
-			print 'title already in use'
+			RESULT = 'title already in use'
 
 	def delete_link():
 		title = request.form['title']
-		
 		DATA.remove('links',title)
 
 	def create_section():
@@ -158,5 +158,4 @@ def manage(request, session):
 		# print 'requestForm:', request.form
 		getAction(request.form['action'])
 
-		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
-								description=description, links=links, logged=logged)
+		return RESULT
