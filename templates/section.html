@@ -11,7 +11,7 @@
 <title>Rete CLIL - Documents</title>
 
 <div class="row" >
-	<div class="col s3 fixed">
+	<div class="col s3 fixed ">
 		<ul id="nav-mobile" class=" fixed" style="transform: translateX(0%);">
 					<!--  layout per nav
 					<div class="divider"></div>
@@ -32,7 +32,7 @@
 
 
 
-						<div class="collapsible-body" style="display: block;">
+						<!--<div class="collapsible-body" style="display: block;">
 							<a class="collapsible-header  waves-effect waves-teal"></a>
 							<ul>
 								{% for section in sections %}
@@ -44,12 +44,27 @@
 								{% endfor %}
 							</li>
 
+						</ul>-->
+						<!-- da mettere a posto i for-->
+						{% for section in sections %}
+						<ul class="collapsible collapsible-accordion">
+							<li class="bold"><a class="collapsible-header  waves-effect waves-teal">{{section.name}}</a>
+								<div class="collapsible-body">
+									<ul>
+										{% for sub_section in section.list %}
+
+										<li><a href="/section/{{sub_section[1]}}">{{sub_section[0]}}</a></li>
+										{% endfor %}
+
+									</ul>
+									{% endfor %}
+								</div>
+
+							</li>
 						</ul>
 					</div>
 					<ul>
-						<li>
-							
-						</li>
+						
 					</ul>
 				</li>
 			</ul>
@@ -58,17 +73,17 @@
 </div>
 {% set count = 0 %}
 
-{% if card != none %}
+{% if card %}
 
 {% for file in card %}
 {% if count == 3 %}
 <div class="row">
-	<!-- da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
-	<div class="col s9 offset-s9"><</div>
+	<!-- da far workare da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
+	<div class="col s9 "><</div>
 </div>
 </div>
 {% endif %}
-<div class="col s2 m3">
+<div class="col m3 ">
 	<div class="card">
 		<div class="card-image">
 			<img src="">
@@ -84,8 +99,8 @@
 {% endfor %}
 
 {% else %}
-<div><p>Non sono presenti file</p></div>>
-
+<div><p>Non sono presenti file</p></div>
+{% endif %}
 
 
 

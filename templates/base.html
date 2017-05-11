@@ -1,7 +1,7 @@
 <!--
 ### 
 ### Responsabile: Perini
-### Ultima modifica di: Perini 08/05
+### Ultima modifica di: Andronio 11/05
 ###
 -->
 
@@ -13,7 +13,20 @@
   			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 			<link rel="shortcut icon" href="http://www.iconj.com/ico/j/h/jhcyn71asp.ico" type="image/x-icon" />
-			
+			<style type="text/css">
+			/* label focus color */
+				.input-field input:focus + label {
+ 		  			color: #64b5f6 !important;
+ 				}
+ 			/* label underline focus color */
+ 				.row .input-field input:focus {
+  		 			border-bottom: 1px solid #64b5f6 !important;
+  					box-shadow: 0 1px 0 0 #64b5f6 !important
+ 				}
+ 				.input-field .prefix.active {
+     				color: #64b5f6;
+   				}
+			</style>
 		{% endblock %}
 	</head>
 	<body>
