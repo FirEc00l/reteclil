@@ -36,7 +36,26 @@ import string
 DATA = pj('data/data.json')
 DB =  utils.pysqlite3()
 
+# global
+RESULT = None
+
 def manage(request, session):
+
+	def initResult():
+		global RESULT
+		if RESULT is None:
+			RESULT = 'Success'
+		print 'RESULT:', RESULT
+
+	def setResult(new_result):
+		global RESULT
+		if RESULT == 'Success':
+			RESULT = new_result
+		return RESULT
+
+	def getResult():
+		global RESULT
+		return RESULT
 
 	def getAction(requestAction):
 		# print 'requestAction:', requestAction
@@ -86,7 +105,7 @@ def manage(request, session):
 			new_link = {'title' : title, 'url' : url}
 			DATA.add('links', new_link)
 		else:
-			RESULT = 'title already in use'
+			setResult('title_already_in_use')
 
 	def delete_link():
 		title = request.form['title']
@@ -154,9 +173,9 @@ def manage(request, session):
 								description=description, links=links, logged=logged) #Passare lista utenti e file da DB
 	else:
 
-		RESULT = 'Success'
+		initResult()
 
 		# print 'requestForm:', request.form
 		getAction(request.form['action'])
 
-		return RESULT
+		return getResult()
