@@ -8,11 +8,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<title>Rete CLIL - Documents</title>
+<title>Rete CLIL - Documents</title>
 
-	<div class="row" >
-		<div class="col s3 fixed">
-			<ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+<div class="row" >
+	<div class="col s3 fixed">
+		<ul id="nav-mobile" class=" fixed" style="transform: translateX(0%);">
 					<!--  layout per nav
 					<div class="divider"></div>
 						  <div class="section">
@@ -42,12 +42,6 @@
 									{% endfor %}
 								</optgroup>
 								{% endfor %}
-
-
-								{% for section in sections %}
-								<li class="bold"><a href="about.html" class="waves-effect waves-teal">{{section.name}}</a></li>
-								<a href="about.html" class="waves-effect waves-teal">{{card[0]}}{{card[1]}}</a>
-								{% endfor %}
 							</li>
 
 						</ul>
@@ -61,34 +55,39 @@
 			</ul>
 		</li>
 	</ul>
+</div>
+{% set count = 0 %}
+
+{% if file %}
+
+{% for file in card %}
+{% if count == 3 %}
+<div class="row">
+	<!-- da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
+	<div class="col s9 offset-s9"><</div>
+</div>
+</div>
+{% endif %}
+<div class="col s2 m3">
+	<div class="card">
+		<div class="card-image">
+			<img src="">
+			<span class="card-title blue-text text-darken-4">{{file[0]}}</span>
+			<a class="btn-floating halfway-fab waves-effect waves-light light-blue darken-3"><i class="material-icons">vertical_align_bottom</i></a>
+		</div>
+		<div class="card-content">
+			<p>{{file[1]}}</p>
+		</div>
 	</div>
-	{% set count = 0 %}
+</div>
+{% set count = count+1 %}
+{% endfor %}
 
-	{% for item in navigation %}
-		{%if count == 3%}
-		<div class="row">
-			<!-- da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
-			<div class="col s9 offset-s9"><</div>
-		</div>
-		</div>
-		{% endif %}
-		<div class="col s2 m3">
-			<div class="card">
-				<div class="card-image">
-					<img src="{{Card.image}}">
-					<span class="card-title blue-text text-darken-4">{{Card.title}}</span>
-					<a class="btn-floating halfway-fab waves-effect waves-light light-blue darken-3"><i class="material-icons">vertical_align_bottom</i></a>
-				</div>
-				<div class="card-content">
-					<p>{{Card.description}}</p>
-						</div>
-			</div>
-		</div>
-		{% set count = count+1 %}
-	{% endfor %}
+{% else %}
+<div><p>Non sono presenti file</p></div>>
 
 
 
 
-	</div>
+</div>
 {% endblock %}
