@@ -35,7 +35,6 @@ import string
 # Costants
 DATA = pj('data/data.json')
 DB =  utils.pysqlite3()
-RESULT = 'Success'
 
 def manage(request, session):
 
@@ -154,6 +153,8 @@ def manage(request, session):
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
 								description=description, links=links, logged=logged) #Passare lista utenti e file da DB
 	else:
+
+		RESULT = 'Success'
 
 		# print 'requestForm:', request.form
 		getAction(request.form['action'])
