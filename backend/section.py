@@ -28,10 +28,11 @@ def section(request, session, section=None):
         return render_template("section.html", logged=logged, sections=sections, card=None)
 
     else:
+        num = "1"
 
         query = """SELECT name, description
                 FROM file
-                WHERE id_sub="%s\"""" % str(section)
+                WHERE id_sub="%s\"""" % num
         result_card = db.query_db(query)
         card_dict = []
 

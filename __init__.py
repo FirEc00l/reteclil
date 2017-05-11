@@ -67,7 +67,7 @@ def route_login():
 
 @app.route("/recovery", methods = ['GET','POST'])
 def route_recovery():
-    return recovery.recovery(request, session, key)
+    return recovery.recovery(request, session)
 
 @app.route("/upload", methods = ['GET','POST'])
 def route_upload():
