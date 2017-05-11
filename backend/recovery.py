@@ -12,7 +12,6 @@ from werkzeug.security import generate_password_hash, \
 from email.mime.text import MIMEText as mt
 # Import smtplib for the actual sending function
 import smtplib
-import request
 import backend.clil_utils.db as utils
 import random
 
@@ -33,14 +32,14 @@ def recovery(request,session,key=None):
         result=db.query_db(query)
         ReciveMail=result[0][0]
         MailHash=generate_password_hash(ReciveMail)
-        
-        
-        
+
+
+
         link='http://127.0.0.1:5000/account/'+ MailHash
-        SendMail = 'reteclilpavia@gmail.com' 
+        SendMail = 'reteclilpavia@gmail.com'
         password = 'robot1ca'
 
-        
+
         #formattazzione messaggio
         FormatoMessaggio = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s"
         msg= "E' stata ricevuta una richiesta di reimpostazione password, per cambiarla accedere al link seguente : "+ link
@@ -54,13 +53,13 @@ def recovery(request,session,key=None):
         part2 = MIMEText(html, 'html')
         msg.attach(part1)
         msg.attach(part2)
-        
+
         '''
-        
+
         #invio mail con nuova password
         s = smtplib.SMTP('smtp.gmail.com:587')
         s.starttls()
-        s.login(SendMail,password) 
+        s.login(SendMail,password)
         s.sendmail(SendMail,ReciveMail,messaggio)
         #s.sendmail(SendMail,ReciveMail,msg.as_string())
         s.quit()
@@ -70,7 +69,7 @@ def recovery(request,session,key=None):
                    WHERE username="%s"
                             """ % (MailHash,user)
         db.query_db(query)
-        
+
         if key is not None:
             query = """SELECT username
                         FROM user
@@ -78,10 +77,10 @@ def recovery(request,session,key=None):
                         """ % MailHash
             result=db.query_db(query)
             username=result[0][0]
-            
+
             #creazione nuova psw
             onetimePSW = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
-            
+
             #inserimento password db
             onetimePSW=generate_password_hash(onetimePSW)
             query = """UPDATE User
@@ -98,7 +97,7 @@ def recovery(request,session,key=None):
                 result = db.query_db(query)
                 if result==None :
                     return render_template("login.html", error = "Nome utente o password errata", logged=False)
-            
+
                 elif check_password_hash(result[0][1],request.form['password']):
                     session['user_id'] = result[0][2]
                     session['user_type'] = result[0][3]
@@ -106,10 +105,9 @@ def recovery(request,session,key=None):
 
                 else:
                     return render_template("login.html", error = "Nome utente o password errata", logged=False)
-        
+
         else:
             return render_template("recovery.html",logged=logged)
-            
-            
+
+
         return render_template("recovery.html",success="modifica effettuata",logged=logged)
-        
