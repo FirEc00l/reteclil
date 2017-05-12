@@ -37,13 +37,13 @@ DATA = pj('data/data.json')
 DB =  utils.pysqlite3()
 
 # global
-RESULT = None
+RESULT = 'Success'
 
 def manage(request, session):
 
 	def initResult():
 		global RESULT
-		if RESULT is None:
+		if RESULT != 'Success':
 			RESULT = 'Success'
 		print 'RESULT:', RESULT
 
@@ -60,7 +60,7 @@ def manage(request, session):
 	def getAction(requestAction):
 		# print 'requestAction:', requestAction
 		switcher = {
-	        'create_user': create_user,
+	        'create_user': create_user, # DEV
 			'delete_user': delete_user,
 	        'delete_file': delete_file,
 	        'edit_description': edit_description, # DONE!
@@ -72,7 +72,7 @@ def manage(request, session):
 			'change_section': change_section,
 			'rename_file': rename_file
 	    }
-
+		initResult()
 		funAction = switcher[requestAction]
 		funAction()
 
@@ -81,6 +81,7 @@ def manage(request, session):
 
 	def delete_user():
 		pass
+
 
 	def delete_file():
 		pass
@@ -172,8 +173,6 @@ def manage(request, session):
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
 								description=description, links=links, logged=logged) #Passare lista utenti e file da DB
 	else:
-
-		initResult()
 
 		# print 'requestForm:', request.form
 		getAction(request.form['action'])
