@@ -1,18 +1,31 @@
-
+'''
+recovery.py
+@author: Nicholas Sollazzo,Alesandro Capici
+@version: 0.9
+@date: 10/05/17
+'''
 from flask import request, render_template, abort
+from flask import url_for
+from flask import redirect
 from werkzeug.security import generate_password_hash, \
      check_password_hash
 import backend.clil_utils.db as utils
 
 def reset_password(request,session):
-    
+
+    print 'yolo'
+
     if 'user_id' in session:
         abort(403)
     else:
         logged = False
 
-    print logged
-    return redirect(url_for('route_home'))
+    condition = True
+
+    if condition:
+        return render_template("reset_password.html", logged=logged)
+    else:
+        return redirect(url_for('route_home'))
 ##
 ##    if request.method != 'POST':
 ##        NewPassword=request.form['NewPassword']
@@ -21,7 +34,7 @@ def reset_password(request,session):
 ##
 ##    else:
 ##        return redirect('home.html',logged=logged)
-        
+
 ##            creazione nuova psw
 ##            onetimePSW = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
 ##            ConetimePSW = onetimePSW
@@ -44,4 +57,3 @@ def reset_password(request,session):
 ##                    session['user_id'] = result[0][2]
 ##                    session['user_type'] = result[0][3]
 ##                    return redirect(url_for('account.html'),logged=logged,psw=ConetimePSW)
-
