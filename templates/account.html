@@ -1,7 +1,7 @@
 <!--
 ### 
 ### Responsabile: Andronio
-### Ultima modifica di: Perini 08/05
+### Ultima modifica di: Perini 12/05
 ###
 -->
 
@@ -137,7 +137,7 @@
 		{% if success %}
 		<div class="row">
 			<div class="col s6 offset-m3">
-				<div class="error" id="error">
+				<div class="success" id="success">
 					<blockquote style="border-left: 5px solid #64b5f6"> <h5>Successo</h5> {{success}} </blockquote>
 				</div>
 			</div>
@@ -150,6 +150,7 @@
 		    			$('#error').html("<blockquote> <h5>ERRORE</h5> La password non può contenere spazi e virgole </blockquote>");
 				     	$(".error").css("display", "inline");
 				     	$("#outerror").css("display", "none");
+				     	$("#success").css("display", "none");
 		    		}
 					if ($('#nuovaPassword').val() == $('#confermaPassword').val() && $('#nuovaPassword').is(":valid") && $('#confermaPassword').is(":valid")) {
 				     	$('.error').html("");
@@ -159,11 +160,13 @@
 				     	$('#error').html("<blockquote> <h5>ERRORE</h5> Password incongruenti </blockquote>");
 				     	$(".error").css("display", "inline");
 				     	$("#outerror").css("display", "none");
+				     	$("#success").css("display", "none");
 				    }
 				    if($('#nuovaEmail').is(":invalid") || $('#confermaEmail').is(":invalid")){
 		    			$('#errore').html("<blockquote> <h5>ERRORE</h5> L'indirizzo e-mail dovrebbe contenere @ seguita da un indirizzo e un suffisso (.it/.com/...) </blockquote>");
 				     	$(".errore").css("display", "inline");
 				     	$("#outerror").css("display", "none");
+				     	$("#success").css("display", "none");
 		    		}
 		        	if ($('#nuovaEmail').val() == $('#confermaEmail').val() && $('#nuovaEmail').is(":valid") && $('#confermaEmail').is(":valid")) {
 				     	$('.errore').html("");
@@ -172,6 +175,7 @@
 				     	$('#errore').html("<blockquote> <h5>ERRORE</h5> Email incongruenti </blockquote>");
 				     	$(".errore").css("display", "inline");
 				     	$("#outerror").css("display", "none");
+				     	$("#success").css("display", "none");
 				    }
 			});
 			$(".validate").keyup(function(e){ // "Quando premi enter si attiva l'evento enter [Non saprei come spiegarlo meglio..]"
@@ -185,6 +189,7 @@
 		    			$('#error').html("<blockquote> <h5>ERRORE</h5> La password non può contenere spazi e virgole </blockquote>");
 				     	$(".error").css("display", "inline");
 				     	$("#outerror").css("display", "none");
+				     	$("#success").css("display", "none");
 		    		}
 					if ($('#nuovaPassword').val() == $('#confermaPassword').val() && $('#nuovaPassword').is(":valid") && $('#confermaPassword').is(":valid")) {
 				     	$('.error').html("");
@@ -194,6 +199,7 @@
 				     	$('#error').html("<blockquote> <h5>ERRORE</h5> Password incongruenti </blockquote>");
 				     	$(".error").css("display", "inline");
 				     	$("#outerror").css("display", "none");
+				     	$("#success").css("display", "none");
 				    }
 		    });
 		    $("#email").click(function(){
@@ -201,6 +207,7 @@
 		    			$('#errore').html("<blockquote> <h5>ERRORE</h5> L'indirizzo e-mail dovrebbe contenere @ seguita da un indirizzo e un suffisso (.it/.com/...) </blockquote>");
 				     	$(".errore").css("display", "inline");
 				     	$("#outerror").css("display", "none");
+				     	$("#success").css("display", "none");
 		    		}
 		        if ($('#nuovaEmail').val() == $('#confermaEmail').val() && $('#nuovaEmail').is(":valid") && $('#confermaEmail').is(":valid")) {
 				     	$('.errore').html("");
@@ -209,6 +216,7 @@
 				     	$('#errore').html("<blockquote> <h5>ERRORE</h5> Email incongruenti </blockquote>");
 				     	$(".errore").css("display", "inline");
 				     	$("#outerror").css("display", "none");
+				     	$("#success").css("display", "none");
 				    }
 		    });
 		});
