@@ -29,19 +29,22 @@
 		    						<input type="hidden" name="action" value="password">
 				    					<div class="row">
 				        					<div class="input-field col s12">
+				        					<i class="material-icons prefix">vpn_key</i>
 				          						<input required id="vecchiaPassword" type="password" class="validate" name="oldpassword">
 				         						<label for="password">Vecchia password</label>
 				        					</div>
 				      					</div>
 				      					<div class="row">
 				        					<div class="input-field col s12">
-				          						<input required id="nuovaPassword" type="password" class="validate" name="newpassword">
+				        					<i class="material-icons prefix">vpn_key</i>
+				          						<input required id="nuovaPassword" type="password" class="validate" name="newpassword" pattern="[^ ,]*" title="la password non può contenere spazi o virgole">
 				         						<label for="password">Nuova password</label>
 				        					</div>
 				      					</div>
 				      					<div class="row">
 				        					<div class="input-field col s12">
-				          						<input required id="confermaPassword" type="password" class="validate">
+				        					<i class="material-icons prefix">vpn_key</i>
+				          						<input required id="confermaPassword" type="password" class="validate" pattern="[^ ,]*" title="la password non può contenere spazi o virgole">
 				         						<label for="password">Conferma password</label>
 				        					</div>
 				      					</div>
@@ -86,19 +89,22 @@
 			    						</div>
 				    					<div class="row">
 				        					<div class="input-field col s12">
+				        						<i class="material-icons prefix">vpn_key</i>
 				          						<input required id="Password" type="password" class="validate" name="password">
 				         						<label for="password">Password</label>
 				        					</div>
 				      					</div>
 				      					<div class="row">
 				        					<div class="input-field col s12">
-				          						<input required id="nuovaEmail" type="text" class="validate" name="newemail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
+				        						<i class="material-icons prefix">email</i>
+				          						<input required id="nuovaEmail" type="text" class="validate" name="newemail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="L'indirizzo e-mail dovrebbe contenere @ seguita da un indirizzo e un suffisso (.it/.com/...)">
 				         						<label for="email">Nuova email</label>
 				        					</div>
 				      					</div>
 				      					<div class="row">
 				        					<div class="input-field col s12">
-				          						<input required id="confermaEmail" type="text" class="validate" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
+				        						<i class="material-icons prefix">email</i>
+				          						<input required id="confermaEmail" type="text" class="validate" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="L'indirizzo e-mail dovrebbe contenere @ seguita da un indirizzo e un suffisso (.it/.com/...)">
 				         						<label for="email">Conferma email</label>
 				        					</div>
 				      					</div>
@@ -140,7 +146,12 @@
 		<script type="text/javascript">
 		$(document).ready(function(){
 		    $("#psw").click(function(){
-					if ($('#nuovaPassword').val() == $('#confermaPassword').val()) {
+		    		if($('#nuovaPassword').is(":invalid") || $('#confermaPassword').is(":invalid")){
+		    			$('#error').html("<blockquote> <h5>ERRORE</h5> La password non può contenere spazi e virgole </blockquote>");
+				     	$(".error").css("display", "inline");
+				     	$("#outerror").css("display", "none");
+		    		}
+					if ($('#nuovaPassword').val() == $('#confermaPassword').val() && $('#nuovaPassword').is(":valid") && $('#confermaPassword').is(":valid")) {
 				     	$('.error').html("");
 				     	$( "#form_psw" ).submit();
 				    } else if ($('#nuovaPassword').val() != $('#confermaPassword').val()) {
@@ -151,6 +162,11 @@
 				    }
 		    });
 		    $("#email").click(function(){
+		    		if($('#nuovaEmail').is(":invalid") || $('#confermaEmail').is(":invalid")){
+		    			$('#errore').html("<blockquote> <h5>ERRORE</h5> L'indirizzo e-mail dovrebbe contenere @ seguita da un indirizzo e un suffisso (.it/.com/...) </blockquote>");
+				     	$(".errore").css("display", "inline");
+				     	$("#outerror").css("display", "none");
+		    		}
 		        if ($('#nuovaEmail').val() == $('#confermaEmail').val() && $('#nuovaEmail').is(":valid") && $('#confermaEmail').is(":valid")) {
 				     	$('.errore').html("");
 				     	$( "#form_email" ).submit();
