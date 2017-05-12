@@ -32,9 +32,9 @@ def recovery(request,session,key=None):
                         """ % user
         result=db.query_db(query)
         ReciveMail=result[0][0]
-        time=time.strftime("%H:%M:%S")
+        data=time.strftime("%H:%M:%S")
         rand=''.join(random.choice('0123456789ABCDEF') for i in range(5))
-        MailHash=MailHash+time+rand
+        MailHash=ReciveMail+data+rand
         MailHash=generate_password_hash(ReciveMail)
 
 
