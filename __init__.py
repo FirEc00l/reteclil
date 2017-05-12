@@ -1,8 +1,8 @@
 '''
 __init__.py
 @author: Nicholas Sollazzo
-@version: 1.7
-@date: 29/04/17
+@version: 1.8
+@date: 10/05/17
 '''
 
 from flask import Flask
@@ -70,8 +70,8 @@ def route_recovery():
     return recovery.recovery(request, session)
 
 @app.route("/recovery/<key>", methods = ['GET','POST'])
-def route_recovery_key():
-    return recovery.recovery(request, session, key)
+def route_recovery_key(key):
+    return recovery.recovery(request, session, key=key)
 
 @app.route("/upload", methods = ['GET','POST'])
 def route_upload():
