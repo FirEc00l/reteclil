@@ -32,7 +32,7 @@ def section(request, session, section=None):
 
         query = """SELECT name, description
                 FROM file
-                WHERE id_sub="%s\"""" % num
+                WHERE id_sub="%s\"""" % str(section)
         result_card = db.query_db(query)
         card_dict = []
 
