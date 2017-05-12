@@ -151,7 +151,7 @@
 				    }
 		    });
 		    $("#email").click(function(){
-		        if ($('#nuovaEmail').val() == $('#confermaEmail').val()) {
+		        if ($('#nuovaEmail').val() == $('#confermaEmail').val() && $('#nuovaEmail').is(":valid") && $('#confermaEmail').is(":valid")) {
 				     	$('.errore').html("");
 				     	$( "#form_email" ).submit();
 				    } else if ($('#nuovaEmail').val() != $('#confermaEmail').val()) {
