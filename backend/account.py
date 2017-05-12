@@ -39,7 +39,7 @@ def account(request, session):
                     db.query_db(query)
                     return render_template("account.html",email=mail,success="modifica effettuata", logged=logged)
                 else:
-                    return render_template("account.html",email=mail,error="Password errata", logged=logged)
+                    return render_template("account.html",email=mail,error="Password errata", errorType="password", logged=logged)
             if request.form['action']=='email':
                 if check_password_hash(password,request.form['password']):
                     newMail=request.form['newemail']
@@ -50,7 +50,7 @@ def account(request, session):
                     db.query_db(query)
                     return render_template("account.html",email=newMail,success="modifica effettuata", logged=logged)
                 else:
-                   return render_template("account.html",email=mail,error="Password errata", logged=logged)
+                   return render_template("account.html",email=mail,error="Password errata", errorType="email", logged=logged)
         else:
             return render_template("account.html",email=mail, logged=logged)
 
