@@ -224,12 +224,14 @@
 		link_title = $("#link_title").val();
 		link_url = $("#link_url").val();
 		$.post("/manage", { action: "create_link", link_title: link_title, link_url: link_url}).done(function( data ) {
-			alert(data);
-			if (data == "Success"){
+			result = data
+			if (result == "Success"){
 				$("#link_list").append("<div class='row' id='row-link-"+ link_title +"'><div class='input-field'><a target='_blank' href='"+ link_url +"'>"+ link_title+"</a><a title='"+ link_title +"' style='cursor:pointer' class='secondary-content delete_link'><i class='material-icons light-blue-text darken-3'>delete</i></a></div></div>");
 				$('#modal_link_add').modal('close');
 				$("#link_title").val("");
 				$("#link_url").val("");
+			}else if (result == "title_already_in_use"){
+				alert("Titolo già in uso. Per favore scegliere un titolo diverso.");
 			}
 	  });
 	});
