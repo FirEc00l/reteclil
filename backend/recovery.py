@@ -1,8 +1,8 @@
 '''
 recovery.py
 @author: Nicholas Sollazzo,Alesandro Capici,Cristian Garau
-@version: 1.0
-@date: 3/05/17
+@version: 1.4
+@date: 10/05/17
 @note: testato ma non funzionante
 '''
 
@@ -22,7 +22,17 @@ def recovery(request,session,key=None):
     else:
         logged = False
     if request.method != 'POST':
-        return render_template('recovery.html', logged=logged)
+        print 'key2:',key
+        if key is not None:
+            query = """SELECT key
+                        FROM user
+                        WHERE username="%s"
+                        """ % user
+            result=db.query_db(query)
+            if result[0][0]==key:
+                return render_template("reset_password.html", logged=logged)
+        else:
+            return render_template("recovery.html",logged=logged)
     else:
         db = utils.pysqlite3()
         user = request.form['user']
@@ -74,16 +84,9 @@ def recovery(request,session,key=None):
                             """ % (MailHash,user)
         db.query_db(query)
 
-        if key is not None:
-            query = """SELECT key
-                        FROM user
-                        WHERE username="%s"
-                        """ % user
-            result=db.query_db(query)
-            if result[0][0]==key:
-                return render_template("reset_password.html")
-                
-    
+        print 'key:',key
+
+
 ##            #creazione nuova psw
 ##            onetimePSW = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
 ##            ConetimePSW = onetimePSW
@@ -106,9 +109,6 @@ def recovery(request,session,key=None):
 ##                    session['user_id'] = result[0][2]
 ##                    session['user_type'] = result[0][3]
 ##                    return redirect(url_for('account.html'),logged=logged,psw=ConetimePSW)
-
-        else:
-            return render_template("recovery.html",logged=logged)
 
 
         return render_template("recovery.html",success="modifica effettuata",logged=logged)
