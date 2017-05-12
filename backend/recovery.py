@@ -17,13 +17,15 @@ import backend.clil_utils.db as utils
 import random
 
 def recovery(request,session,key=None):
+    
     if 'user_id' in session:
         abort(403)
     else:
         logged = False
+        
     if request.method != 'POST':
-        print 'key2:',key
         if key is not None:
+            db = utils.pysqlite3()
             query = """SELECT key
                         FROM user
                         WHERE username="%s"
@@ -35,6 +37,7 @@ def recovery(request,session,key=None):
             return render_template("recovery.html",logged=logged)
     else:
         db = utils.pysqlite3()
+        global user
         user = request.form['user']
         query = """SELECT email
                         FROM user
@@ -42,6 +45,10 @@ def recovery(request,session,key=None):
                         """ % user
         result=db.query_db(query)
         ReciveMail=result[0][0]
+
+
+
+        
         data=time.strftime("%H:%M:%S")
         rand=''.join(random.choice('0123456789ABCDEF') for i in range(5))
         MailHash=ReciveMail+data+rand
