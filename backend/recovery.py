@@ -6,7 +6,11 @@ recovery.py
 @note: testato ma non funzionante
 '''
 
-from flask import request, render_template, abort
+from flask import request
+from flask import render_template
+from flask import abort
+from flask import url_for
+from flask import redirect
 from werkzeug.security import generate_password_hash, \
      check_password_hash
 from email.mime.text import MIMEText as mt
@@ -17,12 +21,12 @@ import backend.clil_utils.db as utils
 import random
 
 def recovery(request,session,key=None):
-    
+
     if 'user_id' in session:
         abort(403)
     else:
         logged = False
-        
+
     if request.method != 'POST':
         if key is not None:
             db = utils.pysqlite3()
@@ -32,7 +36,7 @@ def recovery(request,session,key=None):
                         """ % user
             result=db.query_db(query)
             if result[0][0]==key:
-                return render_template("reset_password.html", logged=logged)
+                return redirect(url_for('route_reset_password'))
         else:
             return render_template("recovery.html",logged=logged)
     else:
@@ -47,13 +51,12 @@ def recovery(request,session,key=None):
         ReciveMail=result[0][0]
 
 
+        print 'ReciveMail:', ReciveMail
 
-        
         data=time.strftime("%H:%M:%S")
         rand=''.join(random.choice('0123456789ABCDEF') for i in range(5))
         MailHash=ReciveMail+data+rand
         MailHash=generate_password_hash(ReciveMail)
-
 
 
         link='http://127.0.0.1:5000/recovery/'+ MailHash
