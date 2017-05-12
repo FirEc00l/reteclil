@@ -17,17 +17,32 @@ def upload(request, session):
 		if logged < 2:
 			abort(403)
 
-		db =  utils.pysqlite3()
+		db = utils.pysqlite3()
 		query = "SELECT section_name, id_section FROM section"
+		print query
 		sections = db.query_db(query)
 
 		if request.method == 'POST':
 			f = request.files['file']
+			
 			if f and allowed_file(f.filename):
 				#Controllare nome file nel db, se ce gia aggiungere qualchecos
 				query = "SELECT id_file FROM file WHERE name = '%s'" % f.filename
-				# = db.query_db(query)
-				f.save('./files/' + secure_filename(f.filename))
+				result = db.query_db(query)
+				print result
+
+				id_sub = request.form.get('sub_sec')
+				id_user = session['user_id']
+				description = request.form['desc']
+
+                                print id_sub
+                                print id_user
+                                print description
+
+				if result == None:
+                                        query = "INSERT INTO file VALUES(NULL, '%s','%s','%s', '%s')" % (f.filename, id_user, id_sub, description)
+                                        db.query_db(query)
+                                f.save('./files/' + secure_filename(f.filename))
 				return "success"
 			else:
 				return "error"
