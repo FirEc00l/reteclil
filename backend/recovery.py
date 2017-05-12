@@ -39,7 +39,7 @@ def recovery(request,session,key=None):
 
 
 
-        link='http://127.0.0.1:5000/account/'+ MailHash
+        link='http://127.0.0.1:5000/recovery/'+ MailHash
         SendMail = 'reteclilpavia@gmail.com'
         password = 'robot1ca'
 
