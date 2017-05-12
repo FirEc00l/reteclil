@@ -18,9 +18,12 @@
 			<div class="col s6 offset-m3">
 				<ul class="collapsible" data-collapsible="accordion">
 					<li>
-		    			<div class="collapsible-header"><i class="material-icons">vpn_key</i>Modifica password</div>
-
-		    			<div class="collapsible-body active" id="collapsible_password">
+						{% if errorType == "password" %}
+		    				<div class="collapsible-header active"><i class="material-icons">vpn_key</i>Modifica password</div>
+		    			{% else %}
+		    				<div class="collapsible-header"><i class="material-icons">vpn_key</i>Modifica password</div>
+		    			{% endif %}
+		    			<div class="collapsible-body" id="collapsible_password">
 		    				<span>
 		    					<form method="POST" action="/account" id="form_psw">
 		    						<input type="hidden" name="action" value="password">
@@ -42,6 +45,15 @@
 				         						<label for="password">Conferma password</label>
 				        					</div>
 				      					</div>
+										{% if error and errorType == "password" %}
+										<div class="row">
+											<div class="col s6">
+												<div class="error" id="outerror">
+													<blockquote> <h5>ERRORE</h5> {{error}} </blockquote>
+												</div>
+											</div>
+										</div>
+										{% endif %}
 				      					<div class="row">
 				      						<div class col="s12">
 												<div class="error" style="display:none" id="error">
@@ -57,7 +69,11 @@
 		      			</div>
 		   		 	</li>
 		  		 	<li>
+						{% if errorType == "email" %}
+		    			<div class="collapsible-header active"><i class="material-icons">account_circle</i>Modifica email</div>
+		    			{% else %}
 		    			<div class="collapsible-header"><i class="material-icons">account_circle</i>Modifica email</div>
+		    			{% endif %}
 
 		    			<div class="collapsible-body">
 		    				<span>
@@ -76,16 +92,25 @@
 				      					</div>
 				      					<div class="row">
 				        					<div class="input-field col s12">
-				          						<input required id="nuovaEmail" type="text" class="validate" name="newemail">
+				          						<input required id="nuovaEmail" type="text" class="validate" name="newemail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
 				         						<label for="email">Nuova email</label>
 				        					</div>
 				      					</div>
 				      					<div class="row">
 				        					<div class="input-field col s12">
-				          						<input required id="confermaEmail" type="text" class="validate">
+				          						<input required id="confermaEmail" type="text" class="validate" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
 				         						<label for="email">Conferma email</label>
 				        					</div>
 				      					</div>
+										{% if error and errorType == "email" %}
+										<div class="row">
+											<div class="col s6">
+												<div class="error" id="outerror">
+													<blockquote> <h5>ERRORE</h5> {{error}} </blockquote>
+												</div>
+											</div>
+										</div>
+										{% endif %}
 				      					<div class="row">
 				      						<div class col="s12">
 												<div class="errore" style="display:none" id="errore">
@@ -103,15 +128,6 @@
 				</ul>
 			</div>
 		</div>
-		{% if error %}
-		<div class="row">
-			<div class="col s6 offset-m3">
-				<div class="error" id="outerror">
-					<blockquote> <h5>Errore</h5> {{error}} </blockquote>
-				</div>
-			</div>
-		</div>
-		{% endif %}
 		{% if success %}
 		<div class="row">
 			<div class="col s6 offset-m3">
