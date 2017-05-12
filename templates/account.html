@@ -106,7 +106,7 @@
 		{% if error %}
 		<div class="row">
 			<div class="col s6 offset-m3">
-				<div class="error" id="error">
+				<div class="error" id="outerror">
 					<blockquote> <h5>Errore</h5> {{error}} </blockquote>
 				</div>
 			</div>
@@ -129,7 +129,9 @@
 				     	$( "#form_psw" ).submit();
 				    } else if ($('#nuovaPassword').val() != $('#confermaPassword').val()) {
 
-				     	$('.error').html("<blockquote> <h5>Errore</h5> Password incongruenti </blockquote>");
+				     	$('#error').html("<blockquote> <h5>ERRORE</h5> Password incongruenti </blockquote>");
+				     	$(".error").css("display", "inline");
+				     	$("#outerror").css("display", "none");
 				    }
 		    });
 		    $("#email").click(function(){
@@ -137,8 +139,9 @@
 				     	$('.errore').html("");
 				     	$( "#form_email" ).submit();
 				    } else if ($('#nuovaEmail').val() != $('#confermaEmail').val()) {
-				     	$('.errore').html("<blockquote> <h5>Errore</h5> Email incongruenti </blockquote>");
-				     	$("#errore").css("display", "inline");
+				     	$('#errore').html("<blockquote> <h5>ERRORE</h5> Email incongruenti </blockquote>");
+				     	$(".errore").css("display", "inline");
+				     	$("#outerror").css("display", "none");
 				    }
 		    });
 		});
