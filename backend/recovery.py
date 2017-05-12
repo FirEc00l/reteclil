@@ -80,7 +80,8 @@ def recovery(request,session,key=None):
 
             #creazione nuova psw
             onetimePSW = ''.join(random.choice('0123456789ABCDEF') for i in range(5))
-
+            ConetimePSW = onetimePSW
+            print ConetimePSW
             #inserimento password db
             onetimePSW=generate_password_hash(onetimePSW)
             query = """UPDATE User
@@ -90,21 +91,15 @@ def recovery(request,session,key=None):
             db.query_db(query)
 
             if request.method=='POST' :#modificare richiesta html
-                db =  utils.pysqlite3()
                 query = """SELECT username, password, id_user, user_type
                            FROM User
-                           WHERE User.username="%s\"""" % request.form['username']
+                           WHERE User.username="%s\"""" % username
                 result = db.query_db(query)
-                if result==None :
-                    return render_template("login.html", error = "Nome utente o password errata", logged=False)
 
-                elif check_password_hash(result[0][1],request.form['password']):
+                if check_password_hash(result[0][1],ConetimePSW):
                     session['user_id'] = result[0][2]
                     session['user_type'] = result[0][3]
-                    return redirect(url_for('route_home'))
-
-                else:
-                    return render_template("login.html", error = "Nome utente o password errata", logged=False)
+                    return redirect(url_for('account.html'),logged=logged,psw=ConetimePSW)
 
         else:
             return render_template("recovery.html",logged=logged)
