@@ -1,90 +1,149 @@
 <!--
 ### 
 ### Responsabile: Giammanco
-### Ultima modifica di: Perini 08/05
+### Modifica di: 
+###             Perini 08/05
+###				Vladyka 12/05
+###
 ###
 -->
 
 {% extends "base.html" %}
 
 {% block content %}
-	<title>Rete CLIL - Upload</title>
-	<script src="http://malsup.github.com/jquery.form.js"></script>
-	<br>
-	<br>
-	<h2 align="center">Carica documento</h2>
-	<br>
-	<form action="/upload" method="POST" enctype="multipart/form-data">
-		<div class="row">
-			<div class="file-field input-field col s6 offset-m3">
-			  <div class="btn">
-				<span>File</span>
-				<input type="file" name="file">
-			  </div>
-			  <div class="file-path-wrapper">
-				<input class="file-path validate" type="text">
-			  </div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="input-field col s6 offset-m3">
-				<select>
-					<option value="" disabled selected>Seleziona una sezione</option>
-					{% for section in sections %}
-						<optgroup label="{{section.name}}">
-							{% for sub_section in section.list %}
-								<option value="{{sub_section[1]}}">{{sub_section[0]}}</option>
-							{% endfor %}
-						</optgroup>
-					{% endfor %}
-				</select>
-				<label>Sezione</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="input-field col s6 offset-m3">
-				<textarea id="description" class="materialize-textarea"></textarea>
-				<label>Descrizione</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col s6 offset-m3">
-				<div class="progress" width>
-				    <div class="determinate" style="width: 0%"></div>
+<title>Rete CLIL - Upload</title>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<br>
+<br>
+<h2 align="center">Carica</h2>
+<br>
+<div class="row">
+	<form class="col s6 offset-m3">
+		<ul class="collapsible" data-collapsible="accordion">
+			<li>
+				<div class="collapsible-header"><i class="material-icons">attach_file</i>Carica Documendo</div>
+				<div class="collapsible-body">
+					<span>
+						<form action="/upload" method="POST" enctype="multipart/form-data">
+							<div class="row">
+								<div class="file-field input-field col s12">
+									<div class="btn">
+										<span>File</span>
+										<input type="file" name="file">
+									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate" type="text">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<select >
+										<option value="" disabled selected>Seleziona una sezione</option>
+										{% for section in sections %}
+										<optgroup label="{{section.name}}">
+											{% for sub_section in section.list %}
+											<option value="{{sub_section[1]}}">{{sub_section[0]}}</option>
+											{% endfor %}
+										</optgroup>
+										{% endfor %}
+									</select>
+									<label>Sezione</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<textarea id="description" class="materialize-textarea"></textarea>
+									<label>Descrizione</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									<div class="progress" width>
+										<div class="determinate" style="width: 0%"></div>
+									</div>
+								</div>
+							</div>
+							<div class="center-align">
+								<button id="carica_file" type="submit" class="waves-effect waves-light btn light-blue darken-3">carica file</button>
+							</div>
+						</form>
+					</span>
 				</div>
-			</div>
-		</div>
-		<div class="center-align">
-			<button type="submit" class="waves-effect waves-light btn light-blue darken-3">carica</button>
-		</div>
-	</form>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="material-icons">event</i>Aggiungi Evento</div>
+				<div class="collapsible-body">
+					<span>
+						<div class="row">
+							<form action="/upload" method="POST" class="col s12" >
+								<div class="row">
+									<div class="input-field col s12">
+										<i class="material-icons prefix">title</i>
+										<input required id="event_title" type="text">
+										<label class="active" for="event_title">Titolo</label>
+									</div>
+									<div class="row">
+										<div class="input-field col s12">
+											<i class="material-icons prefix">place</i>
+											<input required id="event_palce" type="text">
+											<label class="active" for="event_palce">Luogo</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s12">
+											<i class="material-icons prefix">date_range</i>
+											<input type="date" id="event_date" name="event_date" class="datepicker">
+											<label class="active" for="event_date">Data</label>
+											<span class="validity"></span>
+										</div>
+									</div>
+									<div class="input-field col s12">
+										<i class="material-icons prefix">description</i>
+										<textarea required id="textarea1" class="materialize-textarea"></textarea>
+										<label for="textarea1">Descrizione</label>
+									</div>
+									<div class="center-align">
+										<button id="carica_evento" type="submit" class="waves-effect waves-light btn light-blue darken-3">carica evento</button>
+									</div>	
+								</form>
+							</div>
+						</span>
+					</div>
+				</li>
+			</ul>
+		</form>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('select').material_select();
+		});
+		$(function() {
 
-	  <script type="text/javascript">
-  	 	$(document).ready(function() {
-	    	$('select').material_select();
-	  	});
-			$(function() {
+			var bar = $('.bar');
 
-					var bar = $('.bar');
+			var percent = $('.determinate');
 
-					var percent = $('.determinate');
+			$('form').ajaxForm({
+				beforeSend: function() {
+					var percentVal = '0%';
 
-					$('form').ajaxForm({
-							beforeSend: function() {
-									var percentVal = '0%';
+					percent.css("width", percentVal);
+				},
+				uploadProgress: function(event, position, total, percentComplete) {
+					var percentVal = percentComplete + '%';
 
-									percent.css("width", percentVal);
-							},
-							uploadProgress: function(event, position, total, percentComplete) {
-									var percentVal = percentComplete + '%';
-
-									percent.css("width", percentVal);
-							},
-							complete: function(xhr) {
-									console.log(xhr.responseText);
-							}
-					});
+					percent.css("width", percentVal);
+				},
+				complete: function(xhr) {
+					console.log(xhr.responseText);
+				}
 			});
-
-	  </script>
-{% endblock %}
+		});
+	//calendario
+	$('.datepicker').pickadate({
+           selectMonths: true, // Creates a dropdown to control month
+           selectYears: 15 // Creates a dropdown of 15 years to control year
+       });
+   </script>
+   {% endblock %}
