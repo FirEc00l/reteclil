@@ -48,7 +48,7 @@
 						<!-- da mettere a posto i for-->
 						{% for section in sections %}
 						<ul class="collapsible collapsible-accordion">
-							<li class="bold"><a class="collapsible-header  waves-effect waves-teal">{{section.name}}</a>
+							<li class="bold"><a class="collapsible-header active waves-effect waves-teal">{{section.name}}</a>
 								<div class="collapsible-body">
 									<ul>
 										{% for sub_section in section.list %}
@@ -79,22 +79,19 @@
 {% if count == 3 %}
 <div class="row">
 	<!-- da far workare da vedere se metter s9 o s3 da provare all'arrivo delle carte-->
-	<div class="col s9 "><</div>
+	<div class="col s3 "><</div>
 </div>
 </div>
 {% endif %}
-<div class="col m3 ">
-	<div class="card">
-		<div class="card-image">
-			<img src="">
-			<span class="card-title blue-text text-darken-4">{{file[0]}}</span>
-			<a class="btn-floating halfway-fab waves-effect waves-light light-blue darken-3"><i class="material-icons">vertical_align_bottom</i></a>
-		</div>
-		<div class="card-content">
-			<p>{{file[1]}}</p>
+	<div class="col m4">
+		<div class="card">
+			<div class="card-content">
+				<span class="card-title"><!--{{file[0]}}-->Esempio Titolo</span>
+				<a class="btn-floating waves-effect waves-light blue right"><i class="material-icons">vertical_align_bottom</i></a>
+				<p><!--{{file[1]}}-->Esempio Descrizione</p>
+    		</div>
 		</div>
 	</div>
-</div>
 {% set count = count+1 %}
 {% endfor %}
 
