@@ -11,17 +11,19 @@
 				<div class="collapsible-header"><i class="medium material-icons">description</i>Descrizione</div>
 				<div class="collapsible-body">
 					<span>
-						<form action="/manage" method="POST">
-							<input type="hidden" name="action" value="edit_description">
+						<div class="row" style="display: none" id="success_description">
+							<div class="error" id="error">
+								<blockquote style="border-left: 5px solid #64b5f6"> Descrizione aggiornata con successo </blockquote>
+							</div>
+						</div>
 							<div class="row">
 								<div class="input-field">
 									<i class="material-icons prefix light-blue-text darken-3">mode_edit</i>
-									<textarea name="new_description" id="icon_prefix2" class="materialize-textarea">{{description}}</textarea>
+									<textarea name="new_description" id="description" class="materialize-textarea">{{description}}</textarea>
 									<label for="icon_prefix2">Descrizione</label>
-									<button type="submit" id="mod_description" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+									<button type="button" id="mod_description" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
 								</div>
 							</div>
-						</form>
 					</span>
 				</div>
 			</li>
@@ -30,22 +32,20 @@
 				<div class="collapsible-body">
 					<span>
 						<ul class="collection with-header">
-							<!--<li class="collection-header"><h4>Links</h4></li>-->
 							<li class="collection-item">
-								{% for link in links %}
-								<div class="row">
-									<div class="input-field">
-										<a href="{{ link.url }}">{{link.title}}</a>
-										<div class="light-blue darken-3">
-											<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons light-blue-text darken-3">delete</i></a>
-											<a href="#modal_link" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>	
+								<div id="link_list">
+									{% for link in links %}
+									<div class="row" id="row-link-{{ link.title }}">
+										<div class="input-field">
+											<a target="_blank" href="{{ link.url }}">{{link.title}}</a>
+											<a title="{{ link.title }}" style='cursor:pointer' class="secondary-content delete_link"><i class="material-icons light-blue-text darken-3">delete</i></a>
 										</div>
 									</div>
+									{% endfor %}
 								</div>
-								{% endfor %}
-								<br>
 								<a href="#modal_link_add" class="btn-floating btn-medium light-blue darken-3"><i class="material-icons">add</i></a>
 							</li>
+
 						</ul>
 					</span>
 				</div>
@@ -62,7 +62,7 @@
 									{{user.name}}
 									{{user.surname}}
 									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons light-blue-text darken-3">delete</i></a>
-									<a href="#modal_users" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>	
+									<a href="#modal_users" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>
 								</div>
 								{% endfor %}
 							</li>
@@ -81,7 +81,7 @@
 								<div >
 									{{file.file_name}}
 									<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons light-blue-text darken-3">delete</i></a>
-									<a href="#modal_file" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>	
+									<a href="#modal_file" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>
 								</div>
 								{% endfor %}
 							</li>
@@ -113,26 +113,7 @@
 		</ul>
 	</div>
 </div>
-<div id="modal_link" class="modal">
-	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #212121;">Modifica LINK</h4>
-		<form class="col s12">
-			<div class="row">
-				<div class="input-field col s12">
-					<input id="testo_link" type="text" class="validate">
-					<label class="active" for="testo_link">Testo Link</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s12">
-					<input id="new_link" type="text" class="validate">
-					<label class="active" for="new_link">Link</label>
-				</div>
-			</div>
-			<button id="mod_link" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
-		</form>
-	</div>
-</div>
+
 <div id="modal_users" class="modal">
 	<div class="modal-content">
 		<h4 style="margin-left: 33%; color: ##212121;">Modifica Utente</h4>
@@ -156,12 +137,12 @@
 						<label class="active" for="e_mail">E-mail</label>
 					</div>
 				</div>
-				<div class="input-field col s6">															
+				<div class="input-field col s6">
 					<select>
 						<option value="" disabled selected>Scegli il tipo dell'utente</option>
 						<option value="1">Commun</option>
 						<option value="2">Teacher</option>
-					</select>	
+					</select>
 					<label>Tipo Utente</label><br>
 					<a id="psw_gen"class="waves-effect waves-light btn light-blue darken-3"><i class="material-icons left">vpn_key</i>Genera Password</a><br><br>
 					<button id="mod_user" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
@@ -180,12 +161,12 @@
 						<input id="testo_link" type="text" class="validate">
 						<label class="active" for="testo_link">Nome File</label>
 					</div>
-					<div class="input-field col s6">															
+					<div class="input-field col s6">
 						<select>
 							<option value="" disabled selected>Scegli il tipo dell'file</option>
 							<option value="1">Commun</option>
 							<option value="2">Teacher</option>
-						</select>	
+						</select>
 						<label>Tipo File</label><br>
 					</div>
 				</div>
@@ -197,26 +178,66 @@
 <div id="modal_link_add" class="modal">
 	<div class="modal-content">
 		<h4 style="margin-left: 33%; color: #212121;">Agiungi LINK</h4>
-		<form action="/manage" method="POST" class="col s12">
 			<input type="hidden" name="action" value="create_link">
 			<div class="row">
 
 				<div class="input-field col s12">
-					<input name="link_title" type="text" class="validate">
+					<input id="link_title" type="text" class="validate">
 					<label class="active" for="testo_link">Titolo Link</label>
 				</div>
 			</div>
 			<div class="row">
 				<div class="input-field col s12">
-					<input name="link_url" type="text" class="validate">
+					<input id="link_url" type="text" class="validate">
 					<label class="active" for="new_link">URL</label>
 				</div>
 			</div>
-			<button id="create_link" type="submit" class="waves-effect waves-light btn light-blue darken-3">add</button>
-		</form>
+			<button id="create_link" type="button" class="waves-effect waves-light btn light-blue darken-3">add</button>
 	</div>
 </div>
-<script >
+<script type="text/javascript">
+	//modifica descrizione
+
+	$("#mod_description").click(function (){
+		new_description = $("#description").val();
+		$.post("/manage", { action: "edit_description", new_description: new_description}).done(function( data ) {
+			if (data == "Success"){
+				$("#success_description").show();
+			}
+	  });
+	});
+
+	//Eliminazione link
+
+	$(document).on('click', '.delete_link', function (){
+		link_title = $(this).attr("title");
+		$.post("/manage", { action: "delete_link", title: link_title}).done(function( result ) {
+			if (result == "Success"){
+				$("#row-link-"+link_title).remove();
+			}
+	  });
+	});
+
+
+	//Aggiunta link
+	$("#create_link").click(function (){
+		link_title = $("#link_title").val();
+		link_url = $("#link_url").val();
+		$.post("/manage", { action: "create_link", link_title: link_title, link_url: link_url}).done(function( data ) {
+			alert(data);
+			if (data == "Success"){
+				$("#link_list").append("<div class='row' id='row-link-"+ link_title +"'><div class='input-field'><a target='_blank' href='"+ link_url +"'>"+ link_title+"</a><a title='"+ link_title +"' style='cursor:pointer' class='secondary-content delete_link'><i class='material-icons light-blue-text darken-3'>delete</i></a></div></div>");
+				$('#modal_link_add').modal('close');
+				$("#link_title").val("");
+				$("#link_url").val("");
+			}
+	  });
+	});
+
+
+
+
+	//Inizializazione componenti materialize
 	$('.modal').modal({
       dismissible: true, // Modal can be dismissed by clicking outside of the modal
       opacity: .5, // Opacity of modal background
