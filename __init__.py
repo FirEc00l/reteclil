@@ -1,6 +1,6 @@
 '''
 __init__.py
-@author: Nicholas Sollazzo
+@author: Nicholas Sollazzo,Alessadro Capici(pivccole modifiche)
 @version: 1.8
 @date: 10/05/17
 '''
@@ -70,13 +70,13 @@ def route_login():
 def route_reset_password():
     return reset_password.reset_password(request, session)
 
+@app.route("/reset_password/<key>", methods = ['GET','POST'])
+def route_reset_password_key(key):
+    return reset_password.reset_password(request, session, key=key)
+
 @app.route("/recovery", methods = ['GET','POST'])
 def route_recovery():
     return recovery.recovery(request, session)
-
-@app.route("/recovery/<key>", methods = ['GET','POST'])
-def route_recovery_key(key):
-    return recovery.recovery(request, session, key=key)
 
 @app.route("/upload", methods = ['GET','POST'])
 def route_upload():

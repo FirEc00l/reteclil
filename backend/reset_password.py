@@ -27,7 +27,9 @@ def reset_password(request,session,key):
                         """ % user
             result=db.query_db(query)
             if result[0][0]==key:
-                return redirect(url_for('route_reset_password'))
+                NewPassword=request.form['NewPassword']
+                print NewPassword
+                return redirect(url_for('route_home'))
     else:
         return redirect(url_for('route_reset_password'))
 
