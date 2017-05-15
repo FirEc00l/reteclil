@@ -155,7 +155,7 @@
 					if ($('#nuovaPassword').val() == $('#confermaPassword').val() && $('#nuovaPassword').is(":valid") && $('#confermaPassword').is(":valid")) {
 				     	$('.error').html("");
 				     	$( "#form_psw" ).submit();
-				    } else if ($('#nuovaPassword').val() != $('#confermaPassword').val()) {
+				    }if ($('#nuovaPassword').val() != $('#confermaPassword').val()) {
 
 				     	$('#error').html("<blockquote> <h5>ERRORE</h5> Password incongruenti </blockquote>");
 				     	$(".error").css("display", "inline");
@@ -171,7 +171,7 @@
 		        	if ($('#nuovaEmail').val() == $('#confermaEmail').val() && $('#nuovaEmail').is(":valid") && $('#confermaEmail').is(":valid")) {
 				     	$('.errore').html("");
 				     	$( "#form_email" ).submit();
-				    } else if ($('#nuovaEmail').val() != $('#confermaEmail').val()) {
+				    }if ($('#nuovaEmail').val() != $('#confermaEmail').val()) {
 				     	$('#errore').html("<blockquote> <h5>ERRORE</h5> Email incongruenti </blockquote>");
 				     	$(".errore").css("display", "inline");
 				     	$("#outerror").css("display", "none");
@@ -204,7 +204,7 @@
 		    });
 		    $("#email").click(function(){
 		    		if($('#nuovaEmail').is(":invalid") || $('#confermaEmail').is(":invalid")){
-		    			$('#errore').html("<blockquote> <h5>ERRORE</h5> L'indirizzo e-mail dovrebbe contenere @ seguita da un indirizzo e un suffisso (.it/.com/...) </blockquote>");
+		    			$('#errore').html("<blockquote> <h5>ERRORE</h5> Inserire una mail valida </blockquote>");
 				     	$(".errore").css("display", "inline");
 				     	$("#outerror").css("display", "none");
 				     	$("#success").css("display", "none");
