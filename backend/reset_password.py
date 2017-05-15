@@ -1,8 +1,8 @@
 '''
 recovery.py
 @author: Nicholas Sollazzo,Alesandro Capici
-@version: 0.9
-@date: 10/05/17
+@version: 1.0
+@date: 15/05/17
 '''
 from flask import request, render_template, abort
 from flask import url_for
@@ -11,21 +11,30 @@ from werkzeug.security import generate_password_hash, \
      check_password_hash
 import backend.clil_utils.db as utils
 
-def reset_password(request,session):
+def reset_password(request,session,key):
 
     print 'yolo'
 
     if 'user_id' in session:
         abort(403)
     else:
-        logged = False
-
-    condition = True
-
-    if condition:
-        return render_template("reset_password.html", logged=logged)
+        logged = True
+    if key is not None:
+            db = utils.pysqlite3()
+            query = """SELECT key
+                        FROM user
+                        WHERE username="%s"
+                        """ % user
+            result=db.query_db(query)
+            if result[0][0]==key:
+                return redirect(url_for('route_reset_password'))
     else:
-        return redirect(url_for('route_home'))
+        return redirect(url_for('route_reset_password'))
+
+##    if condition:
+##        return render_template("reset_password.html", logged=logged)
+##    else:
+##        return redirect(url_for('route_home'))
 ##
 ##    if request.method != 'POST':
 ##        NewPassword=request.form['NewPassword']

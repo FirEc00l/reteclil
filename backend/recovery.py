@@ -20,7 +20,7 @@ import time
 import backend.clil_utils.db as utils
 import random
 
-def recovery(request,session,key=None):
+def recovery(request,session):
 
     if 'user_id' in session:
         abort(403)
@@ -28,20 +28,9 @@ def recovery(request,session,key=None):
         logged = False
 
     if request.method != 'POST':
-        if key is not None:
-            db = utils.pysqlite3()
-            query = """SELECT key
-                        FROM user
-                        WHERE username="%s"
-                        """ % user
-            result=db.query_db(query)
-            if result[0][0]==key:
-                return redirect(url_for('route_reset_password'))
-        else:
-            return render_template("recovery.html",logged=logged)
+        return render_template("recovery.html",logged=logged)
     else:
         db = utils.pysqlite3()
-        global user
         user = request.form['user']
         query = """SELECT email
                         FROM user
@@ -59,7 +48,7 @@ def recovery(request,session,key=None):
         MailHash=generate_password_hash(ReciveMail)
 
 
-        link='http://127.0.0.1:5000/recovery/'+ MailHash
+        link='http://127.0.0.1:5000/reset_password/'+ MailHash
         SendMail = 'reteclilpavia@gmail.com'
         password = 'robot1ca'
 
