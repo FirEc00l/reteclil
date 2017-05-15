@@ -32,8 +32,11 @@ def upload(request, session):
 				print result
 
 				id_sub = request.form.get('sub_sec')
+				print id_sub
 				id_user = session['user_id']
+				print id_user
 				description = request.form['desc']
+				print description
 
                                 print id_sub
                                 print id_user
