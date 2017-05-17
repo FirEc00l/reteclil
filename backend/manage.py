@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 1.3
-@date: 10/05/17
+@version: 1.3.2
+@date: 17/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -60,13 +60,13 @@ def manage(request, session):
 	def getAction(requestAction):
 		# print 'requestAction:', requestAction
 		switcher = {
-	        'create_user': create_user, # DEV
-			'delete_user': delete_user,
+	        'create_user': create_user, # TBT
+			'delete_user': delete_user, # TBT
 	        'delete_file': delete_file,
-	        'edit_description': edit_description, # DONE!
-			'update_user_password': update_user_password,
-			'create_link': create_link, # DONE!
-			'delete_link': delete_link, # ToBeTested
+	        'edit_description': edit_description, # DONE
+			'update_user_password': update_user_password, # DEV
+			'create_link': create_link, # DONE
+			'delete_link': delete_link, # DONE
 			'create_section': create_section,
 			'delete_section': delete_section,
 			'change_section': change_section,
@@ -76,22 +76,64 @@ def manage(request, session):
 		funAction = switcher[requestAction]
 		funAction()
 
+	# XXX: 1
 	def create_user():
-		pass
+		name = request.form['name']
+		surname = request.form['surname']
+		password = request.form['password']
+		user_type = request.form['user_type']
+		email = request.form['email']
+		username = request.form['username']
+		in_use = False
 
+		query = ''' SELECT username FROM user; '''
+
+		username_in_use = DB.query_db(query)
+
+		for item in username_in_use:
+			if item == username:
+				in_use = True
+
+		if in_use:
+				setResult('username_already_in_use') # TODO implementare in manage.html, cambiare con numeri
+		else:
+			query = '''INSERT INTO user
+			VALUES(NULL, "{name}", "{surname}", "{password}", "{user_type}", "{email}", "{username}", NULL);
+			'''.format(name, surname, password, user_type, email, username)
+
+			DB.query_db(query)
+			DB.close_db()
+
+			setResult('user_created') # TODO implementare in manage.html, cambiare con numeri
+
+	# XXX: 2
 	def delete_user():
-		pass
 
+		username = request.form['username']
 
+		query = ''' DELETE user WHERE username = "{}"; '''.format(username)
+
+		DB.query_db(query)
+		DB.close_db()
+
+		setResult('user_deleted') # TODO implementare in manage.html, cambiare con numeri
+
+	# XXX: 3
 	def delete_file():
 		pass
 
+	# XXX: 4
 	def edit_description():
 		DATA.edit('description', request.form['new_description'])
+		setResult('file_edited') # TODO implementare in manage.html, cambiare con numeri
 
+	# XXX: 5
 	def update_user_password():
-		pass
+		new_password = request.form['password']
 
+		# query = '''  '''
+
+	# XXX: 6
 	def create_link():
 		title = request.form['link_title']
 		url = request.form['link_url']
@@ -106,27 +148,31 @@ def manage(request, session):
 			new_link = {'title' : title, 'url' : url}
 			DATA.add('links', new_link)
 		else:
-			setResult('title_already_in_use')
-
+			setResult('title_already_in_use') # TODO implementare in manage.html, cambiare con numeri
+	# XXX: 7
 	def delete_link():
 		title = request.form['title']
 		DATA.remove('links',title)
 
+	# XXX: 8
 	def create_section():
 		pass
 
+	# XXX: 9
 	def delete_section():
 		pass
 
+	# XXX: 10
 	def change_section():
 		pass
 
+	# XXX: 11
 	def rename_file():
 		pass
 
 	query = '''
-            SELECT *
-            FROM user
+            SELECT id, username, user_type
+            FROM user;
             '''
 
 	user_list = DB.query_db(query)
@@ -141,7 +187,7 @@ def manage(request, session):
 
 	query = '''
             SELECT *
-            FROM file
+            FROM file;
             '''
 
 	file_list = DB.query_db(query)
@@ -167,6 +213,8 @@ def manage(request, session):
 
 	links = DATA.read('links')
 	description = DATA.read('description')
+
+	DB.close_db()
 
 	if request.method != 'POST':
 
