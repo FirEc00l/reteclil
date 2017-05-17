@@ -1,8 +1,8 @@
 '''
 recovery.py
 @author: Nicholas Sollazzo,Alesandro Capici,Cristian Garau
-@version: 1.4
-@date: 10/05/17
+@version: 1.6
+@date: 17/05/17
 @note: testato ma non funzionante
 '''
 
@@ -20,7 +20,7 @@ import time
 import backend.clil_utils.db as utils
 import random
 
-def recovery(request,session):
+def recovery(request,session, key=None):
 
     if 'user_id' in session:
         abort(403)
@@ -38,9 +38,6 @@ def recovery(request,session):
                         """ % user
         result=db.query_db(query)
         ReciveMail=result[0][0]
-
-
-        print 'ReciveMail:', ReciveMail
 
         data=time.strftime("%H:%M:%S")
         rand=''.join(random.choice('0123456789ABCDEF') for i in range(5))
@@ -83,3 +80,24 @@ def recovery(request,session):
                             """ % (MailHash,user)
         db.query_db(query)
         return render_template("recovery.html",success="modifica effettuata",logged=logged)
+    def reset_password(request,session,user, key):
+        print 'yolo'
+        if 'user_id' in session:
+            abort(403)
+        else:
+            logged = True
+            if key is not None:
+                db = utils.pysqlite3()
+                query = """SELECT key
+                           FROM user
+                           WHERE username="%s"
+                           """ % user
+                result=db.query_db(query)
+                if result[0][0]==key:
+                    NewPassword=request.form['NewPassword']
+                    print NewPassword
+                    return redirect(url_for('route_home'))
+                else:
+                    return redirect(url_for('route_reset_password'))
+            
+    

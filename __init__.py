@@ -17,7 +17,6 @@ import backend.home as home
 import backend.section as section
 import backend.login as login
 import backend.recovery as recovery
-import backend.reset_password as reset_password
 import backend.upload as upload
 import backend.account as account
 import backend.manage as manage
@@ -70,13 +69,13 @@ def route_login():
 def route_reset_password():
     return reset_password.reset_password(request, session)
 
-@app.route("/reset_password/<key>", methods = ['GET','POST'])
-def route_reset_password_key(key):
-    return reset_password.reset_password(request, session, key=key)
-
 @app.route("/recovery", methods = ['GET','POST'])
 def route_recovery():
     return recovery.recovery(request, session)
+
+@app.route("/recovery/key", methods = ['GET','POST'])
+def route_recovery_key(key):
+    return recovery.recovery(request, session , key=key)
 
 @app.route("/upload", methods = ['GET','POST'])
 def route_upload():
