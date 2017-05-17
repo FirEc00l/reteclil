@@ -23,21 +23,26 @@ def upload(request, session):
 		sections = db.query_db(query)
 
 		if request.method == 'POST':
-                        if request.form['title'] is None:
+                        title = name = request.form.get('title', None)
+                        print "title is null"
+                        if title is None:
                                 f = request.files['file']
                                 
                                 if f and allowed_file(f.filename):
-                                        #Controllare nome file nel db, se ce gia aggiungere qualchecos
+                                        '''Controllare nome file nel db, se ce gia aggiungere qualchecos
                                         query = "SELECT id_file FROM file WHERE name = '%s'" % f.filename
-                                        result = db.query_db(query)
+                                        result = db.query_db(query)'''
 
                                         id_sub = request.form.get('sub_sec')
+                                        print id_sub
                                         id_user = session['user_id']
+                                        print id_user
                                         description = request.form['desc']
-
-                                        if result == None:
-                                                query = "INSERT INTO file VALUES(NULL, '%s','%s','%s', '%s')" % (f.filename, id_user, id_sub, description)
-                                                db.query_db(query)
+                                        print description
+                                        
+                                        query = "INSERT INTO file VALUES(NULL, '%s','%s','%s', '%s')" % (f.filename, id_user, id_sub, description)
+                                        print query
+                                        db.query_db(query)
                                         f.save('./files/' + secure_filename(f.filename))
                                         return "success"
                                 else:
