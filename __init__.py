@@ -69,13 +69,14 @@ def route_login():
 def route_reset_password():
     return reset_password.reset_password(request, session)
 
-@app.route("/recovery", methods = ['GET','POST'])
-def route_recovery():
-    return recovery.recovery(request, session)
 
 @app.route("/recovery/key", methods = ['GET','POST'])
 def route_recovery_key(key):
     return recovery.recovery(request, session , key=key)
+
+@app.route("/recovery", methods = ['GET','POST'])
+def route_recovery():
+    return recovery.recovery(request, session)
 
 @app.route("/upload", methods = ['GET','POST'])
 def route_upload():
