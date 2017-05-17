@@ -50,7 +50,7 @@ def upload(request, session):
                                 description = request.form['description']
                                 id_user = session['user_id']
                                 
-                                query = "INSERT INTO event VALUES(NULL, '%s', '%s', '%s', '%s', '%s')" % (title, description, place, address, id_user)
+                                query = "INSERT INTO event VALUES(NULL, '%s', '%s', '%s', '%s', '%s', '%s')" % (title, date, description, place, address, id_user)
                                 db.query_db(query)
 
                                 return "success"

@@ -27,6 +27,8 @@ def recovery(request,session, key=None):
     else:
         logged = False
 
+    if key!=None:
+        return render_template("reset_password.html",logged=logged)
     if request.method != 'POST':
         return render_template("recovery.html",logged=logged)
     else:
@@ -45,7 +47,7 @@ def recovery(request,session, key=None):
         MailHash=generate_password_hash(ReciveMail)
 
 
-        link='http://127.0.0.1:5000/recovery/'+ MailHash
+        link='http://127.0.0.1:5000/reset_password/'+ MailHash
         SendMail = 'reteclilpavia@gmail.com'
         password = 'robot1ca'
 
@@ -80,7 +82,7 @@ def recovery(request,session, key=None):
                             """ % (MailHash,user)
         db.query_db(query)
         return render_template("recovery.html",success="modifica effettuata",logged=logged)
-    def reset_password(request,session,user, key):
+    def reset_password(request,session,key):
         print 'yolo'
         if 'user_id' in session:
             abort(403)
@@ -94,6 +96,7 @@ def recovery(request,session, key=None):
                            """ % user
                 result=db.query_db(query)
                 if result[0][0]==key:
+                    
                     NewPassword=request.form['NewPassword']
                     print NewPassword
                     return redirect(url_for('route_home'))
