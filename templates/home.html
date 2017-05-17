@@ -30,7 +30,7 @@
 			<h2 style="text-align: center;">Eventi</h2><br>
 			<div class="collection">
 			{% for item in event %}
-		        <li href="#!" class="collection-item">{{item.name}}<br>{{item.date}}</li>			
+		        <li href="#!" class="collection-item">{{item.name}} - {{item.desc}}<br>{{item.date}} @  - {{item.luogo}},  - {{item.indirizzo}}</li>			
 			{% endfor %}
 		    </div>
 		</div>
