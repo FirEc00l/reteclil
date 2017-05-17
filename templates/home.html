@@ -28,7 +28,11 @@
 	<div class="row parallax-container">
 		<div class="container grey lighten-4">
 			<h2 style="text-align: center;">Eventi</h2><br>
-			
+			<div class="collection">
+			{% for item in event %}
+		        <a href="#!" class="collection-item">{{item.name}}<br>{{item.date}}</a>			
+			{% endfor %}
+		    </div>
 		</div>
 	</div>
 </div>
