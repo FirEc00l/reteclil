@@ -30,8 +30,6 @@ def search(request, session, search_key=None):
                 filename = files[0]
                 file_format = filename.split(".")[-1]
                 dict_files.append({'name': files[0], 'description': files[1], 'extension': file_format})
-            print extension
-            print dict_files
             return render_template("search.html", logged=logged, dict_files=dict_files)
     else:
         return render_template("search.html", logged=logged)
