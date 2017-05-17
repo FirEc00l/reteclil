@@ -45,7 +45,7 @@ def recovery(request,session, key=None):
         MailHash=generate_password_hash(ReciveMail)
 
 
-        link='http://127.0.0.1:5000/reset_password/'+ MailHash
+        link='http://127.0.0.1:5000/recovery/'+ MailHash
         SendMail = 'reteclilpavia@gmail.com'
         password = 'robot1ca'
 
