@@ -23,32 +23,38 @@ def upload(request, session):
 		sections = db.query_db(query)
 
 		if request.method == 'POST':
-			f = request.files['file']
-			
-			if f and allowed_file(f.filename):
-				#Controllare nome file nel db, se ce gia aggiungere qualchecos
-				query = "SELECT id_file FROM file WHERE name = '%s'" % f.filename
-				result = db.query_db(query)
-				print result
+                        if request.form['title'] is None:
+                                f = request.files['file']
+                                
+                                if f and allowed_file(f.filename):
+                                        #Controllare nome file nel db, se ce gia aggiungere qualchecos
+                                        query = "SELECT id_file FROM file WHERE name = '%s'" % f.filename
+                                        result = db.query_db(query)
 
-				id_sub = request.form.get('sub_sec')
-				print id_sub
-				id_user = session['user_id']
-				print id_user
-				description = request.form['desc']
-				print description
+                                        id_sub = request.form.get('sub_sec')
+                                        id_user = session['user_id']
+                                        description = request.form['desc']
 
-                                print id_sub
-                                print id_user
-                                print description
+                                        if result == None:
+                                                query = "INSERT INTO file VALUES(NULL, '%s','%s','%s', '%s')" % (f.filename, id_user, id_sub, description)
+                                                db.query_db(query)
+                                        f.save('./files/' + secure_filename(f.filename))
+                                        return "success"
+                                else:
+                                        return "error"
+                        else:
+                                title = request.form['title']
+                                place = request.form['place']
+                                address = request.form['address']
+                                date = request.form['event_date']
+                                description = request.form['description']
+                                id_user = session['user_id']
+                                
+                                query = "INSERT INTO event VALUES(NULL, '%s', '%s', '%s', '%s', '%s')" % (title, description, place, address, id_user)
+                                db.query_db(query)
 
-				if result == None:
-                                        query = "INSERT INTO file VALUES(NULL, '%s','%s','%s', '%s')" % (f.filename, id_user, id_sub, description)
-                                        db.query_db(query)
-                                f.save('./files/' + secure_filename(f.filename))
-				return "success"
-			else:
-				return "error"
+                                return "success"
+                                
 		else:
 			sections_dict = []
 			for section in sections:
