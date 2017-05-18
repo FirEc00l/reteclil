@@ -65,7 +65,7 @@ def route_section(section):
 def route_login():
     return login.login(request, session)
 
-@app.route("/recovery/key", methods = ['GET','POST'])
+@app.route("/recovery/<key>", methods = ['GET','POST'])
 def route_recovery_key(key):
     return recovery.recovery(request, session , key=key)
 

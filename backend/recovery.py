@@ -27,8 +27,8 @@ def recovery(request,session, key=None):
     else:
         logged = False
 
-    if key!=None:
-        return render_template("reset_password.html",logged=logged)
+    if key != None:
+        return render_template("reset_password.html", logged = logged)
     if request.method != 'POST':
         return render_template("recovery.html",logged=logged)
     else:
@@ -47,7 +47,7 @@ def recovery(request,session, key=None):
         MailHash=generate_password_hash(ReciveMail)
 
 
-        link='http://127.0.0.1:5000/reset_password/'+ MailHash
+        link='http://127.0.0.1:5000/recovery/'+ MailHash
         SendMail = 'reteclilpavia@gmail.com'
         password = 'robot1ca'
 
@@ -58,6 +58,7 @@ def recovery(request,session, key=None):
         Oggetto="Recupero password"
         messaggio = FormatoMessaggio%(SendMail, ReciveMail, Oggetto, msg)
 
+        print link
         '''
         fp = open(textfile, 'rb')
         html = fp.read()
@@ -67,40 +68,42 @@ def recovery(request,session, key=None):
         msg.attach(part2)
 
         '''
-
-        #invio mail con nuova password
-        s = smtplib.SMTP('smtp.gmail.com:587')
-        s.starttls()
-        s.login(SendMail,password)
-        s.sendmail(SendMail,ReciveMail,messaggio)
-        #s.sendmail(SendMail,ReciveMail,msg.as_string())
-        s.quit()
+##
+##        #invio mail con nuova password
+##        s = smtplib.SMTP('smtp.gmail.com:587')
+##        s.starttls()
+##        s.login(SendMail,password)
+##        s.sendmail(SendMail,ReciveMail,messaggio)
+##        #s.sendmail(SendMail,ReciveMail,msg.as_string())
+##        s.quit()
 
         query = """UPDATE User
                    SET key="%s"
                    WHERE username="%s"
                             """ % (MailHash,user)
         db.query_db(query)
+
+        #session['key'] = MailHash
         return render_template("recovery.html",success="modifica effettuata",logged=logged)
-    def reset_password(request,session,key):
-        print 'yolo'
-        if 'user_id' in session:
-            abort(403)
-        else:
-            logged = True
-            if key is not None:
-                db = utils.pysqlite3()
-                query = """SELECT key
-                           FROM user
-                           WHERE username="%s"
-                           """ % user
-                result=db.query_db(query)
-                if result[0][0]==key:
-                    
-                    NewPassword=request.form['NewPassword']
-                    print NewPassword
-                    return redirect(url_for('route_home'))
-                else:
-                    return redirect(url_for('route_reset_password'))
+##    def reset_password(request,session,key):
+##        print 'yolo'
+##        if 'user_id' in session:
+##            abort(403)
+##        else:
+##            logged = True
+##            if key is not None:
+##                db = utils.pysqlite3()
+##                query = """SELECT key
+##                           FROM user
+##                           WHERE username="%s"
+##                           """ % user
+##                result=db.query_db(query)
+##                if result[0][0]==key:
+##                    
+##                    NewPassword=request.form['NewPassword']
+##                    print NewPassword
+##                    return redirect(url_for('route_home'))
+##                else:
+##                    return redirect(url_for('route_reset_password'))
             
     
