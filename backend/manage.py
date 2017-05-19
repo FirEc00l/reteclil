@@ -173,7 +173,7 @@ def manage(request, session):
 		pass
 
 	query = '''
-            SELECT username, user_type
+            SELECT name, surname, username, user_type
             FROM user;
             '''
 
