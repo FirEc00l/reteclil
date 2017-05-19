@@ -1,3 +1,4 @@
+# -*- coding: cp1252 -*-
 '''
 recovery.py
 @author: Nicholas Sollazzo,Alesandro Capici,Cristian Garau
@@ -19,16 +20,42 @@ import smtplib
 import time
 import backend.clil_utils.db as utils
 import random
+#no post reindirizzo template se è e cambio psw             
 
 def recovery(request,session, key=None):
-
     if 'user_id' in session:
         abort(403)
     else:
         logged = False
 
-    if key != None:
-        return render_template("reset_password.html", logged = logged)
+##    if key is not None:
+##        if request.method != 'POST':
+##            db = utils.pysqlite3()
+##            query = """SELECT key
+##                       FROM user
+##                       WHERE key="%s"
+##                       """ % key
+##            result=db.query_db(query)
+##            if result[0][0]==key:
+##                return render_template("reset_password.html",logged=logged)
+##            else:
+##                abort(403) 
+##        else:
+##            print 'garau'
+##            db = utils.pysqlite3()
+##            query = """SELECT key , id_user
+##                       FROM user
+##                       WHERE key="%s"
+##                         """ % key
+##            result=db.query_db(query)
+##            if result[0][0]==key:
+##                NewPassword=request.form['NewPassword']
+##                print NewPassword
+##                return redirect(url_for('route_home'))
+##            else:
+##                return redirect(url_for('route_reset_password'))
+##            
+        
     if request.method != 'POST':
         return render_template("recovery.html",logged=logged)
     else:
@@ -47,7 +74,7 @@ def recovery(request,session, key=None):
         MailHash=generate_password_hash(ReciveMail)
 
 
-        link='http://127.0.0.1:5000/recovery/'+ MailHash
+        link='http://127.0.0.1:5000/reset_password/'+ MailHash
         SendMail = 'reteclilpavia@gmail.com'
         password = 'robot1ca'
 
@@ -84,26 +111,5 @@ def recovery(request,session, key=None):
         db.query_db(query)
 
         #session['key'] = MailHash
-        return render_template("recovery.html",success="modifica effettuata",logged=logged)
-##    def reset_password(request,session,key):
-##        print 'yolo'
-##        if 'user_id' in session:
-##            abort(403)
-##        else:
-##            logged = True
-##            if key is not None:
-##                db = utils.pysqlite3()
-##                query = """SELECT key
-##                           FROM user
-##                           WHERE username="%s"
-##                           """ % user
-##                result=db.query_db(query)
-##                if result[0][0]==key:
-##                    
-##                    NewPassword=request.form['NewPassword']
-##                    print NewPassword
-##                    return redirect(url_for('route_home'))
-##                else:
-##                    return redirect(url_for('route_reset_password'))
-            
+        return render_template("recovery.html",success="modifica effettuata",logged=logged)         
     

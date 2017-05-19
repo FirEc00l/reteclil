@@ -17,6 +17,7 @@ import backend.home as home
 import backend.section as section
 import backend.login as login
 import backend.recovery as recovery
+import backend.reset_password as reset_password
 import backend.upload as upload
 import backend.account as account
 import backend.manage as manage
@@ -53,25 +54,29 @@ def too_long(e):
 def route_home():
     return home.home(session)
 
-@app.route("/section/<key>", methods = ['GET','POST'])
-def route_section_key(key):
-    return section.section(request, session, section=key)
-
 @app.route("/section", methods = ['GET','POST'])
-def route_section():
+def route_section_key():
     return section.section(request, session)
+
+@app.route("/section/<section>", methods = ['GET','POST'])
+def route_section(section):
+    return section.section(request, session, section=section)
 
 @app.route("/login", methods = ['GET','POST'])
 def route_login():
     return login.login(request, session)
 
-@app.route("/recovery/<key>", methods = ['GET','POST'])
-def route_recovery_key(key):
-    return recovery.recovery(request, session , key=key)
-
 @app.route("/recovery", methods = ['GET','POST'])
 def route_recovery():
     return recovery.recovery(request, session)
+
+@app.route("/reset_password", methods = ['GET','POST'])
+def route_reset_password():
+    return reset_password.reset_password(request, session)
+
+@app.route("/reset_password/<key>", methods = ['GET','POST'])
+def route_reset_password_key(key):
+    return reset_password.reset_password(request, session , key=key)
 
 @app.route("/upload", methods = ['GET','POST'])
 def route_upload():
