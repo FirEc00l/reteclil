@@ -21,18 +21,25 @@ def reset_password(request,session, key=None):
         abort(403)
     else:
         logged = False
-        
-    if request.method != 'POST':
+
+    if key:
+    
         db = utils.pysqlite3()
         query = """SELECT key
-                   FROM user
-                   WHERE key="%s"
-                   """ % key
+                       FROM user
+                       WHERE key="%s"
+                       """ % key
         result=db.query_db(query)
+        print result
+        
         if result[0][0]==key:
-            return redirect(url_for('route_reset_password_key/'+key), code=307)
+            if request.method == 'POST':
+                #cambio psw
+                return render_template('reset_password.html', logged=logged, success="sdfser")
+            else:
+                return render_template('reset_password.html', logged=logged, key=key)
         else:
             abort(403)
     else:
-        print 'garau'
-        return redirect(url_for('route_reset_password'))
+        return redirect(url_for("route_recovery"))
+            
