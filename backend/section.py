@@ -1,9 +1,13 @@
-#FILE EDIT BY Vincenzo Di Pietro
+'''
+section.py
+@author: Vincenzo Di Pietro
+@date: 8/5/17
+'''
 
 import backend.clil_utils.db as utils
 from flask import render_template, url_for, redirect
 
-def section(request, session, section=None):
+def section(request, session, key=None):
     db =  utils.pysqlite3()
     query = "SELECT section_name, id_section FROM section"
     sections = db.query_db(query)
@@ -24,16 +28,16 @@ def section(request, session, section=None):
     else:
         logged = False
 
-    if section is None:
+    if key is None:
         return render_template("section.html", logged=logged, sections=sections, card=None)
 
     else:
-        num = "1"
 
         query = """SELECT name, description
                 FROM file
-                WHERE id_sub="%s\"""" % str(section)
+                WHERE id_sub="%s\"""" % str(key)
         result_card = db.query_db(query)
+        
         card_dict = []
 
         if result_card is None :
@@ -42,7 +46,9 @@ def section(request, session, section=None):
         else:
 
             for sub_section in result_card:
-                    card_dict.append( {'title': sub_section[0], 'description' : sub_section[1]} )
+                    filename = sub_section[0]
+                    file_format = filename.split(".")[-1]
+                    card_dict.append( {'title': sub_section[0], 'description' : sub_section[1], 'extension': file_format} )
 
             card = card_dict
 

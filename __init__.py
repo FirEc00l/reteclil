@@ -56,7 +56,7 @@ def route_home():
 
 @app.route("/section/<key>", methods = ['GET','POST'])
 def route_section_key(key):
-    return section.section(request, session, section=key)
+    return section.section(request, session, key=key)
 
 @app.route("/section", methods = ['GET','POST'])
 def route_section():
@@ -96,7 +96,7 @@ def route_logout():
 
 @app.route("/forum", methods = ['GET','POST'])
 def route_forum():
-    return forum.forum(request)
+    return forum.forum(request, session)
 
 @app.route("/forum/<thread_id>", methods = ['GET','POST'])
 def route_thread():
