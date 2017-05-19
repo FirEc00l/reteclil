@@ -1,7 +1,7 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 1.3.2.1
+@version: 1.3.2.2
 @date: 19/05/17
 ===============================================
 manage(request):
@@ -34,12 +34,13 @@ import string
 
 # Costants
 DATA = pj('data/data.json')
-DB =  utils.pysqlite3()
 
 # global
 RESULT = 'Success'
 
 def manage(request, session):
+
+	DB =  utils.pysqlite3()
 
 	def initResult():
 		global RESULT
@@ -173,11 +174,26 @@ def manage(request, session):
 		pass
 
 	query = '''
-            SELECT name, surname, username, user_type
+            SELECT id_user
             FROM user;
             '''
 
 	user_list = DB.query_db(query)
+
+	user_list_dict = []
+	for user in user_list:
+		query = '''
+		SELECT name, surname, username, user_type
+		FROM user
+		WHERE id_user="{}";
+		'''.format( str(user[0]) )
+		result = DB.query_db(query)
+		user_list_dict.append( {'name':result[0][0],
+								'surname':result[0][1],
+								'username':result[0][2],
+								'user_type':result[0][3]} )
+
+	user_list = user_list_dict
 
 	if user_list is not None:
 		user_list = list(user_list)
@@ -216,9 +232,9 @@ def manage(request, session):
 	links = DATA.read('links')
 	description = DATA.read('description')
 
-	DB.close_db()
-
 	if request.method != 'POST':
+
+		DB.close_db()
 
 		return render_template('manage.html', user_list=user_list, file_list=file_list, section_list=section_list,
 								description=description, links=links, logged=logged) #Passare lista utenti e file da DB
@@ -226,5 +242,7 @@ def manage(request, session):
 
 		# print 'requestForm:', request.form
 		getAction(request.form['action'])
+
+		DB.close_db()
 
 		return getResult()
