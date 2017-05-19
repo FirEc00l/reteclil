@@ -28,9 +28,13 @@
 		<div class="container grey lighten-4">
 			<h2 style="text-align: center;">Eventi</h2><br>
 			<div class="collection">
-			{% for item in event %}
-		        <li href="#!" class="collection-item">{{item.name}} - {{item.desc}}<br>{{item.date}} @ {{item.luogo}},  {{item.indirizzo}}</li>			
-			{% endfor %}
+			{% if event %}
+				{% for item in event %}
+			        <li href="#!" class="collection-item">{{item.name}} - {{item.desc}}<br>{{item.date}} @ {{item.luogo}},  {{item.indirizzo}}</li>			
+				{% endfor %}
+			{% else %}
+			<li> Non ci sono nuovi eventi </li>
+			{% endif %}
 		    </div>
 		</div>
 	</div>
