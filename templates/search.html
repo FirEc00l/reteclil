@@ -1,21 +1,9 @@
 <!--
 ### 
-### Responsabile: Andronio
-### Ultima modifica di: Perini 08/05
+### Responsabile: Perini,Andronio
 ###
 -->
 
-<!--
-### Colori per le Card e File:
-###	
-### Audio (???) -> indigo lighten-1
-###	Video (Incerto) -> purple lighten-3
-### Cartelle Compresse -> yellow lighten-4
-### Fogli di calcolo -> green
-### Presentazioni -> orange darken-4 
-### PDF -> red
-### Immagini -> green lighten-2
--->
 {% extends "base.html" %}
 {% block title %}ReteCLIL - Search{% endblock %}
 
@@ -53,9 +41,9 @@
 		       	<div class="col m4">
 		       	{% if item.extension == "pdf" %}
 			        <div class="card red lighten-1">
-			    {% elif item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" %}
+			    {% elif item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" or item.extension == "ico" %}
 			        <div class="card blue lighten-3">
-			    {% elif item.extension == "mov" %}
+			    {% elif item.extension == "mov" or item.extension == "mp4" %}
 			        <div class="card purple lighten-2">
 			    {% elif item.extension == "mp3" or item.extension == "m4a" or item.extension == "wav"  %}
 			        <div class="card indigo lighten-2">
