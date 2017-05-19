@@ -6,6 +6,7 @@ Just kidding, my code is so good that you can understand it without comments
 """
 
 import backend.clil_utils.db as utils
+import calendar
 from  flask import render_template, url_for, redirect, abort, request
 from werkzeug.utils import secure_filename
 
@@ -52,10 +53,25 @@ def upload(request, session):
                                 place = request.form['place']
                                 address = request.form['address']
                                 date = request.form['event_date']
+                                time = request.form['event_time']
+                                datetime = date + time
                                 description = request.form['description']
                                 id_user = session['user_id']
+
+                                abbr_to_num = {name: num for num, name in enumerate(calendar.month_abbr) if num}
+
+                                day = date.split(' ')[0]
+                                if day < 10:
+                                        day = '0' + day
+                                month = date.split(' ')[1]
+                                month = month[0:3]
+                                month = abbr_to_num[month]
+                                year = date.split(' ')[2]
+                                year = year[2:]
+
+                                datetime = str(day) + "-" + str(month) + "-" + str(year) + " " + str(time)
                                 
-                                query = "INSERT INTO event VALUES(NULL, '%s', '%s', '%s', '%s', '%s', '%s')" % (title, date, description, place, address, id_user)
+                                query = "INSERT INTO event VALUES(NULL, '%s', '%s', '%s', '%s', '%s', '%s')" % (title, datetime, description, place, address, id_user)
                                 db.query_db(query)
 
                                 return "success"
