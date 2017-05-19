@@ -54,13 +54,13 @@ def too_long(e):
 def route_home():
     return home.home(session)
 
-@app.route("/section", methods = ['GET','POST'])
-def route_section_key():
-    return section.section(request, session)
+@app.route("/section/<key>", methods = ['GET','POST'])
+def route_section_key(key):
+    return section.section(request, session, section=key)
 
-@app.route("/section/<section>", methods = ['GET','POST'])
-def route_section(section):
-    return section.section(request, session, section=section)
+@app.route("/section", methods = ['GET','POST'])
+def route_section():
+    return section.section(request, session)
 
 @app.route("/login", methods = ['GET','POST'])
 def route_login():
