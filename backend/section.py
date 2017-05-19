@@ -1,4 +1,8 @@
-#FILE EDIT BY Vincenzo Di Pietro
+'''
+section.py
+@author: Vincenzo Di Pietro
+@date: 8/5/17
+'''
 
 import backend.clil_utils.db as utils
 from flask import render_template, url_for, redirect

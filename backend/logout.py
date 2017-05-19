@@ -1,3 +1,9 @@
+'''
+logout.py
+@author: Vincenzo Di Pietro
+@date: 8/5/17
+'''
+
 from flask import render_template, url_for, redirect
 
 def logout(session):
