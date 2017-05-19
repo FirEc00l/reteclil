@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 1.3.2
-@date: 17/05/17
+@version: 1.3.2.1
+@date: 19/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -131,7 +131,9 @@ def manage(request, session):
 	def update_user_password():
 		new_password = request.form['password']
 
-		# query = '''  '''
+		query = '''UPDATE user
+				   SET password = "{0}"
+				   WHERE username = "{1}";'''.format(new_password, username)
 
 	# XXX: 6
 	def create_link():
@@ -171,7 +173,7 @@ def manage(request, session):
 		pass
 
 	query = '''
-            SELECT id, username, user_type
+            SELECT username, user_type
             FROM user;
             '''
 

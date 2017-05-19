@@ -15,16 +15,16 @@ def section(request, session, section=None):
             result = db.query_db(query)
             sections_dict.append( {'name': section[0], 'list': result} )
 
-    sections = sections_dict    
-    
-    
+    sections = sections_dict
+
+
     if 'user_id' in session:
         logged = session['user_type']
-        
+
     else:
         logged = False
-    
-    if section==None:
+
+    if section is None:
         return render_template("section.html", logged=logged, sections=sections, card=None)
 
     else:
@@ -36,15 +36,14 @@ def section(request, session, section=None):
         result_card = db.query_db(query)
         card_dict = []
 
-        if result_card == None :
+        if result_card is None :
             return render_template("section.html", logged=logged, sections=sections, card=None)
-        
+
         else:
-                
+
             for sub_section in result_card:
                     card_dict.append( {'title': sub_section[0], 'description' : sub_section[1]} )
-                    
+
             card = card_dict
-                            
+
             return render_template("section.html", logged=logged, sections=sections, card=card)
-            
