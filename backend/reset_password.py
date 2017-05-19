@@ -30,12 +30,12 @@ def reset_password(request,session, key=None):
                        WHERE key="%s"
                        """ % key
         result=db.query_db(query)
-        print result
-        
         if result[0][0]==key:
             if request.method == 'POST':
                 #cambio psw
-                return render_template('reset_password.html', logged=logged, success="sdfser")
+                NewPassword=request.form['NewPassword']
+                print NewPassword
+                return render_template('reset_password.html', logged=logged, success="password modificata")
             else:
                 return render_template('reset_password.html', logged=logged, key=key)
         else:
