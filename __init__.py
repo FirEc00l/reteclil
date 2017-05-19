@@ -96,7 +96,7 @@ def route_logout():
 
 @app.route("/forum", methods = ['GET','POST'])
 def route_forum():
-    return forum.forum(request)
+    return forum.forum(request, session)
 
 @app.route("/forum/<thread_id>", methods = ['GET','POST'])
 def route_thread():
