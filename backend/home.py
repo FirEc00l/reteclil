@@ -25,9 +25,9 @@ def home(session):
     result = db.query_db(query)
 
     event = []
-
-    for events in result:
-        event.append({'name': events[0], 'date': events[1], 'desc': events[2], 'luogo': events[3], 'indirizzo': events[4]})
+    if event:
+        for events in result:
+            event.append({'name': events[0], 'date': events[1], 'desc': events[2], 'luogo': events[3], 'indirizzo': events[4]})
 
     links = DATA.read('links')
     description = DATA.read('description')
