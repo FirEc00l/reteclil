@@ -2,8 +2,8 @@
 '''
 recovery.py
 @author: Nicholas Sollazzo,Alesandro Capici,Cristian Garau
-@version: 1.6
-@date: 17/05/17
+@version: 1.8
+@date: 19/05/17
 @note: testato ma non funzionante
 '''
 
