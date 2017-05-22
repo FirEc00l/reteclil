@@ -13,9 +13,9 @@
 <br>
 <h2 align="center">Carica</h2>
 <br>
-	<div class="row">
-		<div class="col s6 offset-m3">
-			<ul class="collapsible" data-collapsible="accordion">
+<div class="row">
+	<div class="col s6 offset-m3">
+		<ul class="collapsible" data-collapsible="accordion">
 			<li>
 				<div class="collapsible-header"><i class="material-icons">attach_file</i>Carica Documento</div>
 				<div class="collapsible-body">
@@ -157,4 +157,51 @@
            selectYears: 15 // Creates a dropdown of 15 years to control year
        });
    </script>
-   {% endblock %}
+   <style type="text/css">
+   	.picker { outline: none; } /* Optional feature */
+   	/* Header - Day of the week */
+   	.picker__weekday-display { background-color: #1976d2;
+   		font-weight: 600;}
+   		/* Body - Today info */
+   		.picker__date-display { background-color: #2196f3; }
+   		/* Buttons of actions */
+   		.picker__nav--prev:hover { background-color: #bbdefb; }
+   		.picker__nav--next:hover { background-color: #bbdefb; }
+   		.picker__nav--prev:before {
+   			border-left: 0;
+   			border-right: 0.75em solid #2196f3;
+   		}
+   		.picker__nav--next:before {
+   			border-right: 0;
+   			border-left: 0.75em solid #2196f3;
+   		}
+   		.picker__today { color: #1e88e5; }
+   	.picker__clear { /* If you want to customize */ }
+   	.picker__close { color: #1e88e5; }
+   	.btn-flat.picker__today:active { background-color: #bbdefb; }
+   	.btn-flat.picker__close:active { background-color: #bbdefb; }
+   	.btn-flat.picker__clear:active { background-color: #bbdefb; }
+   	/* Select months of the year */
+   	.picker__select--month.browser-default {
+   		display: inline;
+   		background-color: #FFFFFF;
+   		width: 34%;
+   		border: none;
+   		outline: none;
+   	}
+   	/* Every month of the year except: today */
+   .picker__day { /* If you want to customize */ }
+.picker__day:hover { /* If you want to customize */ }
+.picker__day--infocus:hover { color: #1976d2; }
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected { 
+	color: #FFFFFF;
+	font-weight: 700;
+}
+.picker__day.picker__day--infocus.picker__day--selected.picker__day--highlighted { background-color: #2196f3; }
+/* Today */
+.picker__day.picker__day--infocus.picker__day--today.picker__day--selected.picker__day--highlighted { background-color: #2196f3; }
+.picker__day.picker__day--today 
+{ color: #1976d2;
+	font-weight: 700; }
+</style>
+{% endblock %}
