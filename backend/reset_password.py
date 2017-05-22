@@ -39,6 +39,11 @@ def reset_password(request,session, key=None):
                         WHERE key="%s"
                         """ % (NewPassword,key)
                 db.query_db(query)
+                query = """UPDATE User
+                        SET key=NULL
+                        WHERE key="%s"
+                        """ %key
+                db.query_db(query)
                 
                 return render_template('reset_password.html', logged=logged, success="password modificata")
             else:
