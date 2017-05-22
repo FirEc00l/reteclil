@@ -9,36 +9,56 @@
 
 {% block content %}
 <title>Rete CLIL - Forum</title>
+ <style>
+
+    .Abbrevia {
+      -o-text-overflow: ellipsis;   /* Opera */
+      text-overflow:    ellipsis;   /* IE, Safari (WebKit) */
+      overflow:hidden;              /* don't show excess chars */
+      white-space:nowrap;           /* force single line */
+    }
+    </style>
 <br>
 <br>
 <h2 align="center">Forum</h2>
 <br>
+{% if discussion %}
 <div class="input-field col s6 offset-m3">
 	<ul class="collection">
-		<li class="collection-item avatar">
-			<i class="material-icons circle blue">perm_identity</i>
-			<span class="title">Title</span>
-			<p>First Line <br>
-				Second Line
-			</p>
-   		</li>
-    	<li class="collection-item avatar">
-      		<i class="material-icons circle green">insert_chart</i>
-      		<span class="title">Title</span>
-      		<p>First Line <br>
-         		Second Line
-      		</p>
-      		<a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
-    	</li>
-    	<li class="collection-item avatar">
-      		<i class="material-icons circle red">play_arrow</i>
-      		<span class="title">Title</span>
-      		<p>First Line <br>
-         		Second Line
-     		</p>
-      		<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-    		</li>
-  	</ul>
+<!--da fixare nomi da jinja-->
+  
+    {% for discussion in discussions %}
+    <a href="/forum/{{sub_forum[1]}}">
+    <li class="collection-item avatar">
+      <i class="material-icons circle blue">question_answer</i>
+      <span class="title Abbrevia">{{discussion.title}}</span>
+      <p class="Abbrevia">{{discussion.arguments}}
+     </p>
+     </a>
+     <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+   </li>
+   {% endfor %}
+ </ul>
+
+ {% else %}
+ <!--da vedere row e dimensione in col-->
+ <div class="row" >
+  <div class="col m4 offset-m4"><p align="center">Attualmente non sono presenti discussioni.Puo crearne una nuova premento sul tasto dal simbolo "+" in basso a sinistra</p></div>
+</div>
+{% endif %}
+<!-- Modal Trigger -->
+  <a class="btn-floating btn-large waves-effect waves-light blue" href="#modal1"><i class="material-icons">add</i></a>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
