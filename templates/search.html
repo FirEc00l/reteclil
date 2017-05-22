@@ -66,7 +66,7 @@
 		            <h4 style="background-color: #e0e0e0 ">{{item.name}}</h4>
 		            <hr>
 		            {% if item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" or item.extension == "ico" %}
-		            	<img src="/static/files/{{item.name}}">
+		            	<img src="/static/files/{{item.name}}" style="max-height: 1000px; max-width: 650px;" >
 		            {% else %}
 		            	<p>{{item.description}}</p>
 		            {% endif %}
