@@ -57,22 +57,21 @@ def recovery(request,session, key=None):
         messaggio = FormatoMessaggio%(SendMail, ReciveMail, Oggetto, msg)
 
         print link
-        '''
-        fp = open(textfile, 'rb')
+        
+        fp = open(templates/Mail, 'rb')
         html = fp.read()
         part1 = MIMEText(messaggio, 'plain')
         part2 = MIMEText(html, 'html')
         msg.attach(part1)
         msg.attach(part2)
 
-        '''
 
         #invio mail con nuova password
         s = smtplib.SMTP('smtp.gmail.com:587')
         s.starttls()
         s.login(SendMail,password)
-        s.sendmail(SendMail,ReciveMail,messaggio)
-        #s.sendmail(SendMail,ReciveMail,msg.as_string())
+        #s.sendmail(SendMail,ReciveMail,messaggio)
+        s.sendmail(SendMail,ReciveMail,msg.as_string())
         s.quit()
 
         query = """UPDATE User
