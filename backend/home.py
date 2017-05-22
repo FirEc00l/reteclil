@@ -25,7 +25,8 @@ def home(session):
     result = db.query_db(query)
 
     event = []
-    if event:
+
+    if result:
         for events in result:
             event.append({'name': events[0], 'date': events[1], 'desc': events[2], 'luogo': events[3], 'indirizzo': events[4]})
 
