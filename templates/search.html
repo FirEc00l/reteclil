@@ -66,10 +66,11 @@
 		            <h4 style="background-color: #e0e0e0 ">{{item.name}}</h4>
 		            <hr>
 		            {% if item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" or item.extension == "ico" %}
-		            	<img src="/static/files/{{item.name}}" style="max-height: 1000px; max-width: 650px;" >
+		            	<img src="/static/files/{{item.name}}" style="max-height: 500px; max-width: 650px;" >
 		            {% else %}
 		            	<p>{{item.description}}</p>
 		            {% endif %}
+		            <br>
 		            <form> <!-- Bottone -->
 		            <a href="/static/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
 		            </form>
