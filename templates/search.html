@@ -60,11 +60,14 @@
 	    	</div>
 	    </div>
 		{% for item in dict_files %} <!-- Stampa dei modal -->
-			<div id="modalfor{{item.name}}" class="modalfor modal" style=" z-index: 1003; display: none; opacity: .5; transform: scaleX(0.7); top: 154.742px;">
+			<div id="modalfor{{item.name}}" class="modalfor modal" style=" z-index: 1003; display: none; opacity: .5; transform: scaleX(0.7); top: 154.742px; background-color: #e0e0e0;">
           		<div class="modal-content">
-		            <h4>{{item.name}}</h4>
+		            <h4 style="background-color: #e0e0e0 ">{{item.name}}</h4>
+		            <hr>
 		            <p>{{item.description}}</p>
-		            <form name="{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right"><i class="material-icons">vertical_align_bottom</i></form>
+		            <form> <!-- Bottone -->
+		            <a href="/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" download><i class="material-icons">vertical_align_bottom</i></a>
+		            </form>
           		</div>
           	</div>
           	<!-- Fine Modal -->
@@ -94,7 +97,7 @@
 				        </form>
 				    </div>
 		     	</div>
-		     	<!-- ######################################### Prossima Carta ######################################### -->
+		     	<!-- ### Prossima Carta ### -->
 		{% endfor %}
 		   	</div>
     	{% if error %}
