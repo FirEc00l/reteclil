@@ -20,6 +20,7 @@
 		.modalfor {
 	    	-o-text-overflow: white-space:nowrap;           /* force single line */
 	    	text-overflow: white-space:nowrap;           /* force single line */
+	    	word-wrap: break-word;
 		}
 	</style>
 	<script>
@@ -64,10 +65,15 @@
           		<div class="modal-content">
 		            <h4 style="background-color: #e0e0e0 ">{{item.name}}</h4>
 		            <hr>
-		            <p>{{item.description}}</p>
+		            {% if item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" or item.extension == "ico" %}
+		            	<img src="/static/files/{{item.name}}" style="max-height: 1000px; max-width: 650px;" >
+		            {% else %}
+		            	<p>{{item.description}}</p>
+		            {% endif %}
 		            <form> <!-- Bottone -->
-		            <a href="/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" download><i class="material-icons">vertical_align_bottom</i></a>
+		            <a href="/static/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
 		            </form>
+		            <br>
           		</div>
           	</div>
           	<!-- Fine Modal -->
