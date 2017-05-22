@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 1.3.2.2
-@date: 19/05/17
+@version: 1.3.3
+@date: 22/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -63,15 +63,15 @@ def manage(request, session):
 		switcher = {
 	        'create_user': create_user, # TBT
 			'delete_user': delete_user, # TBT
-	        'delete_file': delete_file,
 	        'edit_description': edit_description, # DONE
-			'update_user_password': update_user_password, # DEV
+			'update_user_password': update_user_password, # TBT
 			'create_link': create_link, # DONE
 			'delete_link': delete_link, # DONE
 			'create_section': create_section,
 			'delete_section': delete_section,
 			'change_section': change_section,
-			'rename_file': rename_file
+			'rename_file': rename_file,
+			'delete_file': delete_file
 	    }
 		initResult()
 		funAction = switcher[requestAction]
@@ -120,23 +120,22 @@ def manage(request, session):
 		setResult('user_deleted') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 3
-	def delete_file():
-		pass
-
-	# XXX: 4
 	def edit_description():
 		DATA.edit('description', request.form['new_description'])
 		setResult('file_edited') # TODO implementare in manage.html, cambiare con numeri
 
-	# XXX: 5
+	# XXX: 4
 	def update_user_password():
-		new_password = request.form['password']
+		new_password = request.form['new_password']
+		username = request.form['username']
 
 		query = '''UPDATE user
 				   SET password = "{0}"
 				   WHERE username = "{1}";'''.format(new_password, username)
 
-	# XXX: 6
+		setResult('password_updated') # TODO implementare in manage.html, cambiare con numeri
+
+	# XXX: 5
 	def create_link():
 		title = request.form['link_title']
 		url = request.form['link_url']
@@ -152,25 +151,30 @@ def manage(request, session):
 			DATA.add('links', new_link)
 		else:
 			setResult('title_already_in_use') # TODO implementare in manage.html, cambiare con numeri
-	# XXX: 7
+
+	# XXX: 6
 	def delete_link():
 		title = request.form['title']
 		DATA.remove('links',title)
 
-	# XXX: 8
+	# XXX: 7
 	def create_section():
 		pass
 
-	# XXX: 9
+	# XXX: 8
 	def delete_section():
 		pass
 
-	# XXX: 10
+	# XXX: 9
 	def change_section():
 		pass
 
-	# XXX: 11
+	# XXX: 10
 	def rename_file():
+		pass
+
+	# XXX: 11
+	def delete_file():
 		pass
 
 	query = '''
@@ -179,15 +183,22 @@ def manage(request, session):
             '''
 
 	user_list = DB.query_db(query)
+	print 'user_list:', user_list
 
 	user_list_dict = []
 	for user in user_list:
+
+		print 'user', user
+
 		query = '''
 		SELECT name, surname, username, user_type
 		FROM user
 		WHERE id_user="{}";
 		'''.format( str(user[0]) )
 		result = DB.query_db(query)
+
+		print 'result', result
+
 		user_list_dict.append( {'name':result[0][0],
 								'surname':result[0][1],
 								'username':result[0][2],
@@ -195,13 +206,11 @@ def manage(request, session):
 
 	user_list = user_list_dict
 
-	if user_list is not None:
-		user_list = list(user_list)
-	else:
+	print user_list
+
+	if user_list is None:
 		user_list = []
 		print 'Query returned no result'
-
-	user_list = list( DB.query_db(query) )
 
 	query = '''
             SELECT *
