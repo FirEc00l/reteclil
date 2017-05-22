@@ -14,19 +14,20 @@ from flask import url_for
 from flask import redirect
 from werkzeug.security import generate_password_hash, \
      check_password_hash
+
 from email.mime.text import MIMEText as mt
 # Import smtplib for the actual sending function
 import smtplib
 import time
 import backend.clil_utils.db as utils
 import random
-#no post reindirizzo template se è e cambio psw             
+#no post reindirizzo template se ï¿½ e cambio psw
 
 def recovery(request,session, key=None):
     if 'user_id' in session:
         abort(403)
     else:
-        logged = False    
+        logged = False
     if request.method != 'POST':
         return render_template("recovery.html",logged=logged)
     else:
@@ -57,22 +58,23 @@ def recovery(request,session, key=None):
         messaggio = FormatoMessaggio%(SendMail, ReciveMail, Oggetto, msg)
 
         print link
-        '''
-        fp = open(textfile, 'rb')
-        html = fp.read()
-        part1 = MIMEText(messaggio, 'plain')
-        part2 = MIMEText(html, 'html')
-        msg.attach(part1)
-        msg.attach(part2)
 
-        '''
+        with open('templates/Mail.html', 'rb') as fp:
+            html = fp.read()
+
+        part1 = mt(messaggio, 'plain')
+        part2 = mt(html, 'html')
+
+        # msg += str(part1)
+        # msg += str(part2)
+
 
         #invio mail con nuova password
         s = smtplib.SMTP('smtp.gmail.com:587')
         s.starttls()
         s.login(SendMail,password)
-        s.sendmail(SendMail,ReciveMail,messaggio)
-        #s.sendmail(SendMail,ReciveMail,msg.as_string())
+        #s.sendmail(SendMail,ReciveMail,messaggio)
+        s.sendmail(SendMail,ReciveMail,msg.as_string())
         s.quit()
 
         query = """UPDATE User
@@ -80,5 +82,4 @@ def recovery(request,session, key=None):
                    WHERE username="%s"
                             """ % (MailHash,user)
         db.query_db(query)
-        return render_template("recovery.html",success="modifica effettuata",logged=logged)         
-    
+        return render_template("recovery.html",success="modifica effettuata",logged=logged)
