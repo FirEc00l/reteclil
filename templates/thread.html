@@ -1,1 +1,40 @@
-<!DOCTYPE html>
+###
+### Modifiche:
+###				Vladyka 22/05/17
+###
+###
+###
+###
+{% extends "base.html" %}
+{% block title %}Forum{% endblock %}
+
+{% block content %}
+<br><br>
+<h3 align="center">Thread</h3><br>
+<div class="row">
+	<div class="col s8 offset-m2">
+		<div class="col s12 ">
+			<div class="card grey lighten-3">
+				<div class="card-content white-text">
+					<span class="card-title black-text">{{post.nome}}</span>
+					<p class="black-text">{{post.text}}</p>
+				</div>
+				<div class="card-action">
+					<p align="margin-left">{{post.date}}</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<form action="/thread" method="POST" class="col s12">
+				<div class="row">
+					<div class="input-field col s12">
+						<textarea id="textarea1" class="materialize-textarea"></textarea>
+						<label for="textarea1">Agiungi</label>
+					</div>
+				</div>
+			</form>
+		</div>
+		<button type="submit" style="margin-left: 45%" class="waves-effect waves-light btn light-blue darken-3" >agiungi</button>
+	</div>
+</div>
+{% endblock %}
