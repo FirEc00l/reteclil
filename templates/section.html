@@ -1,8 +1,22 @@
-    <!-- Navbar goes here -->
+<!--
+### 
+### Responsabile: Alemanni
+### Ultima modifica di: Alemanni 19/05
+###
+-->
     {% extends "base.html" %}
 
     {% block content %}
     <title>Rete CLIL - Documents</title>
+    <style>
+
+    .Abbrevia {
+      -o-text-overflow: ellipsis;   /* Opera */
+      text-overflow:    ellipsis;   /* IE, Safari (WebKit) */
+      overflow:hidden;              /* don't show excess chars */
+      white-space:nowrap;           /* force single line */
+    }
+    </style>
     <div class="row">
 
       <div class="col s3 fixed ">
@@ -44,9 +58,9 @@
                         <div class="card green">
                           {% endif %}
                           <div class="card-content">
-                            <span class="card-title">{{item.name}}</span>
+                            <span class="Abbrevia card-title">{{item.name}}</span>
                             <a class="btn-floating waves-effect waves-light blue right"><i class="material-icons">vertical_align_bottom</i></a>
-                            <p>{{item.description}}</p>
+                            <p class="Abbrevia">{{item.description}}</p>
                           </div>
                         </div>
                       </div>
@@ -54,7 +68,7 @@
 
                       {% else %}
                       <div class="row" >
-                        <div class="col m4"><p>Non sono presenti file</p></div>
+                        <div class="col m4"><p>All'interno della sezione scelta non sono presenti file. Scelga un'altra sezione.</p></div>
                       </div>
                       {% endif %}
 
