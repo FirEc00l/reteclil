@@ -8,5 +8,6 @@ import backend.clil_utils.db as utils
 from flask import render_template, url_for, redirect
 
 def forum(request, session):
+    logged = False;
 
-    return render_template("forum.html")
+    return render_template("forum.html", logged = logged)
