@@ -44,7 +44,7 @@ def upload(request, session):
                                         query = "INSERT INTO file VALUES(NULL, '%s','%s','%s', '%s')" % (f.filename, id_user, id_sub, description)
                                         print query
                                         db.query_db(query)
-                                        f.save('./files/' + secure_filename(f.filename))
+                                        f.save('./static/files/' + secure_filename(f.filename))
                                         return "success"
                                 else:
                                         return "error"
