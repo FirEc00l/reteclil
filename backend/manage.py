@@ -1,7 +1,7 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 1.3.3
+@version: 1.3.8
 @date: 22/05/17
 ===============================================
 manage(request):
@@ -61,23 +61,40 @@ def manage(request, session):
 	def getAction(requestAction):
 		# print 'requestAction:', requestAction
 		switcher = {
+			'edit_description': edit_description, # DONE
 	        'create_user': create_user, # TBT
 			'delete_user': delete_user, # TBT
-	        'edit_description': edit_description, # DONE
 			'update_user_password': update_user_password, # TBT
 			'create_link': create_link, # DONE
 			'delete_link': delete_link, # DONE
-			'create_section': create_section,
-			'delete_section': delete_section,
-			'change_section': change_section,
-			'rename_file': rename_file,
-			'delete_file': delete_file
+			'create_section': create_section, # TBT
+			'delete_section': delete_section, # TBT
+			'change_file_section': change_file_section, # TBT
+			'rename_file': rename_file, # TBT
+			'delete_file': delete_file # TBT
 	    }
 		initResult()
 		funAction = switcher[requestAction]
 		funAction()
 
 	# XXX: 1
+	def edit_description():
+		DATA.edit('description', request.form['new_description'])
+
+		setResult('file_edited') # TODO implementare in manage.html, cambiare con numeri
+
+	# XXX: 2
+	def delete_user():
+		username = request.form['username']
+
+		query = ''' DELETE user WHERE username = "{}"; '''.format(username)
+
+		DB.query_db(query)
+		DB.close_db()
+
+		setResult('user_deleted') # TODO implementare in manage.html, cambiare con numeri
+
+	# XXX: 3
 	def create_user():
 		name = request.form['name']
 		surname = request.form['surname']
@@ -94,6 +111,7 @@ def manage(request, session):
 		for item in username_in_use:
 			if item == username:
 				in_use = True
+				break
 
 		if in_use:
 				setResult('username_already_in_use') # TODO implementare in manage.html, cambiare con numeri
@@ -107,23 +125,6 @@ def manage(request, session):
 
 			setResult('user_created') # TODO implementare in manage.html, cambiare con numeri
 
-	# XXX: 2
-	def delete_user():
-
-		username = request.form['username']
-
-		query = ''' DELETE user WHERE username = "{}"; '''.format(username)
-
-		DB.query_db(query)
-		DB.close_db()
-
-		setResult('user_deleted') # TODO implementare in manage.html, cambiare con numeri
-
-	# XXX: 3
-	def edit_description():
-		DATA.edit('description', request.form['new_description'])
-		setResult('file_edited') # TODO implementare in manage.html, cambiare con numeri
-
 	# XXX: 4
 	def update_user_password():
 		new_password = request.form['new_password']
@@ -132,6 +133,9 @@ def manage(request, session):
 		query = '''UPDATE user
 				   SET password = "{0}"
 				   WHERE username = "{1}";'''.format(new_password, username)
+
+		DB.query_db(query)
+		DB.close_db()
 
 		setResult('password_updated') # TODO implementare in manage.html, cambiare con numeri
 
@@ -157,38 +161,95 @@ def manage(request, session):
 		title = request.form['title']
 		DATA.remove('links',title)
 
+		setResult('link_deleted') # TODO implementare in manage.html, cambiare con numeri
+
 	# XXX: 7
 	def create_section():
-		pass
+		section_name = requesr.form['section_name']
+
+		query = ''' SELECT section_name FROM section; '''
+
+		section_name_in_use = DB.query_db(query)
+
+		for item in section_name_in_use:
+			if item == section_name:
+				in_use = True
+				break
+
+		if in_use:
+			setResult('section_name_already_in_use') # TODO implementare in manage.html, cambiare con numeri
+		else:
+			query = '''INSERT INTO section
+					   VALUES(NULL, "{0}");
+					'''.format(section_name)
+
+			DB.query_db(query)
+			DB.close_db()
+
+			setResult('section_created') # TODO implementare in manage.html, cambiare con numeri
+
 
 	# XXX: 8
 	def delete_section():
-		pass
+		section_name = request.form['section_name']
+
+		query = ''' DELETE section WHERE section_name = "{}"; '''.format(section_name)
+
+		DB.query_db(query)
+		DB.close_db()
+
+		setResult('section_deleted') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 9
-	def change_section():
-		pass
+	def change_file_section():
+		id_file = request.form['id_file']
+		new_id_sub = request.form['new_id_sub']
+
+		query = '''UPDATE file
+				   SET id_sub = "{0}"
+				   WHERE id_file = "{1}";'''.format(new_id_sub, id_file)
+
+		DB.query_db(query)
+		DB.close_db()
+
+		setResult('changed_file_section') # TODO implementare in manage.html, cambiare con numeri
+
 
 	# XXX: 10
 	def rename_file():
-		pass
+		id_file = request.form['id_file']
+		new_name = request.form['new_name']
+
+		query = '''UPDATE file
+				   SET name = "{0}"
+				   WHERE id_file = "{1}";'''.format(new_name, id_file)
+
+		DB.query_db(query)
+		DB.close_db()
+
+		setResult('filename_changed') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 11
 	def delete_file():
-		pass
+		id_file = request.form['id_file']
 
+		query = ''' DELETE file WHERE id_file = "{}"; '''.format(id_file)
+
+		DB.query_db(query)
+		DB.close_db()
+
+		setResult('file_deleted') # TODO implementare in manage.html, cambiare con numeri
+
+	# XXX: 0
 	query = '''
             SELECT id_user
             FROM user;
             '''
 
 	user_list = DB.query_db(query)
-	print 'user_list:', user_list
 
 	user_list_dict = []
 	for user in user_list:
-
-		print 'user', user
 
 		query = '''
 		SELECT name, surname, username, user_type
@@ -205,8 +266,6 @@ def manage(request, session):
 								'user_type':result[0][3]} )
 
 	user_list = user_list_dict
-
-	print user_list
 
 	if user_list is None:
 		user_list = []
