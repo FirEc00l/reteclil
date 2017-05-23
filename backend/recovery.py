@@ -55,11 +55,10 @@ def recovery(request,session, key=None):
         #formattazzione messaggio
         mime=MIMEMultipart('alternative')
         FormatoMessaggio = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s"
-        msg= "E' stata ricevuta una richiesta di reimpostazione password, per cambiarla accedere al link seguente : "+ link
+        msg= "E' stata ricevuta una richiesta di reimpostazione password, per cambiarla accedere al link seguente : <a href=\"{}\">qui <\a> ".format(link)
         Oggetto="Recupero password"
         messaggio = FormatoMessaggio%(SendMail, ReciveMail, Oggetto, msg)
 
-        print link
         
         fp = open('templates/Mail.html', 'rb')
         html = fp.read()
@@ -69,7 +68,7 @@ def recovery(request,session, key=None):
         mime.attach(part2)
 
         
-        #invio mail con nuova password
+        #invio mail con link
         s = smtplib.SMTP('smtp.gmail.com:587')
         s.starttls()
         s.login(SendMail,password)

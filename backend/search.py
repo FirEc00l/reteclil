@@ -17,7 +17,8 @@ def search(request, session, search_key=None):
         query = """
                 SELECT name, description
                 FROM file
-                WHERE name LIKE '%{}%'""".format(search_key)
+                WHERE name LIKE '%{}%'
+                OR description LIKE '%{}%'""".format(search_key, search_key)
 
         files = db.query_db(query)
         
