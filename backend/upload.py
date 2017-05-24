@@ -20,7 +20,6 @@ def upload(request, session):
 
 		db = utils.pysqlite3()
 		query = "SELECT section_name, id_section FROM section"
-		print query
 		sections = db.query_db(query)
 
 		if request.method == 'POST':
@@ -35,19 +34,21 @@ def upload(request, session):
                                         result = db.query_db(query)'''
 
                                         id_sub = request.form.get('sub_sec')
-                                        print id_sub
                                         id_user = session['user_id']
-                                        print id_user
                                         description = request.form['desc']
-                                        print description
                                         
                                         query = "INSERT INTO file VALUES(NULL, '%s','%s','%s', '%s')" % (f.filename, id_user, id_sub, description)
-                                        print query
                                         db.query_db(query)
                                         f.save('./static/files/' + secure_filename(f.filename))
-                                        return "success"
+
+
+                                        print "inserito un file giusto"
+                                        return redirect(url_for('route_upload', sections=sections, logged=logged, success = True))
+                                        #return render_template("upload.html", sections=sections, logged=logged, success = True)
+                                        #return "success"
                                 else:
-                                        return "error"
+                                        return render_template("upload.html", sections=sections, logged=logged, success = False)
+                                        #return "error"
                         else:
                                 title = request.form['title']
                                 place = request.form['place']
@@ -73,8 +74,9 @@ def upload(request, session):
                                 
                                 query = "INSERT INTO event VALUES(NULL, '%s', '%s', '%s', '%s', '%s', '%s')" % (title, datetime, description, place, address, id_user)
                                 db.query_db(query)
-
-                                return "success"
+                                print "inserito evento giusto"
+                                return render_template("upload.html", sections=sections, logged=logged, success = True)
+                                #return "success"
                                 
 		else:
 			sections_dict = []
@@ -86,6 +88,8 @@ def upload(request, session):
 				sections_dict.append( {'name': section[0], 'list': result} )
 
 			sections = sections_dict
+			print "return pagina vuota"
+			#return redirect(url_for('route_upload', sections=sections, logged=logged, success = True))
 			return render_template("upload.html", sections=sections, logged=logged)
 	else:
 		abort(403)
