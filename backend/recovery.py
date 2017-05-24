@@ -78,10 +78,13 @@ def recovery(request,session, key=None):
         #s.sendmail(SendMail,ReciveMail,messaggio)
         s.sendmail(SendMail,ReciveMail,mime_msg.as_string().replace('placeholder', link))
         s.quit()
-
+        if s :
+            success='modifica effettuata'
+        else:
+            success='errore riprovare'
         query = """UPDATE User
                    SET key="%s"
                    WHERE username="%s"
                             """ % (MailHash,user)
         db.query_db(query)
-        return render_template("recovery.html",success="modifica effettuata",logged=logged)
+        return render_template("recovery.html",success,logged=logged)
