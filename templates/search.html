@@ -35,8 +35,10 @@
 		    });
 			$('.ShowButton').modal();
 			$("#search_key").bind("enterKey",function(e){
-				a=$("#search_key").val(); // Prende il valore da search
-				$(location).attr('href', '/search/'+a); // Lo mette nella URL
+				if($("#search_key").is(':valid')){
+					a=$("#search_key").val(); // Prende il valore da search
+					$(location).attr('href', '/search/'+a); // Lo mette nella URL
+				}
 			});
 			$("#search_key").keyup(function(e){ // "Quando premi enter si attiva l'evento enter [Non saprei come spiegarlo meglio..]"
 				if(e.keyCode == 13){
@@ -56,7 +58,7 @@
 		<div class="row"> <!-- Barra di ricerca -->
 			<div class="input-field col s6 offset-m3">
 				<i class="material-icons prefix">search</i>
-				<input id="search_key" type="text" class="validate">
+				<input required id="search_key" type="text" class="validate">
 				<label for="icon_prefix">Cerca</label>
 	    	</div>
 	    </div>
@@ -67,9 +69,9 @@
 		            <hr>
 		            {% if item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" or item.extension == "ico" %}
 		            	<img src="/static/files/{{item.name}}" style="max-height: 500px; max-width: 650px;" >
-		            {% else %}
-		            	<p>{{item.description}}</p>
+		            	<hr>
 		            {% endif %}
+		            	<p>{{item.description}}</p>
 		            <br>
 		            <form> <!-- Bottone -->
 		            <a href="/static/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
