@@ -1,6 +1,10 @@
 <!--
 ### 
 ### Responsabile: Giammanco
+### Modifica di: 
+###             Perini 08/05
+###				Vladyka 24/05
+###
 ###
 -->
 
@@ -14,16 +18,16 @@
 <h2 align="center">Carica</h2>
 <br>
 <div class="row">
-	<div class="col s6 offset-m3">
+	<form class="col s6 offset-m3">
 		<ul class="collapsible" data-collapsible="accordion">
 			<li>
-				<div class="collapsible-header"><i class="material-icons">attach_file</i>Carica Documento</div>
+				<div class="collapsible-header"><i class="material-icons">attach_file</i>Carica Documendo</div>
 				<div class="collapsible-body">
 					<span>
 						<form action="/upload" method="POST" enctype="multipart/form-data">
 							<div class="row">
-								<div class="file-field input-field col s12" >
-									<div class="btn" style="background-color: #1976d2">
+								<div class="file-field input-field col s12">
+									<div class="btn">
 										<span>File</span>
 										<input type="file" name="file">
 									</div>
@@ -34,7 +38,7 @@
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
-									<select name='sub_sec'>
+									<select >
 										<option value="" disabled selected>Seleziona una sezione</option>
 										{% for section in sections %}
 										<optgroup label="{{section.name}}">
@@ -49,14 +53,14 @@
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
-									<textarea id="description" class="materialize-textarea" name='desc'></textarea>
+									<textarea id="description" class="materialize-textarea"></textarea>
 									<label>Descrizione</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col s12">
-									<div class="progress blue lighten-2">
-										<div class="determinate blue darken-1" style="width: 0%"></div>
+									<div class="progress" width>
+										<div class="determinate" style="width: 0%"></div>
 									</div>
 								</div>
 							</div>
@@ -76,21 +80,14 @@
 								<div class="row">
 									<div class="input-field col s12">
 										<i class="material-icons prefix">title</i>
-										<input required id="event_title" type="text" name = "title">
+										<input required id="event_title" type="text">
 										<label class="active" for="event_title">Titolo</label>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
 											<i class="material-icons prefix">place</i>
-											<input required id="event_place" type="text" name = "place">
+											<input required id="event_palce" type="text">
 											<label class="active" for="event_palce">Luogo</label>
-										</div>
-									</div>
-									<div class="row">
-										<div class="input-field col s12">
-											<i class="material-icons prefix">business</i>
-											<input required id="address" type="text" name = "address">
-											<label class="active" for="address">Indirizzo</label>
 										</div>
 									</div>
 									<div class="row">
@@ -101,17 +98,9 @@
 											<span class="validity"></span>
 										</div>
 									</div>
-									<div class="row">
-										<div class="input-field col s12">
-											<i class="material-icons prefix">schedule</i>
-											<input required type="text" id="event_time" name="event_time" class="validate" pattern="(0[0-9]|1[0-9])(:[0-5][0-9]){1}">
-											<label class="active" for="event_date">Ora dell'evento</label>
-											<span class="validity"></span>
-										</div>
-									</div>
 									<div class="input-field col s12">
 										<i class="material-icons prefix">description</i>
-										<textarea required id="textarea1" class="materialize-textarea" name="description"></textarea>
+										<textarea required id="textarea1" class="materialize-textarea"></textarea>
 										<label for="textarea1">Descrizione</label>
 									</div>
 									<div class="center-align">
@@ -123,7 +112,16 @@
 					</div>
 				</li>
 			</ul>
-		</div>
+			{% if success %}
+			<div class="row">
+				<div class="col s6 offset-m3">
+					<div class="success" id="success">
+						<blockquote style="border-left: 5px solid #64b5f6"> <h5>Successo</h5> {{upload_success}} </blockquote>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+		</form>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -157,51 +155,4 @@
            selectYears: 15 // Creates a dropdown of 15 years to control year
        });
    </script>
-   <style type="text/css">
-   	.picker { outline: none; } /* Optional feature */
-   	/* Header - Day of the week */
-   	.picker__weekday-display { background-color: #1976d2;
-   		font-weight: 600;}
-   		/* Body - Today info */
-   		.picker__date-display { background-color: #2196f3; }
-   		/* Buttons of actions */
-   		.picker__nav--prev:hover { background-color: #bbdefb; }
-   		.picker__nav--next:hover { background-color: #bbdefb; }
-   		.picker__nav--prev:before {
-   			border-left: 0;
-   			border-right: 0.75em solid #2196f3;
-   		}
-   		.picker__nav--next:before {
-   			border-right: 0;
-   			border-left: 0.75em solid #2196f3;
-   		}
-   		.picker__today { color: #1e88e5; }
-   	.picker__clear { /* If you want to customize */ }
-   	.picker__close { color: #1e88e5; }
-   	.btn-flat.picker__today:active { background-color: #bbdefb; }
-   	.btn-flat.picker__close:active { background-color: #bbdefb; }
-   	.btn-flat.picker__clear:active { background-color: #bbdefb; }
-   	/* Select months of the year */
-   	.picker__select--month.browser-default {
-   		display: inline;
-   		background-color: #FFFFFF;
-   		width: 34%;
-   		border: none;
-   		outline: none;
-   	}
-   	/* Every month of the year except: today */
-   .picker__day { /* If you want to customize */ }
-.picker__day:hover { /* If you want to customize */ }
-.picker__day--infocus:hover { color: #1976d2; }
-.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected { 
-	color: #FFFFFF;
-	font-weight: 700;
-}
-.picker__day.picker__day--infocus.picker__day--selected.picker__day--highlighted { background-color: #2196f3; }
-/* Today */
-.picker__day.picker__day--infocus.picker__day--today.picker__day--selected.picker__day--highlighted { background-color: #2196f3; }
-.picker__day.picker__day--today 
-{ color: #1976d2;
-	font-weight: 700; }
-</style>
-{% endblock %}
+   {% endblock %}
