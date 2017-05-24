@@ -1,10 +1,9 @@
 # -*- coding: cp1252 -*-
 '''
 recovery.py
-@author: Nicholas Sollazzo,Alesandro Capici,Cristian Garau
-@version: 1.8
-@date: 19/05/17
-@note: testato ma non funzionante
+@author: Nicholas Sollazzo, Alesandro Capici, Cristian Garau
+@version: 1.9
+@date: 24/05/17
 '''
 
 from flask import request
@@ -22,13 +21,13 @@ import smtplib
 import time
 import backend.clil_utils.db as utils
 import random
-#no post reindirizzo template se è e cambio psw             
+#no post reindirizzo template se ï¿½ e cambio psw
 
 def recovery(request,session, key=None):
     if 'user_id' in session:
         abort(403)
     else:
-        logged = False    
+        logged = False
     if request.method != 'POST':
         return render_template("recovery.html",logged=logged)
     else:
@@ -53,27 +52,31 @@ def recovery(request,session, key=None):
 
 
         #formattazzione messaggio
-        mime=MIMEMultipart('alternative')
+        mime_msg = MIMEMultipart('alternative')
+        mime_msg['Subject'] = "Recupero Password"
+        mime_msg['From'] = SendMail
+        mime_msg['To'] = ReciveMail
+
         FormatoMessaggio = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s"
-        msg= "E' stata ricevuta una richiesta di reimpostazione password, per cambiarla accedere al link seguente : <a href=\"{}\">qui <\a> ".format(link)
+        msg = "Rete CLIL della provincia di Pavia\nE' stato effettuato un tentativo di recupero della password per il tuo account della Rete CLIL della provincia di Pavia\nPer recuperare la password premi qui\n{}\nIn alternativa, copia questo link nella barra degli indirizzi\n{}".format(link, link)
         Oggetto="Recupero password"
-        messaggio = FormatoMessaggio%(SendMail, ReciveMail, Oggetto, msg)
 
-        
-        fp = open('templates/Mail.html', 'rb')
-        html = fp.read()
-        part1 = MIMEText(messaggio, 'plain')
+
+        with open('templates/Mail.html', 'rb') as fp:
+            html = fp.read()
+
+        part1 = MIMEText(msg, 'plain')
         part2 = MIMEText(html, 'html')
-        mime.attach(part1)
-        mime.attach(part2)
+        mime_msg.attach(part1)
+        mime_msg.attach(part2)
 
-        
+
         #invio mail con link
         s = smtplib.SMTP('smtp.gmail.com:587')
         s.starttls()
         s.login(SendMail,password)
         #s.sendmail(SendMail,ReciveMail,messaggio)
-        s.sendmail(SendMail,ReciveMail,mime.as_string())
+        s.sendmail(SendMail,ReciveMail,mime_msg.as_string().replace('placeholder', link))
         s.quit()
 
         query = """UPDATE User
@@ -81,5 +84,4 @@ def recovery(request,session, key=None):
                    WHERE username="%s"
                             """ % (MailHash,user)
         db.query_db(query)
-        return render_template("recovery.html",success="modifica effettuata",logged=logged)         
-    
+        return render_template("recovery.html",success="modifica effettuata",logged=logged)
