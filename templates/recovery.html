@@ -23,4 +23,13 @@
 	</form>
     </div>
   </div>
+		{% if success %}
+		<div class="row">
+			<div class="col s6 offset-m3">
+				<div class="success" id="success">
+					<blockquote style="border-left: 5px solid #64b5f6"> <h5>Successo</h5> {{success}} </blockquote>
+				</div>
+			</div>
+		</div>
+		{% endif %}
 {% endblock %}
