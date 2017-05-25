@@ -78,7 +78,7 @@ def recovery(request,session, key=None):
         #s.sendmail(SendMail,ReciveMail,messaggio)
         s.sendmail(SendMail,ReciveMail,mime_msg.as_string().replace('placeholder', link))
         s.quit()
-        if !s :
+        if s :
             success="E' stata inviata una mail con le informazioni di recupero password"
         else:
             success='errore riprovare'
