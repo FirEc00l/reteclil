@@ -87,13 +87,20 @@ def manage(request, session):
 	def delete_user():
 		username = request.form['username']
 
-		query = '''DELETE FROM user
-				   WHERE username = "{}";'''.format(username)
+		query = ''' SELECT id_user
+					FROM user
+					WHERE username = "{}" '''.format(username)
 
-		DB.query_db(query)
-		DB.close_db()
+		id_to_be_deleted = DB.query_db(query)
 
-		# setResult('user_deleted') # TODO implementare in manage.html, cambiare con numeri
+		if id_to_be_deleted == session['user_id']:
+			setResult('Error') # TODO implementare in manage.html, cambiare con numeri
+		else:
+			query = '''DELETE FROM user
+			WHERE username = "{}";'''.format(username)
+
+			DB.query_db(query)
+			DB.close_db()
 
 	# XXX: 3
 	def create_user():
@@ -258,8 +265,6 @@ def manage(request, session):
 		WHERE id_user="{}";
 		'''.format( str(user[0]) )
 		result = DB.query_db(query)
-
-		print 'result', result
 
 		user_list_dict.append( {'name':result[0][0],
 								'surname':result[0][1],
