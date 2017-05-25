@@ -59,14 +59,14 @@
 		<div class="row"> <!-- Barra di ricerca -->
 			<div class="input-field col s6 offset-m3">
 				<i class="material-icons prefix">search</i>
-				<input required id="search_key" type="text" class="validate" pattern="[^ ][a-zA-Z0-9 ,.]+">
+				<input required id="search_key" type="text" class="validate" pattern="[^ ][a-zA-Z\u00C0-\u017F0-9 ,.?!#@\\\^]*">
 				<label for="icon_prefix">
 	    	</div>
 	    </div>
 		{% for item in dict_files %} <!-- Stampa dei modal -->
-			<div id="modalfor{{item.name}}" class="modalfor modal" style=" z-index: 1003; display: none; opacity: .5; transform: scaleX(0.7); top: 154.742px; background-color: #e0e0e0;">
+			<div id="modalfor{{item.name}}" class="modalfor modal" style=" z-index: 1003; display: none; opacity: .5; transform: scaleX(0.7); top: 154.742px; ">
           		<div class="modal-content">
-		            <h4 style="background-color: #e0e0e0 ">{{item.name}}</h4>
+		            <h4>{{item.name}}</h4>
 		            <hr>
 		            {% if item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" or item.extension == "ico" %}
 		            	<img src="/static/files/{{item.name}}" style="max-height: 500px; max-width: 650px;" >
@@ -75,7 +75,11 @@
 		            	<p>{{item.description}}</p>
 		            <br>
 		            <form> <!-- Bottone -->
-		            <a href="/static/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
+		            {% if logged %}
+		            	<a href="/static/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
+		            {% else %}
+		            	<a href="/static/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right disabled" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
+		            {% endif %}
 		            </form>
 		            <br>
           		</div>

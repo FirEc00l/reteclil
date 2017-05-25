@@ -53,24 +53,35 @@
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_identity</i>Utenti</div>
 				<div class="collapsible-body">
-					<span>
 						<ul class="collection with-header">
-							<!--<li class="collection-header"><h4>Users</h4></li>-->
 							<li class="collection-item">
-								{% for user in user_list %}
+								<table>
+									<tr>
+										<th>Nome e cognome</th>
+										<th>Nome utente</th>
+										<th>Tipologia utente</th>
+										<th>Azioni</th>
+									</tr>
+									{% set user_types = ['Insegnante', 'Referente', 'Amministratore'] %}
 
-									<div class="row" id="row-link-{{ user.username }}">
-										<div class="input-field">
-											{{user.name}}
-											{{user.surname}}
-											<a username="{{ user.username }}" style='cursor:pointer' class="secondary-content delete_link"><i class="material-icons light-blue-text darken-3">delete</i></a>
-										</div>
-									</div>
+									{% if user_list %}
+										{% for user in user_list %}
+											<tr id="row-user-{{ user.username }}">
+													<div class="input-field">
+														<td>{{user.name}} {{user.surname}}</td>
+														<td>{{user.username}}</td>
+														<td>{{user_types[user.user_type | int - 1 ]}}</td>
+														<td>
+															<a username="{{ user.username }}" style='cursor:pointer' class="secondary-content delete_user"><i class="material-icons light-blue-text darken-3">delete</i></a>
+														</td>
+													</div>
+											</tr>
+										{% endfor %}
+									{% endif %}
 
-								{% endfor %}
+								</table>
 							</li>
 						</ul>
-					</span>
 				</div>
 			</li>
 			<li>
@@ -78,7 +89,6 @@
 				<div class="collapsible-body">
 					<span>
 						<ul class="collection with-header">
-							<!--<li class="collection-header"><h4>Filess</h4></li>-->
 							<li class="collection-item">
 								{% for file in file_list %}
 									<div class="inout-field">
@@ -180,13 +190,12 @@
 </div>
 <div id="modal_link_add" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #212121;">Agiungi LINK</h4>
+		<h4 style="margin-left: 33%; color: #212121;">Agiungi link</h4>
 			<input type="hidden" name="action" value="create_link">
 			<div class="row">
-
 				<div class="input-field col s12">
 					<input id="link_title" type="text" class="validate">
-					<label class="active" for="testo_link">Titolo Link</label>
+					<label class="active" for="testo_link">Titolo link</label>
 				</div>
 			</div>
 			<div class="row">
@@ -199,8 +208,8 @@
 	</div>
 </div>
 <script type="text/javascript">
-	//modifica descrizione
 
+	//modifica descrizione
 	$("#mod_description").click(function (){
 		new_description = $("#description").val();
 		$.post("/manage", { action: "edit_description", new_description: new_description}).done(function( data ) {
@@ -211,16 +220,14 @@
 	});
 
 	//Eliminazione link
-
 	$(document).on('click', '.delete_link', function (){
 		link_title = $(this).attr("title");
 		$.post("/manage", { action: "delete_link", title: link_title}).done(function( result ) {
 			if (result == "Success"){
-				$("#row-link-"+link_title).remove();
+				$("#row-user-"+username).remove();
 			}
 	  });
 	});
-
 
 	//Aggiunta link
 	$("#create_link").click(function (){
@@ -239,7 +246,15 @@
 	  });
 	});
 
-
+	//Eliminazione user
+	$(document).on('click', '.delete_user', function (){
+		username = $(this).attr("username");
+		$.post("/manage", { action: "delete_user", username: username}).done(function( result ) {
+			if (result == "Success"){
+				$("#row-link-"+link_title).remove();
+			}
+	  });
+	});
 
 
 	//Inizializazione componenti materialize
@@ -252,6 +267,7 @@
       endingTop: '10%', // Ending top style attribute
   }
   );
+
 	$('.dropdown-button').dropdown({
 		inDuration: 300,
 		outDuration: 225,
@@ -263,6 +279,7 @@
       stopPropagation: false // Stops event propagation
   }
   );
+
 	$(document).ready(function() {
 		$('select').material_select();
 	});

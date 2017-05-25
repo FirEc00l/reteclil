@@ -2,8 +2,8 @@
 '''
 recovery.py
 @author: Nicholas Sollazzo, Alesandro Capici, Cristian Garau
-@version: 1.9
-@date: 24/05/17
+@version: 2.0
+@date: 25/05/17
 '''
 
 from flask import request
@@ -78,10 +78,13 @@ def recovery(request,session, key=None):
         #s.sendmail(SendMail,ReciveMail,messaggio)
         s.sendmail(SendMail,ReciveMail,mime_msg.as_string().replace('placeholder', link))
         s.quit()
-
+        if !s :
+            success="E' stata inviata una mail con le informazioni di recupero password"
+        else:
+            success='errore riprovare'
         query = """UPDATE User
                    SET key="%s"
                    WHERE username="%s"
                             """ % (MailHash,user)
         db.query_db(query)
-        return render_template("recovery.html",success="modifica effettuata",logged=logged)
+        return render_template("recovery.html",success=success,logged=logged)
