@@ -87,4 +87,4 @@ def recovery(request,session, key=None):
                    WHERE username="%s"
                             """ % (MailHash,user)
         db.query_db(query)
-        return render_template("recovery.html",success,logged=logged)
+        return render_template("recovery.html",success=success,logged=logged)
