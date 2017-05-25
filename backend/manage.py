@@ -1,7 +1,7 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 1.3.9
+@version: 1.3.10
 @date: 25/05/17
 ===============================================
 manage(request):
@@ -81,7 +81,7 @@ def manage(request, session):
 	def edit_description():
 		DATA.edit('description', request.form['new_description'])
 
-		setResult('file_edited') # TODO implementare in manage.html, cambiare con numeri
+		# setResult('file_edited') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 2
 	def delete_user():
@@ -93,7 +93,7 @@ def manage(request, session):
 		DB.query_db(query)
 		DB.close_db()
 
-		setResult('user_deleted') # TODO implementare in manage.html, cambiare con numeri
+		# setResult('user_deleted') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 3
 	def create_user():
@@ -124,7 +124,7 @@ def manage(request, session):
 			DB.query_db(query)
 			DB.close_db()
 
-			setResult('user_created') # TODO implementare in manage.html, cambiare con numeri
+			# setResult('user_created') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 4
 	def update_user_password():
@@ -138,7 +138,7 @@ def manage(request, session):
 		DB.query_db(query)
 		DB.close_db()
 
-		setResult('password_updated') # TODO implementare in manage.html, cambiare con numeri
+		# setResult('password_updated') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 5
 	def create_link():
@@ -162,7 +162,7 @@ def manage(request, session):
 		title = request.form['title']
 		DATA.remove('links',title)
 
-		setResult('link_deleted') # TODO implementare in manage.html, cambiare con numeri
+		# setResult('link_deleted') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 7
 	def create_section():
@@ -187,7 +187,7 @@ def manage(request, session):
 			DB.query_db(query)
 			DB.close_db()
 
-			setResult('section_created') # TODO implementare in manage.html, cambiare con numeri
+			# setResult('section_created') # TODO implementare in manage.html, cambiare con numeri
 
 
 	# XXX: 8
@@ -199,7 +199,7 @@ def manage(request, session):
 		DB.query_db(query)
 		DB.close_db()
 
-		setResult('section_deleted') # TODO implementare in manage.html, cambiare con numeri
+		# setResult('section_deleted') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 9
 	def change_file_section():
@@ -213,7 +213,7 @@ def manage(request, session):
 		DB.query_db(query)
 		DB.close_db()
 
-		setResult('changed_file_section') # TODO implementare in manage.html, cambiare con numeri
+		# setResult('changed_file_section') # TODO implementare in manage.html, cambiare con numeri
 
 
 	# XXX: 10
@@ -228,7 +228,7 @@ def manage(request, session):
 		DB.query_db(query)
 		DB.close_db()
 
-		setResult('filename_changed') # TODO implementare in manage.html, cambiare con numeri
+		# setResult('filename_changed') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 11
 	def delete_file():
@@ -239,7 +239,7 @@ def manage(request, session):
 		DB.query_db(query)
 		DB.close_db()
 
-		setResult('file_deleted') # TODO implementare in manage.html, cambiare con numeri
+		# setResult('file_deleted') # TODO implementare in manage.html, cambiare con numeri
 
 	# XXX: 0
 	query = '''
