@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 1.3.8
-@date: 22/05/17
+@version: 1.3.9
+@date: 25/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -87,7 +87,8 @@ def manage(request, session):
 	def delete_user():
 		username = request.form['username']
 
-		query = ''' DELETE user WHERE username = "{}"; '''.format(username)
+		query = '''DELETE FROM user
+				   WHERE username = "{}";'''.format(username)
 
 		DB.query_db(query)
 		DB.close_db()
