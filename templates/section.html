@@ -1,79 +1,307 @@
-<!--
-### 
-### Responsabile: Alemanni
-### Ultima modifica di: Alemanni 19/05
-###
--->
-    {% extends "base.html" %}
+{% extends "base.html" %}
+{% block title %}ReteCLIL - Search{% endblock %}
 
-    {% block content %}
-    <title>Rete CLIL - Documents</title>
-    <style>
+{% block content %}
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 
-    .Abbrevia {
-      -o-text-overflow: ellipsis;   /* Opera */
-      text-overflow:    ellipsis;   /* IE, Safari (WebKit) */
-      overflow:hidden;              /* don't show excess chars */
-      white-space:nowrap;           /* force single line */
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+
+
+  <style type="text/css">
+  	.Abbrevia {
+	    -o-text-overflow: ellipsis;   /* Opera */
+	    text-overflow:    ellipsis;   /* IE, Safari (WebKit) */
+	    overflow:hidden;              /* don't show excess chars */
+	    white-space:nowrap;           /* force single line */
+	}
+    {
+      margin: 0;
+      padding: 0;
     }
-    </style>
-    <div class="row">
 
-      <div class="col s3 fixed ">
-        <ul id="nav-mobile" class=" fixed" style="transform: translateX(0%);">
-          {% for section in sections %}
-          <ul class="collapsible collapsible-accordion">
-            <li class="bold"><a class="collapsible-header active waves-effect waves-teal">{{section.name}}</a>
-              <div class="collapsible-body">
-                <ul>
-                  {% for sub_section in section.list %}
+    a {
+      text-decoration: none;
+    }
+    i {
+      padding-right: 5px;
+    }
+    .sidenav {
+      width: 190px;
+      background: #1565c0;
+      height: 100%;
+      position: fixed;
+    }
+    .sidenav ul li {
+      /*padding: 4px;*/
 
-                  <li><a href="/section/{{sub_section[1]}}">{{sub_section[0]}}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-              {% endfor %}
-            </li>
+      font-size: .9em;
+      margin-left: 10px;
+      list-style: none;
+    }
+    .sidenav a {
+      padding: 10px 0 10px 10px;
+      color: #FFFFFF;
+      display: block;
+      width: 100%;
+      margin-left: -10px;
+      transition: background 0.25s ease-in-out;
+      -webkit-transition: background 0.25s ease-in-out;
+      -moz-transition: background 0.25s ease-in-out;
+      -o-transition: background 0.25s ease-in-out;
+      -ms-transition: background 0.25s ease-in-out;
+    }
+    .sidenav a:hover {
+      background: #42a5f5;
+      color: #FFFFFF;
+    }
+    .submenu {
+      display: none;
+      background: #64b5f6 ;
+      border-top: 2px solid #90caf9 ;
+      border-bottom: 2px solid #90caf9 ;
+      /*width: 100%;*/
+
+      margin-left: -10px;
+      padding: 0 7px;
+    }
+    .submenu ul li {
+      margin: 0;
+    }
+    .submenu a {
+      color: #FFFFFF;
+      background: none !important;
+      padding-left: 25px;
+      transition: color 0.25s ease-in-out;
+      -webkit-transition: color 0.25s ease-in-out;
+      -moz-transition: color 0.25s ease-in-out;
+      -o-transition: color 0.25s ease-in-out;
+      -ms-transition: color 0.25s ease-in-out;
+    }
+    .submenu a:hover {
+      color: #1565c0;
+      background: none;
+    }
+    /***active state***/
+    .active {
+      position: relative;
+    }
+    .active a {
+      background: #1565c0;
+    }
+    /***arrow on active***/
+    li.active:after {
+      content: ' ';
+      position: absolute;
+      height: 0;
+      width: 0;
+      top: 6%;
+      left: 177px;
+      border: 10px solid;
+      border-color: #FFFFFF transparent transparent #FFFFFF;
+      -webkit-transform: rotate(-45deg);
+      /* Saf3.1+, Chrome */
+
+      -moz-transform: rotate(-45deg);
+      /* FF3.5+ */
+
+      -ms-transform: rotate(-45deg);
+      /* IE9 */
+
+      -o-transform: rotate(-45deg);
+      /* Opera 10.5 */
+
+      transform: rotate(-45deg);
+    }
+    li.active.hidden:after {
+      display: none;
+    }
+    li#collapse-menu {
+      margin-top: 20px;
+    }
+    li#collapse-menu a:hover {
+      background: none !important;
+      color: #FFFFFF;
+    }
+    /***collapsed sidenav**/
+    .sidenav-collapsed {
+      display: none;
+      width: 37px;
+      position: absolute;
+      height: 100%;
+      background: #FFFFFF;
+    }
+    .sidenav-collapsed ul li {
+      list-style: none;
+      /*margin-left: 10px;*/
+
+      margin: 10px 0 0;
+    }
+    .sidenav-collapsed a {
+      color: #f8f8f8;
+      /*padding: 8px;*/
+
+      padding: 1px 6px 1px 5px;
+      font-size: 1.3em;
+    }
+    .sidenav-collapsed a:hover {
+      background: #9daf25;
+    }
+    #expand-menu {
+      margin-top: 25px;
+    }
+    .collapsed-submenu {
+      display: none;
+      background: #FFFFFF;
+      position: absolute;
+      width: 200px;
+      height: auto;
+      left: 37px;
+      top: -1px;
+      /*padding: 0 0 10px 10px;*/
+
+    }
+    .collapsed-submenu a {
+      color: #FFFFFF;
+      font-size: 0.9em;
+      background: none !important;
+    }
+    .collapsed-submenu a:hover {
+      background: none !important;
+      color: #FFFFFF;
+    }
+    .collapsed-submenu:before {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      top: 7px;
+      left: -5px;
+      border: 10px solid;
+      border-color: #FFFFFF transparent transparent #FFFFFF;
+      -webkit-transform: rotate(-45deg);
+      /* Saf3.1+, Chrome */
+
+      -moz-transform: rotate(-45deg);
+      /* FF3.5+ */
+
+      -ms-transform: rotate(-45deg);
+      /* IE9 */
+
+      -o-transform: rotate(-45deg);
+      /* Opera 10.5 */
+
+      transform: rotate(-45deg);
+    }
+
+  </style>
+
+  <script type="text/javascript">
+  var a=1;
+    $(document).ready(function() {
+
+      $('.parent').click(function(event) {
+        event.preventDefault();
+        $('li').removeClass('active');
+        $(this).parent().addClass('active');
+        $(this).parent().children("ul").slideToggle("slow");
+      });
+
+      /***collapse menu***/
+      $('#collapse').click(function() {
+
+        $('.sidenav').hide('slide', {direction: 'left'}, 500);
+        $('.sidenav-collapsed').show();
+
+      });
+
+      $('.collapsed-parent').click(function(event) {
+        event.preventDefault();
+
+
+        $("ul.collapsed-submenu").hide().fadeOut();
+        $('li').removeClass('active');
+        $(this).parent().addClass('active');
+        $(this).parent().addClass('hidden');
+        $(this).parent().children("ul").fadeIn("slow");
+
+      });
+
+      /***expand menu***/
+      $('#expand-menu').click(function() {
+        if(a){
+          $('.sidenav-collapsed').hide('slide', {direction: 'left'}, 500);
+          a=!a;
+        }else{
+          $('.sidenav').show('slide', {direction: 'left'}, 500);
+          a=!a;
+        }
+      })
+    });
+  </script>
+  <title></title>
+
+<div class="wrapper">
+
+    <div class="sidenav">
+      <ul>
+
+        {% for section in sections %}
+
+        <li><a class="parent" href="#"><i class="icon-meter"></i>{{section.name}}</a>
+          <ul class="submenu">
+          {% for sub_section in section.list %}
+            <li><a href="/section/{{sub_section[1]}}">{{sub_section[0]}}</a></li>
+          {% endfor %}
           </ul>
-        </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+</div>
 
-        <div class="col s9">
-          {% if card %}
 
-          {% for item in card %}
-          <div class="col m4">
-            {% if item.extension == "pdf" %}
-            <div class="card red lighten-1">
-              {% elif item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" %}
-              <div class="card blue lighten-3">
-                {% elif item.extension == "mov" %}
-                <div class="card purple lighten-2">
-                  {% elif item.extension == "mp3" or item.extension == "m4a" or item.extension == "wav"  %}
-                  <div class="card indigo lighten-2">
-                    {% elif item.extension == "zip" or item.extension == "rar" or item.extension == "7z"  %}
-                    <div class="card amber lighten-2">
-                      {% elif item.extension == "odp" or item.extension == "ppt" or item.extension == "pps"  %}
-                      <div class="card orange">
-                        {% elif item.extension == "ods" or item.extension == "xls" or item.extension == "xml"  %}
-                        <div class="card green">
-                          {% endif %}
-                          <div class="card-content">
-                            <span class="Abbrevia card-title">{{item.name}}</span>
-                            <a class="btn-floating waves-effect waves-light blue right"><i class="material-icons">vertical_align_bottom</i></a>
-                            <p class="Abbrevia">{{item.description}}</p>
-                          </div>
-                        </div>
-                      </div>
-                      {% endfor %}
 
-                      {% else %}
-                      <div class="row" >
-                        <div class="col m4"><p>All'interno della sezione scelta non sono presenti file. Scelga un'altra sezione.</p></div>
-                      </div>
-                      {% endif %}
-
-                    </div>
-
-                  </div>
-
-                  {% endblock %}
+{% if card %}
+  <div class="row">
+	 {% for item in card %}
+  	    	<div class="col s4 offset-s2" id="{{item.name}}" style="position:relative;">
+  	            {% if item.extension == "pdf" %}
+  	            	 <div class="card red lighten-1">
+  	            {% elif item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" %}
+  	            	 <div class="card blue lighten-3">
+  	            {% elif item.extension == "mov" %}
+  	               <div class="card purple lighten-2">
+  	            {% elif item.extension == "mp3" or item.extension == "m4a" or item.extension == "wav"  %}
+  	               <div class="card indigo lighten-2">
+  	            {% elif item.extension == "zip" or item.extension == "rar" or item.extension == "7z"  %}
+  	               <div class="card amber lighten-2">
+  	            {% elif item.extension == "odp" or item.extension == "ppt" or item.extension == "pps"  %}
+  	               <div class="card orange">
+  	            {% elif item.extension == "ods" or item.extension == "xls" or item.extension == "xml"  %}
+  	               <div class="card green">
+  	            {% endif %}
+  			            <div class="card-content">
+  			            	<span class="Abbrevia card-title">{{item.name}}</span>
+  			                <a class="btn-floating waves-effect waves-light blue right"><i class="material-icons" style="align:center;">&nbsp;vertical_align_bottom</i></a>
+  			                <p class="Abbrevia">{{item.description}}</p>
+  			            </div>
+  	        	    </div>
+            <script>
+            if(a%2==0){
+              document.getElementById("{{item.name}}").classList.remove('offset-s2');
+              document.getElementById("{{item.name}}").classList.add('offset-s1');
+            }
+            a++;
+            </script>
+  	</div>
+	{% endfor %}
+{% else %}
+    <div class="row" >
+		<div class="col m4 offset-m2"><p>All'interno della sezione scelta non sono presenti file. Scelga un'altra sezione.</p></div>
+	</div>
+{% endif %}
+{% endblock %}
