@@ -1,6 +1,6 @@
 ###
 ### Modifiche:
-###				Vladyka 22/05/17
+###				Vladyka 26/05/17
 ###
 ###
 ###
@@ -10,17 +10,16 @@
 
 {% block content %}
 <br><br>
-<h3 align="center">Thread</h3><br>
+<h3 align="center">{{thread_title}}</h3><br>
 <div class="row">
 	<div class="col s8 offset-m2">
 		<div class="col s12 ">
 			<div class="card grey lighten-3">
+				<br>
+				<h6 style="margin-left: 1%; margin-top: -1%">{{post.date}}</h6>
 				<div class="card-content white-text">
-					<span class="card-title black-text">{{post.nome}}</span>
+					<span class="card-title black-text">{{post.author}}</span>
 					<p class="black-text">{{post.text}}</p>
-				</div>
-				<div class="card-action">
-					<p align="margin-left">{{post.date}}</p>
 				</div>
 			</div>
 		</div>
@@ -29,12 +28,33 @@
 				<div class="row">
 					<div class="input-field col s12">
 						<textarea id="textarea1" class="materialize-textarea"></textarea>
-						<label for="textarea1">Agiungi</label>
+						<label for="textarea1">TESTO</label>
 					</div>
 				</div>
 			</form>
 		</div>
-		<button type="submit" style="margin-left: 45%" class="waves-effect waves-light btn light-blue darken-3" >agiungi</button>
+		<a id="threadAdd" href="#modal1" stype="submit" style="margin-left: 42%" class="waves-effect waves-light btn light-blue darken-3">aggiungi</a>
 	</div>
 </div>
+<!--############################################################################################################################-->
+<div id="modal1" class="modal">
+	<div class="modal-content">
+		<h4>Grazie</h4>
+		<h5>Testo è stato aggiunto ;)<h5>
+		</div>
+		<div class="modal-footer">
+			<!--<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>-->
+		</div>
+	</div>
+	<script type="text/javascript">
+		$('.modal').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .5, // Opacity of modal background
+      inDuration: 300, // Transition in duration
+      outDuration: 200, // Transition out duration
+      startingTop: '4%', // Starting top style attribute
+      endingTop: '10%', // Ending top style attribute
+  }
+  );
+</script>
 {% endblock %}
