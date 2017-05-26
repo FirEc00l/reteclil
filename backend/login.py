@@ -18,12 +18,16 @@ def login(request, session):
 
         if request.method=='POST' :
 
-
+            print request.form['username']
             db =  utils.pysqlite3()
             query = """SELECT username, password, id_user, user_type
                        FROM User
                        WHERE User.username="%s\"""" % request.form['username']
             result = db.query_db(query)
+
+            print request.form['password']
+            print result[0][1]
+            
             if result==None :
                 return render_template("login.html", error = "Nome utente o password errata", logged=False)
         
