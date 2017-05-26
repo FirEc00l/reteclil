@@ -1,8 +1,8 @@
 '''
 manage.py
 @author: Nicholas Sollazzo
-@version: 1.3.10
-@date: 25/05/17
+@version: 1.3.11
+@date: 26/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -260,7 +260,7 @@ def manage(request, session):
 	for user in user_list:
 
 		query = '''
-		SELECT name, surname, username, user_type
+		SELECT name, surname, username,email, user_type
 		FROM user
 		WHERE id_user="{}";
 		'''.format( str(user[0]) )
@@ -269,7 +269,8 @@ def manage(request, session):
 		user_list_dict.append( {'name':result[0][0],
 								'surname':result[0][1],
 								'username':result[0][2],
-								'user_type':result[0][3]} )
+								'email':result[0][3],
+								'user_type':result[0][4]} )
 
 	user_list = user_list_dict
 
