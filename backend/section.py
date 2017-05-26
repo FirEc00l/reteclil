@@ -33,7 +33,7 @@ def section(request, session, key=None):
 
     else:
 
-        query = """SELECT name, description
+        query = """SELECT name, description, id_file
                 FROM file
                 WHERE id_sub="%s\"""" % str(key)
         result_card = db.query_db(query)
@@ -48,7 +48,7 @@ def section(request, session, key=None):
             for sub_section in result_card:
                     filename = sub_section[0]
                     file_format = filename.split(".")[-1]
-                    card_dict.append( {'name': sub_section[0], 'description' : sub_section[1], 'extension': file_format} )
+                    card_dict.append( {'name': sub_section[0], 'description' : sub_section[1], 'extension': file_format, 'id': sub_section[2]} )
 
             card = card_dict
 

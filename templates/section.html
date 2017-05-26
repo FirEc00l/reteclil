@@ -268,7 +268,7 @@
 {% if card %}
   <div class="row">
 	 {% for item in card %}
-  	    	<div class="col s4 offset-s2" id="{{item.name}}" style="position:relative;">
+  	    	<div class="col s4 offset-s2" id="{{item.id}}" style="position:relative;">
   	            {% if item.extension == "pdf" %}
   	            	 <div class="card red lighten-1">
   	            {% elif item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" %}
@@ -292,8 +292,8 @@
   	        	    </div>
             <script>
             if(a%2==0){
-              document.getElementById("{{item.name}}").classList.remove('offset-s2');
-              document.getElementById("{{item.name}}").classList.add('offset-s1');
+              document.getElementById("{{item.id}}").classList.remove('offset-s2');
+              document.getElementById("{{item.id}}").classList.add('offset-s1');
             }
             a++;
             </script>
