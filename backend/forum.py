@@ -12,7 +12,7 @@ def forum(request, session):
         logged = session['user_type']
 
     result_dict = []
-    
+
     db =  utils.pysqlite3()
     query = "SELECT * FROM post"
     result = db.query_db(query)
@@ -21,6 +21,6 @@ def forum(request, session):
                     filename = sub_section[0]
                     file_format = filename.split(".")[-1]
                     result_dict.append( {'id_post': thread[0], 'title' : thread[1], 'content' : thread[2], 'date_post' : thread[3], 'id_user' : thread[4], 'id_thread' : thread[5], 'extension': file_format} )
-    threads = result_dict 
+    threads = result_dict
 
-    return render_template("forum.html", logged = logged, threads)
+    return render_template("forum.html", logged=logged, threads=threads)
