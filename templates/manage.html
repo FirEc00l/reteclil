@@ -78,8 +78,8 @@
 											</tr>
 										{% endfor %}
 									{% endif %}
-
 								</table>
+								<a href="#modal_user" class="btn-floating btn-medium light-blue darken-3"><i class="material-icons">add</i></a>
 							</li>
 						</ul>
 				</div>
@@ -127,26 +127,26 @@
 	</div>
 </div>
 
-<div id="modal_users" class="modal">
+<div id="modal_user" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: ##212121;">Modifica Utente</h4>
+		<h4 style="margin-left: 33%; color: ##212121;">Inserisci utente</h4>
 		<div class="row">
 			<form class="col s12">
 				<div class="row">
 					<div class="input-field col s12">
 						<input id="user_name" type="text" class="validate">
-						<label class="active" for="user_name">Nome Utente</label>
+						<label class="active" for="user_name">Nome</label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12">
 						<input id="user_surname" type="text" class="validate">
-						<label class="active" for="user_surname">Cognome Utente</label>
+						<label class="active" for="user_surname">Cognome</label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12">
-						<input id="e_mail" type="text" class="validate">
+						<input id="user_email" type="text" class="validate">
 						<label class="active" for="e_mail">E-mail</label>
 					</div>
 				</div>
@@ -157,7 +157,6 @@
 						<option value="2">Teacher</option>
 					</select>
 					<label>Tipo Utente</label><br>
-					<a id="psw_gen"class="waves-effect waves-light btn light-blue darken-3"><i class="material-icons left">vpn_key</i>Genera Password</a><br><br>
 					<button id="mod_user" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
 				</div>
 			</form>
@@ -251,7 +250,7 @@
 		username = $(this).attr("username");
 		$.post("/manage", { action: "delete_user", username: username}).done(function( result ) {
 			if (result == "Success"){
-				$("#row-link-"+link_title).remove();
+				$("#row-user-"+username).remove();
 			}
 	  });
 	});
