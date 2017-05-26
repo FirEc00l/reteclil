@@ -99,8 +99,8 @@ def route_forum():
     return forum.forum(request, session)
 
 @app.route("/forum/<thread_id>", methods = ['GET','POST'])
-def route_thread():
-    return thread.thread(request)
+def route_thread(thread_id):
+    return thread.thread(request,session,id_thread=thread_id)
 
 @app.route("/search/<search_key>", methods = ['GET','POST'])
 def route_search_key(search_key):
