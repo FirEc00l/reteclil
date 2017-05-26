@@ -20,33 +20,10 @@
 </style>
 
   <script>
-    $(document).ready(function(){
-      $('.modalfor').modal({
-          dismissible: true, // Modal can be dismissed by clicking outside of the modal
-          opacity: .5, // Opacity of modal background
-          inDuration: 300, // Transition in duration
-          outDuration: 200, // Transition out duration
-          startingTop: '4%', // Starting top style attribute
-          endingTop: '10%', // Ending top style attribute
-        });
-      $('.ShowButton').modal();
-      $("#search_key").bind("enterKey",function(e){
-        if($("#search_key").is(':valid')){
-          a=$("#search_key").val(); // Prende il valore da search
-          $(location).attr('href', '/search/'+a); // Lo mette nella URL
-        }
-      });
-      $("#search_key").keyup(function(e){ // "Quando premi enter si attiva l'evento enter [Non saprei come spiegarlo meglio..]"
-        if(e.keyCode == 13){
-               $(this).trigger("enterKey");
-        }
-      });
-      $('.btn-floating').each(function(){
-          $(this).click(function(){
-              $('modalfor'+$(this).attr('name')).modal("open");
-          });
-      });
-    });         
+   $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });         
   </script>
 <br>
 <br>
@@ -77,8 +54,10 @@
     <div class="col m4 offset-m4"><p align="center">Attualmente non sono presenti discussioni.Puo crearne una nuova premento sul tasto dal simbolo "+" in basso a sinistra</p></div>
   </div>
   {% endif %}
-  <!-- Modal Trigger -->
-  <a class="ShowButton btn-floating btn-large waves-effect waves-light blue modal-trigger" href="#modal1"><i class="material-icons">add</i></a>
+  
+<!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn" href="#modal1">Modal</a>
+
   <!-- Modal Structure -->
   <div id="modal1" class="modal">
     <div class="modal-content">
@@ -89,6 +68,7 @@
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
     </div>
   </div>
+  
 </div>
 {% endblock %}
 
