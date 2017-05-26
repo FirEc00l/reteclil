@@ -1,8 +1,13 @@
 import sqlite3
+import os
+
 
 class pysqlite3(object):
         def __init__(self):
-                self.conn = sqlite3.connect('./data/database.sqlite3.db')
+                dir = os.path.dirname(__file__)
+                db_path = os.path.join(dir, '../../data/database.sqlite3.db')
+                print db_path
+                self.conn = sqlite3.connect(db_path)
         '''
         def get_db(self):
                 conn = sqlite3.connect(self.dbname)
