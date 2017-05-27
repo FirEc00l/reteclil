@@ -10,8 +10,8 @@ from flask import render_template, url_for, redirect
 def forum(request, session):
     if 'user_id' in session:
 		logged = session['user_type']
-	else:
-		abort(403)
+    else:
+        abort(403)
 		
     result_dict = []
 
