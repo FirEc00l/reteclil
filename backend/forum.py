@@ -25,7 +25,7 @@ def forum(request, session):
 
     else:
         for thread in result:
-                        result_dict.append( {'id_thread': thread[0], 'title' : thread[1], 'id_user' : thread[2], 'name' : thread[3]} )
+                        result_dict.append( {'id_thread': thread[0], 'title' : thread[1], 'id_user' : thread[2], 'name' : thread[3], 'surname' : thread[4]} )
         threads = result_dict
 
         print threads
