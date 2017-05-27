@@ -19,8 +19,6 @@ def forum(request, session):
     query = "SELECT id_thread, title, id_user, name, surname FROM thread NATURAL JOIN user"
     result = db.query_db(query)
 
-    print result
-
     if result is None :
         threads = None
         return render_template("forum.html", logged=logged, threads=threads)
@@ -30,7 +28,7 @@ def forum(request, session):
                         result_dict.append( {'id_thread': thread[0], 'title' : thread[1], 'id_user' : thread[2], 'name' : thread[3]} )
         threads = result_dict
 
-        print thread
+        print threads
 
         return render_template("forum.html", logged=logged, threads=threads)
 
