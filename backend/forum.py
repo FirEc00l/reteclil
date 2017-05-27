@@ -33,19 +33,41 @@ def forum(request, session):
         query = "SELECT count(id_thread) FROM thread"
         result = db.query_db(query)
 
-        nthread = result
+        nthread = str(result[0])
 
         print nthread
 
         return render_template("forum.html", logged=logged, threads=threads, nthread=nthread)
 
-    '''
-    if request.method=='POST' :
+    
+    
+
+'''
+        date = str(datetime.datetime.now())
+
+        print date
+
+        if request.method=='POST' :
 
         query = """INSERT INTO thread
                VALUES (NULL, %s, %s)""" %request.form['title'] %session['user_id']
+
+        result = db.query_db(query)
+
+        print result
+
+        query = "SELECT LAST(id_thread) FROM thread "
+
+        result = db.query_db(query)
+
+        id = str(result)
+
+        print id
         
         query = """INSERT INTO post
-               VALUES (NULL, %s, %s, %data, user, NULL)""" %
-    
-    '''
+               VALUES (%s, %s, %s, %data, user, NULL)""" %id %request.form['title'] %request.form['content'] %date
+
+        print result
+'''
+
+
