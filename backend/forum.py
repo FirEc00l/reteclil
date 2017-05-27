@@ -30,12 +30,22 @@ def forum(request, session):
 
         print threads
 
-        return render_template("forum.html", logged=logged, threads=threads)
+        query = "SELECT count(id_thread) FROM thread"
+        result = db.query_db(query)
+
+        nthread = result
+
+        print nthread
+
+        return render_template("forum.html", logged=logged, threads=threads, nthread=nthread)
 
     '''
     if request.method=='POST' :
 
-    query = """INSERT INTO table_name
-               VALUES (NULL, %s, , ,%s);""" %
+        query = """INSERT INTO thread
+               VALUES (NULL, %s, %s)""" %request.form['title'] %session['user_id']
+        
+        query = """INSERT INTO post
+               VALUES (NULL, %s, %s, %data, user, NULL)""" %
     
     '''
