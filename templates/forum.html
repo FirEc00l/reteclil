@@ -23,6 +23,7 @@
    $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
+    $('.btn').modal();
   });         
   </script>
 <br>
@@ -31,7 +32,7 @@
 <br>
 {% if discussion %}
 <div class="input-field col s6 offset-m3">
-	<ul class="collection">
+  <ul class="collection">
     <!--da fixare nomi da jinja nome cognome titolo (togliere ultimo post)-->
 
     {% for discussion in discussions %}
@@ -56,7 +57,9 @@
   {% endif %}
   
 <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn" href="#modal1">Modal</a>
+  <a class="waves-effect waves-light btn" href="#modal1"><i class="material-icons">add</i></a>
+  
+
 
   <!-- Modal Structure -->
   <div id="modal1" class="modal">
