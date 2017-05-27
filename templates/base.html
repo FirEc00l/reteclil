@@ -1,5 +1,5 @@
 <!--
-### 
+###
 ### Responsabile: Perini
 ###
 -->
@@ -41,7 +41,7 @@
 		<nav class="nav-extended light-blue darken-4">
     	<div class="nav-wrapper">
 	      <a href="/" class="brand-logo">Rete CLIL</a>
-	      <ul class="right hide-on-med-and-down">
+	      <ul class="right">
 	      	<li><a href="/search"><i class="material-icons">search</i></a></li>
 
 	        <li><a href="/">Home</a></li>
@@ -49,6 +49,7 @@
 					{% if logged > 1 %}<li><a href="/upload">Carica</a></li>{% endif %}
 					{% if logged == 3 %}<li><a href="/manage">Gestisci</a></li>{% endif %}
 					{% if logged %}
+						<li><a href="/forum">Forum</a></li>
 						<li><a href="/account">Account</a></li>
 	        	<li><a href="/logout">Esci</a></li>
 					{% else %}
