@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Index{% endblock %}
 
 {% block content %}
+<title>Rete CLIL - Gestione sito</title>
 <br><br>
-<h2 align="center">Gestione Rete CLIL</h2><br>
+<h2 align="center">Gestione sito</h2><br>
 <div class="row">
-	<div class="col s6 offset-m3">
+	<div class="col s8 offset-m2">
 		<ul class="collapsible" data-collapsible="accordion">
+			<!-- COLLAPSIBLE: Modifica descrizione -->
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">description</i>Descrizione</div>
 				<div class="collapsible-body">
@@ -27,6 +28,8 @@
 					</span>
 				</div>
 			</li>
+
+			<!-- COLLAPSIBLE: Aggiunta e modifica links -->
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">place</i>Links</div>
 				<div class="collapsible-body">
@@ -45,23 +48,27 @@
 								</div>
 								<a href="#modal_link_add" class="btn-floating btn-medium light-blue darken-3"><i class="material-icons">add</i></a>
 							</li>
-
 						</ul>
 					</span>
 				</div>
 			</li>
+
+			<!-- COLLAPSIBLE: Aggiunta e modifica utenti -->
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_identity</i>Utenti</div>
 				<div class="collapsible-body">
 						<ul class="collection with-header">
 							<li class="collection-item">
-								<table>
-									<tr>
-										<th>Nome e cognome</th>
-										<th>Nome utente</th>
-										<th>Tipologia utente</th>
-										<th>Azioni</th>
-									</tr>
+								<table class="striped" id="table_users">
+									<thead>
+										<tr>
+											<th>Nome e cognome</th>
+											<th>E-mail</th>
+											<th>Nome utente</th>
+											<th>Tipologia utente</th>
+											<th>Azioni</th>
+										</tr>
+									</thead>
 									{% set user_types = ['Insegnante', 'Referente', 'Amministratore'] %}
 
 									{% if user_list %}
@@ -69,6 +76,7 @@
 											<tr id="row-user-{{ user.username }}">
 													<div class="input-field">
 														<td>{{user.name}} {{user.surname}}</td>
+														<td>{{user.email}}</td>
 														<td>{{user.username}}</td>
 														<td>{{user_types[user.user_type | int - 1 ]}}</td>
 														<td>
@@ -79,29 +87,36 @@
 										{% endfor %}
 									{% endif %}
 								</table>
+								<br>
 								<a href="#modal_user" class="btn-floating btn-medium light-blue darken-3"><i class="material-icons">add</i></a>
 							</li>
 						</ul>
 				</div>
 			</li>
+
+			<!-- COLLAPSIBLE: Modifica files -->
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_media</i>Files</div>
 				<div class="collapsible-body">
 					<span>
 						<ul class="collection with-header">
 							<li class="collection-item">
-								{% for file in file_list %}
-									<div class="inout-field">
-										{{file.file_name}}
-										<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons light-blue-text darken-3">delete</i></a>
-										<a href="#modal_file" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>
-									</div>
-								{% endfor %}
+								{% if file_list %}
+									{% for file in file_list %}
+										<div class="inout-field">
+											{{file.file_name}}
+											<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons light-blue-text darken-3">delete</i></a>
+											<a href="#modal_file" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>
+										</div>
+									{% endfor %}
+								{% endif %}
 							</li>
 						</ul>
 					</span>
 				</div>
 			</li>
+
+			<!-- COLLAPSIBLE: Aggiunta e modifica sezioni -->
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">subject</i>Sezioni Files</div>
 				<div class="collapsible-body">
@@ -127,42 +142,46 @@
 	</div>
 </div>
 
+<!-- MODAL: Inserimento dati utente -->
 <div id="modal_user" class="modal">
 	<div class="modal-content">
 		<h4 style="margin-left: 33%; color: ##212121;">Inserisci utente</h4>
-		<div class="row">
-			<form class="col s12">
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="user_name" type="text" class="validate">
-						<label class="active" for="user_name">Nome</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="user_surname" type="text" class="validate">
-						<label class="active" for="user_surname">Cognome</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="user_email" type="text" class="validate">
-						<label class="active" for="e_mail">E-mail</label>
-					</div>
+		<form id="form_user">
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="user_name" type="text" class="validate">
+					<label class="active" for="user_name">Nome</label>
 				</div>
 				<div class="input-field col s6">
-					<select>
+					<input id="user_surname" type="text" class="validate">
+					<label class="active" for="user_surname">Cognome</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="user_email" type="text" class="validate">
+					<label class="active" for="e_mail">E-mail</label>
+				</div>
+				<div class="input-field col s6">
+					<select id="user_type">
 						<option value="" disabled selected>Scegli il tipo dell'utente</option>
-						<option value="1">Commun</option>
-						<option value="2">Teacher</option>
+						<option value="1">Insegnante</option>
+						<option value="2">Referente</option>
+						<option value="3">Amministratore</option>
 					</select>
 					<label>Tipo Utente</label><br>
-					<button id="mod_user" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
 				</div>
-			</form>
-		</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<button id="add_user" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>
+
+<!-- MODAL: Modifica files -->
 <div id="modal_file" class="modal">
 	<div class="modal-content">
 		<h4 style="margin-left: 33%; color: #212121;">Modifica FILE</h4>
@@ -183,10 +202,16 @@
 					</div>
 				</div>
 			</div>
-			<button id="mod_file" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+			<div class="row">
+				<div class="input-field col s6">
+					<button id="mod_file" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+				</div>
+			</div>
 		</form>
 	</div>
 </div>
+
+<!-- MODAL: Inserimento links -->
 <div id="modal_link_add" class="modal">
 	<div class="modal-content">
 		<h4 style="margin-left: 33%; color: #212121;">Agiungi link</h4>
@@ -203,9 +228,14 @@
 					<label class="active" for="new_link">URL</label>
 				</div>
 			</div>
-			<button id="create_link" type="button" class="waves-effect waves-light btn light-blue darken-3">add</button>
+			<div class="row">
+				<div class="input-field col s6">
+					<button id="create_link" type="button" class="waves-effect waves-light btn light-blue darken-3">add</button>
+				</div>
+			</div>
 	</div>
 </div>
+
 <script type="text/javascript">
 
 	//modifica descrizione
@@ -223,7 +253,7 @@
 		link_title = $(this).attr("title");
 		$.post("/manage", { action: "delete_link", title: link_title}).done(function( result ) {
 			if (result == "Success"){
-				$("#row-user-"+username).remove();
+				$("#row-link-"+link_title).remove();
 			}
 	  });
 	});
@@ -239,6 +269,23 @@
 				$('#modal_link_add').modal('close');
 				$("#link_title").val("");
 				$("#link_url").val("");
+			}else if (result == "title_already_in_use"){
+				alert("Titolo già in uso. Per favore scegliere un titolo diverso.");
+			}
+	  });
+	});
+
+	//Aggiunta user
+
+	$("#add_user").click(function (){
+		user_name = $("#user_name").val();
+		user_surname = $("#user_surname").val();
+		user_email = $("#user_email").val();
+		user_type = $("#user_type").val();
+		$.post("/manage", { action: "create_user", name: user_name, surname: user_surname, email: user_email, user_type: user_name}).done(function( result ) {
+			if (result == "Success"){
+				$("#table_users").append("");
+				$('#form_user').reset();
 			}else if (result == "title_already_in_use"){
 				alert("Titolo già in uso. Per favore scegliere un titolo diverso.");
 			}
