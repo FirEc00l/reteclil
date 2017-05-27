@@ -30,24 +30,23 @@
       padding-right: 5px;
     }
     .sidenav {
-      width: 190px;
-      background: #1565c0;
+      width: 15%;
+      background: #FFFFFF;
       height: 100%;
       position: fixed;
+      margin-top: 2%;
     }
     .sidenav ul li {
       /*padding: 4px;*/
 
       font-size: .9em;
-      margin-left: 10px;
       list-style: none;
     }
     .sidenav a {
-      padding: 10px 0 10px 10px;
-      color: #FFFFFF;
+      padding: 5% 0% 5% 10%;
+      color: #000000;
       display: block;
       width: 100%;
-      margin-left: -10px;
       transition: background 0.25s ease-in-out;
       -webkit-transition: background 0.25s ease-in-out;
       -moz-transition: background 0.25s ease-in-out;
@@ -55,17 +54,15 @@
       -ms-transition: background 0.25s ease-in-out;
     }
     .sidenav a:hover {
-      background: #42a5f5;
+      background: #bbdefb;
       color: #FFFFFF;
     }
     .submenu {
       display: none;
-      background: #64b5f6 ;
-      border-top: 2px solid #90caf9 ;
-      border-bottom: 2px solid #90caf9 ;
+      background: #90caf9;
+      border-top: 2px solid #64b5f6 ;
+      border-bottom: 2px solid #64b5f6 ;
       /*width: 100%;*/
-
-      margin-left: -10px;
       padding: 0 7px;
     }
     .submenu ul li {
@@ -82,7 +79,7 @@
       -ms-transition: color 0.25s ease-in-out;
     }
     .submenu a:hover {
-      color: #1565c0;
+      color: #757575;
       background: none;
     }
     /***active state***/
@@ -90,7 +87,7 @@
       position: relative;
     }
     .active a {
-      background: #1565c0;
+      background: #FFFFFF;
     }
     /***arrow on active***/
     li.active:after {
@@ -99,7 +96,7 @@
       height: 0;
       width: 0;
       top: 6%;
-      left: 177px;
+      left: 96%;
       border: 10px solid;
       border-color: #FFFFFF transparent transparent #FFFFFF;
       -webkit-transform: rotate(-45deg);
@@ -129,14 +126,13 @@
     /***collapsed sidenav**/
     .sidenav-collapsed {
       display: none;
-      width: 37px;
+      width: 100%;
       position: absolute;
       height: 100%;
       background: #FFFFFF;
     }
     .sidenav-collapsed ul li {
       list-style: none;
-      /*margin-left: 10px;*/
 
       margin: 10px 0 0;
     }
@@ -251,7 +247,7 @@
 
         {% for section in sections %}
 
-        <li><a class="parent" href="#"><i class="icon-meter"></i>{{section.name}}</a>
+        <li style="border-color: #e3f2fd; border-style: solid; margin-top:1%"><a class="parent" href="#"><i class="icon-meter""></i>{{section.name}}</a>
           <ul class="submenu">
           {% for sub_section in section.list %}
             <li><a href="/section/{{sub_section[1]}}">{{sub_section[0]}}</a></li>
@@ -262,8 +258,6 @@
       </ul>
     </div>
 </div>
-
-
 
 {% if card %}
   <div class="row">
