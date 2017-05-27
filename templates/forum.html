@@ -40,7 +40,8 @@
       <li class="collection-item avatar">
         <i class="material-icons circle blue">question_answer</i>
         <span class="title Abbrevia">{{thread.title}}</span>
-        <p class="Abbrevia">Autore: {{thread.name}}  {{thread.surname}}
+        <p class="Abbrevia">Autore: {{thread.name}}  {{thread.surname}}.<br>
+        Numero di post: {{nthread}}
         </p>
       </a>
       <!--da rendere hidden -->
@@ -73,13 +74,13 @@
       <form class="col s12" action="/forum" method="POST">
         <div class="row">
           <div class="input-field col s12">
-            <input placeholder="Title" type="text" >
+            <input placeholder="Title" type="text" id="title">
             <label for="Title">Title</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea"></textarea>
+            <textarea id="content" class="materialize-textarea"></textarea>
             <label for="textarea1">Description</label>
           </div>
         </div>
