@@ -26,20 +26,23 @@
       width: 15%;
       background: #FFFFFF;
       height: 100%;
-      position: fixed;
-      margin-top: 2%;
+      position: absolute;
+      margin-top: 1%;
     }
     .sidenav ul li {
       /*padding: 4px;*/
 
       font-size: .9em;
+      margin-left: 10px;
       list-style: none;
     }
     .sidenav a {
-      padding: 5% 0% 5% 10%;
-      color: #000000;
+      padding: 10px 0 10px 10px;
+      color: #FFFFFF;
       display: block;
       width: 100%;
+      margin-left: -10px;
+      background-color: #1565c0;
       transition: background 0.25s ease-in-out;
       -webkit-transition: background 0.25s ease-in-out;
       -moz-transition: background 0.25s ease-in-out;
@@ -47,15 +50,17 @@
       -ms-transition: background 0.25s ease-in-out;
     }
     .sidenav a:hover {
-      background: #bbdefb;
+      background: #42a5f5;
       color: #FFFFFF;
     }
     .submenu {
       display: none;
-      background: #90caf9;
-      border-top: 2px solid #64b5f6 ;
-      border-bottom: 2px solid #64b5f6 ;
-      /*width: 100%;*/
+      background: #64b5f6 ;
+      border-top: 2px solid #90caf9 ;
+      border-bottom: 2px solid #90caf9 ;
+      width: 100%;
+
+      margin-left: -10px;
       padding: 0 7px;
     }
     .submenu ul li {
@@ -72,7 +77,7 @@
       -ms-transition: color 0.25s ease-in-out;
     }
     .submenu a:hover {
-      color: #757575;
+      color: #1565c0;
       background: none;
     }
     /***active state***/
@@ -80,7 +85,7 @@
       position: relative;
     }
     .active a {
-      background: #FFFFFF;
+      background: #1565c0;
     }
     /***arrow on active***/
     li.active:after {
@@ -89,7 +94,7 @@
       height: 0;
       width: 0;
       top: 6%;
-      left: 96%;
+      left: 177px;
       border: 10px solid;
       border-color: #FFFFFF transparent transparent #FFFFFF;
       -webkit-transform: rotate(-45deg);
@@ -119,13 +124,14 @@
     /***collapsed sidenav**/
     .sidenav-collapsed {
       display: none;
-      width: 100%;
+      width: 37px;
       position: absolute;
       height: 100%;
-      background: #FFFFFF;
+      background: #1565c0;
     }
     .sidenav-collapsed ul li {
       list-style: none;
+      /*margin-left: 10px;*/
 
       margin: 10px 0 0;
     }
@@ -187,6 +193,7 @@
     }
 
   </style>
+
 
   <script>
     var a=1;
@@ -252,7 +259,7 @@
 
           {% for section in sections %}
 
-          <li style="border-color: #e3f2fd; border-style: solid; margin-top:1%"><a class="parent" href="#"><i class="icon-meter""></i>{{section.name}}</a>
+          <li><a class="parent" href="#"><i class="icon-meter""></i>{{section.name}}</a>
             <ul class="submenu">
             {% for sub_section in section.list %}
               <li><a href="/section/{{sub_section[1]}}">{{sub_section[0]}}</a></li>
@@ -310,7 +317,9 @@
     	               <div class="card green">
     	            {% endif %}
     			            <div class="card-content">
+                      {% if logged == 3 %}
                         <a href="#!" class="right" style="margin-top: -5%; margin-right: -7%;"><i class="material-icons">delete</i></a>
+                      {% endif %}
     			            	<span class="Abbrevia card-title">{{item.name}}</span>
     			                <a name="{{item.id}}" class="ShowButton btn-floating waves-effect modal-trigger waves-light blue right" href="#modalfor{{item.id}}"><i class="material-icons" style="align:center;">&nbsp;perm_media</i></a>
     			                <p class="Abbrevia">{{item.description}}</p>
