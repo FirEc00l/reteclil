@@ -15,19 +15,24 @@ query_db con username inserito senza '_id'. poi cambiare l'username con _id pres
 
 import random
 
+import db as utils
 
-def usrgen(name, surname, default=True, id=None):
 
-    if default:
-        id = name[0] + surname + '_' + pswgen('0123456789ABCDEF', 5)
-        print id
-    else:
-        pass
-    return
+def usrgen(name, surname):
+
+    DB = utils.pysqlite3()
+
+    query = ''' SELECT id_user
+                FROM user
+            '''
+
+    last_id = DB.query_db(query)
+
+    last_id = int(last_id[-1][-1]) + 1
+
+    id = name[0] + surname + '_' + str(last_id)
+    return id
 
 
 def pswgen(dict, length):
     return ''.join(random.choice(dict) for i in range(length))
-
-
-usrgen('nicholas', 'sollazzo')
