@@ -110,7 +110,7 @@ def manage(request, session):
         password = ppg.pswgen('0123456789ABCDEF', 5)
         user_type = request.form['user_type']
         email = request.form['email']
-        username = request.form['username']  # generare
+        # username = TODO generate
         in_use = False
 
         query = ''' SELECT username FROM user; '''
@@ -122,18 +122,17 @@ def manage(request, session):
                 in_use = True
                 break
 
-        if in_use:
-            # TODO implementare in manage.html, cambiare con numeri
-            setResult('username_already_in_use')
-        else:
             query = '''INSERT INTO user
-			VALUES(NULL, "{name}", "{surname}", "{password}", "{user_type}", "{email}", "{username}", NULL);
+			VALUES(NULL, "{name}", "{surname}", "{password}",
+			       "{user_type}", "{email}", "{username}", NULL);
 			'''.format(name, surname, password, user_type, email, username)
 
             DB.query_db(query)
             DB.close_db()
 
             # setResult('user_created') # TODO implementare in manage.html, cambiare con numeri
+
+        # TODO: send email
 
     # XXX: 4
     def update_user_password():
@@ -306,6 +305,16 @@ def manage(request, session):
             abort(403)
     else:
         abort(403)
+
+    query = "SELECT section_name, id_section FROM section"
+    sections = db.query_db(query)
+
+    for section in sections:
+        query = '''SELECT sub_name, id_sub
+				   FROM sub_section
+				WHERE id_section="{}" '''.format(str(section[1]))
+        result = db.query_db(query)
+        section_list.append({'name': section[0], 'list': result})
 
     links = DATA.read('links')
     description = DATA.read('description')
