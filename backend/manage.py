@@ -307,13 +307,13 @@ def manage(request, session):
         abort(403)
 
     query = "SELECT section_name, id_section FROM section"
-    sections = db.query_db(query)
+    sections = DB.query_db(query)
 
     for section in sections:
         query = '''SELECT sub_name, id_sub
 				   FROM sub_section
 				WHERE id_section="{}" '''.format(str(section[1]))
-        result = db.query_db(query)
+        result = DB.query_db(query)
         section_list.append({'name': section[0], 'list': result})
 
     links = DATA.read('links')
