@@ -53,8 +53,8 @@
       {% if logged == 3 %}
       <!-- xhr jquery vins-->
       <form action="/forum" method="POST">
-      <!--<a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>-->
-      <button type="submit" class="waves-effect waves-light btn light-blue darken-3"><i class="material-icons">delete</i></button>
+      <a href="#!" type="submit" class="secondary-content"><i class="material-icons">delete</i></a>
+      <!--<button type="submit" class="waves-effect waves-light btn-floating btn-small btn red accent-4"><i class="material-icons">delete</i></button>-->
       <input type="hidden" name="request" value="delete">
       <input type="hidden" name="{{thread.id_thread}}" value="{{thread.id_thread}}">
       </form>
