@@ -20,7 +20,7 @@
 
   a {
     color: black;
-}
+  }
 
 </style>
 
@@ -46,7 +46,7 @@
         <i class="material-icons circle blue">question_answer</i>
         <span class="title Abbrevia">{{thread.title}}</span>
         <p class="Abbrevia">Autore: {{thread.name}}  {{thread.surname}}.<br>
-        Numero di post: {{nthread}}
+          Numero di post: {{nthread}}
         </p>
       </a>
       <!--da rendere hidden -->
@@ -67,7 +67,7 @@
   
   <!-- Modal Trigger -->
   <div class="row">
-  <div class="col s1 offset-m11">
+    <div class="col s1 offset-m11">
       <a class="btn-floating btn-medium light-blue darken-3" href="#modal1"><i class="material-icons">add</i></a>
     </div>
   </div>
@@ -77,8 +77,8 @@
   <div id="modal1" class="modal">
     <div class="modal-content">
      <div class="row">
-     <!--da modificare action-->
-      <form class="col s12" action="/thread" method="POST">
+       <!--da modificare action-->
+       <form class="col s12" action="/thread" method="POST">
         <div class="row">
           <div class="input-field col s12">
             <input placeholder="Title" type="text" id="title">
@@ -100,7 +100,8 @@
   <div class="modal-footer">
     <div class="row"> 
       <div class="col s3 offset-m9">
-        <a class="waves-effect waves-light light-blue darken-3 btn" value="submit">Submit</a>
+      <a class="waves-effect waves-light light-blue darken-3 btn" value="Submit" tye="submit">Submit</a>
+
       </div>
     </div>
   </div>
