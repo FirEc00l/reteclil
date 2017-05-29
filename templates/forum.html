@@ -17,6 +17,11 @@
     overflow:hidden;              /* don't show excess chars */
     white-space:nowrap;           /* force single line */
   }
+
+  a {
+    color: black;
+  }
+
 </style>
 
 <script>
@@ -41,11 +46,12 @@
         <i class="material-icons circle blue">question_answer</i>
         <span class="title Abbrevia">{{thread.title}}</span>
         <p class="Abbrevia">Autore: {{thread.name}}  {{thread.surname}}.<br>
-        Numero di post: {{nthread}}
+          Numero di post: {{nthread}}
         </p>
       </a>
       <!--da rendere hidden -->
       {% if logged == 3 %}
+      <!-- xhr jquery vins-->
       <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
       {% endif %}
     </li>
@@ -61,7 +67,7 @@
   
   <!-- Modal Trigger -->
   <div class="row">
-  <div class="col s1 offset-m11">
+    <div class="col s1 offset-m11">
       <a class="btn-floating btn-medium light-blue darken-3" href="#modal1"><i class="material-icons">add</i></a>
     </div>
   </div>
@@ -71,33 +77,37 @@
   <div id="modal1" class="modal">
     <div class="modal-content">
      <div class="row">
-     <!--da modificare action-->
-      <form class="col s12" action="/thread" method="POST">
+       <!--da modificare action-->
+       <form class="col s12" action="/forum" method="POST">
         <div class="row">
           <div class="input-field col s12">
-            <input placeholder="Title" type="text" id="title">
+          <input placeholder="Title" type="text" id="title" name="title">
             <label for="Title">Title</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea id="content" class="materialize-textarea"></textarea>
+            <textarea id="content" class="materialize-textarea" name="content"></textarea>
             <label for="textarea1">Description</label>
           </div>
         </div>
-        
+        <br>
+        <div class="row">
+          <div class="center-align">
+            <button type="submit" class="waves-effect waves-light btn light-blue darken-3">login</button>
+          </div>
+        </div>
       </form>
     </div>
 
 
   </div>
   <div class="modal-footer">
-    <div class="row"> 
-      <div class="col s3 offset-m9">
-        <a class="waves-effect waves-light light-blue darken-3 btn" value="submit">Submit</a>
-      </div>
+    <div class="row">     
+
     </div>
   </div>
+</div>
 </div>
 
 </div>

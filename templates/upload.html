@@ -1,5 +1,5 @@
 <!--
-### 
+###
 ### Responsabile: Giammanco
 ###
 -->
@@ -20,12 +20,12 @@
 				<div class="collapsible-header"><i class="material-icons">attach_file</i>Carica Documento</div>
 				<div class="collapsible-body">
 					<span>
-						<form action="/upload" method="POST" enctype="multipart/form-data">
+						<form action="/upload" id="form_file" method="POST" enctype="multipart/form-data">
 							<div class="row">
 								<div class="file-field input-field col s12" >
 									<div class="btn" style="background-color: #1976d2">
 										<span>File</span>
-										<input type="file" name="file">
+										<input type="file" name="file" required>
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text">
@@ -34,7 +34,7 @@
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
-									<select name='sub_sec'>
+									<select name='sub_sec' required>
 										<option value="" disabled selected>Seleziona una sezione</option>
 										{% for section in sections %}
 										<optgroup label="{{section.name}}">
@@ -118,7 +118,7 @@
 									</div>
 									<div class="center-align">
 										<button id="carica_evento" type="submit" class="waves-effect waves-light btn light-blue darken-3">carica evento</button>
-									</div>	
+									</div>
 								</form>
 							</div>
 						</span>
@@ -137,7 +137,7 @@
 
 			var percent = $('.determinate');
 
-			$('form').ajaxForm({
+			$('#form_file').ajaxForm({
 				beforeSend: function() {
 					var percentVal = '0%';
 
@@ -192,18 +192,18 @@
    		outline: none;
    	}
    	/* Every month of the year except: today */
-   .picker__day { /* If you want to customize */ }
-.picker__day:hover { /* If you want to customize */ }
-.picker__day--infocus:hover { color: #1976d2; }
-.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected { 
-	color: #FFFFFF;
-	font-weight: 700;
-}
-.picker__day.picker__day--infocus.picker__day--selected.picker__day--highlighted { background-color: #2196f3; }
-/* Today */
-.picker__day.picker__day--infocus.picker__day--today.picker__day--selected.picker__day--highlighted { background-color: #2196f3; }
-.picker__day.picker__day--today 
-{ color: #1976d2;
-	font-weight: 700; }
+	   .picker__day { /* If you want to customize */ }
+	.picker__day:hover { /* If you want to customize */ }
+	.picker__day--infocus:hover { color: #1976d2; }
+	.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected {
+		color: #FFFFFF;
+		font-weight: 700;
+	}
+	.picker__day.picker__day--infocus.picker__day--selected.picker__day--highlighted { background-color: #2196f3; }
+	/* Today */
+	.picker__day.picker__day--infocus.picker__day--today.picker__day--selected.picker__day--highlighted { background-color: #2196f3; }
+	.picker__day.picker__day--today
+	{ color: #1976d2;
+		font-weight: 700; }
 </style>
 {% endblock %}

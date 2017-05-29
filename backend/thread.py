@@ -2,7 +2,7 @@
 #se conne ssione epost inserisci post
 '''
 thread.py
-@author:Alesandro Capici, Cristian Garau
+@author:Alesandro Capici
 @version: 0.1
 @date: 26/05/17
 '''
