@@ -9,8 +9,10 @@ import json
 import os
 import os.path
 
+
 class pyJson(object):
     """docstring for pyJson."""
+
     def __init__(self, path):
         super(pyJson, self).__init__()
         self.path = path
@@ -20,17 +22,17 @@ class pyJson(object):
             data_str = tmpj.read()
 
         if key is None:
-            return json.loads(data_str) # return all the json
+            return json.loads(data_str)  # return all the json
         else:
             return json.loads(data_str)[key]
 
     def write(self, args, path=None):
         if path is None:
             with open(self.path, 'w') as f:
-                f.write(json.dump(args,f))
+                f.write(json.dump(args, f))
         else:
             with open(path, 'w') as f:
-                f.write(json.dump(args,f))
+                f.write(json.dump(args, f))
 
     def copy(self, ext='copy'):
         with open(self.path, 'r') as f:
@@ -55,11 +57,12 @@ class pyJson(object):
 
         new_path = self.copy('tmp')
 
-        with open(new_path, 'w') as f: # temporary json with new changes
+        with open(new_path, 'w') as f:  # temporary json with new changes
             f.write(json.dumps(json_data))
 
         os.remove(self.path)
-        os.rename(new_path, self.path) # rename the temporary file onto the original file
+        # rename the temporary file onto the original file
+        os.rename(new_path, self.path)
 
     def add(self, key, args):
         with open(self.path, 'r') as f:
@@ -70,18 +73,19 @@ class pyJson(object):
 
         self.edit(key, json_elements)
 
-    def remove(self, key, arg): # developing
+    def remove(self, key, arg):  # developing
 
         data = self.read()
 
         i = -1
         for element in data[key]:
-            i+=1
+            i += 1
             if arg in element.values():
                 del data[key][i]
                 break
 
         self.edit(key, data[key])
+
 
 '''
 test
