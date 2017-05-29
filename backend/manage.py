@@ -29,11 +29,11 @@ import string
 from flask import abort, render_template, request
 
 import backend.clil_utils.db as utils
+import backend.clil_utils.pyUser as pyu
 from backend.clil_utils.pyJson import pyJson as pj
 
 # Costants
 DATA = pj('data/data.json')
-
 # global
 RESULT = 'Success'
 
@@ -107,10 +107,10 @@ def manage(request, session):
     def create_user():
         name = request.form['name']
         surname = request.form['surname']
-        password = ppg.pswgen('0123456789ABCDEF', 5)
+        password = pyu.pswgen('0123456789ABCDEF', 5)
         user_type = request.form['user_type']
         email = request.form['email']
-        # username = TODO generate
+        username = pyu.usergen(name, surname)
         in_use = False
 
         query = ''' SELECT username FROM user; '''
