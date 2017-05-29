@@ -1,6 +1,6 @@
 '''
 __init__.py
-@author: Nicholas Sollazzo,Alessadro Capici(pivccole modifiche)
+@author: Nicholas Sollazzo,Alessadro Capici(piccole modifiche)
 @version: 1.8
 @date: 10/05/17
 '''
