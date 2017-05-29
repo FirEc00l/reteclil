@@ -25,7 +25,7 @@
 								<div class="file-field input-field col s12" >
 									<div class="btn" style="background-color: #1976d2">
 										<span>File</span>
-										<input type="file" name="file">
+										<input type="file" name="file" required>
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text">
@@ -34,7 +34,7 @@
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
-									<select name='sub_sec'>
+									<select name='sub_sec' required>
 										<option value="" disabled selected>Seleziona una sezione</option>
 										{% for section in sections %}
 										<optgroup label="{{section.name}}">
