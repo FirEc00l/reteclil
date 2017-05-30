@@ -127,7 +127,15 @@
 			</ul>
 		</div>
 	</div>
+	<div id="error-msg" class="row" style="display:none;">
+		<div class="col s6 offset-m3">
+			<div class="error" id="outerror">
+				<blockquote> <h5>ERRORE</h5> Formato non supportato </blockquote>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript">
+	var a;
 		$(document).ready(function() {
 			$('select').material_select();
 		});
@@ -150,6 +158,13 @@
 				},
 				complete: function(xhr) {
 					console.log(xhr.responseText);
+					a=xhr.responseText;
+					if(a=='success'){
+						$('#error-msg').css('display','none');
+						window.location.reload();
+					}else{
+						$('#error-msg').css('display','inline');
+					}
 				}
 			});
 		});
