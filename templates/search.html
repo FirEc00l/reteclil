@@ -105,6 +105,9 @@
 			        <div class="card green">
 				{% endif %}
 				        <form name="Carta" type="/POST" class="card-content">
+                      {% if logged == 3 %}
+                        <a href="#!" class="right" style="margin-top: -5%; margin-right: -7%;"><i class="material-icons">delete</i></a>
+                      {% endif %}
 				            <span class="Abbrevia card-title" id="{{item.name}}">{{item.name}}</span>
 				            <a name="{{item.name}}" id="ShowButton{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" href="#modalfor{{item.name}}"><i class="material-icons">perm_media</i></a>
 				            <p class="Abbrevia" id="{{item.description}}">{{item.description}}</p>
