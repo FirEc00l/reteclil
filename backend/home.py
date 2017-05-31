@@ -1,11 +1,11 @@
 '''
 home.py
-@author: Nicholas Sollazzo
+@author: Nicholas Sollazzo,Alessandro Capici
 @version: 1.6
 @date: 8/05/17
 '''
 from flask import render_template
-
+from time import gmtime, strftime
 import backend.clil_utils.db as utils
 from backend.clil_utils.pyJson import pyJson as pj
 
@@ -21,9 +21,12 @@ def home(session):
         logged = False
     # luogo, indirizzo, desc
     db = utils.pysqlite3()
-    query = "SELECT title, date, description, place, address FROM event"
+    c=strftime("%d-%m-%Y %H:%M", gmtime())
+    query = "SELECT title, date, description, place, address FROM event WHERE date>'{}'".format(c)
+    print query
+    
     result = db.query_db(query)
-
+    print result
     event = []
 
     if result:
