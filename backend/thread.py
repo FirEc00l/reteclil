@@ -14,7 +14,10 @@ def thread (request, session, id_thread):
     if 'user_id' in session:
         logged = session['user_type']
         if request.method=='POST' :
-            abort(403)
+           testo=request.form['textarea1']
+           print testo
+           return render_template("thread.html")
+     
         else:
             db =  utils.pysqlite3()
             query = """SELECT title
@@ -40,7 +43,7 @@ def thread (request, session, id_thread):
                 id_user = post[3]
                 dict_files.append({'post_id': post[0], 'post.text': post[1], 'post.data': post[2], 'post.author': post[3]})
                 
-            return render_template("forum.html",thread_title=titolo,  logged=logged,post=dict_files)
+            return render_template("thread.html",thread_title=titolo,  logged=logged,post=dict_files)
     else :
         abort(403)
 
