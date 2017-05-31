@@ -3,7 +3,7 @@ pyMail.py
 @author: Nicholas Sollazzo
 @mail: sollsharp@gmail.com
 @version: 1.0
-@date: 26/05/17
+@date: 31/05/17
 '''
 
 import smtplib
@@ -11,7 +11,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-def mail(from_gmail, from_gmail_psw, to_email, subject, body, html_path=None, placeholder=None, link=None):
+def send_email(from_gmail, from_gmail_psw, to_email, subject, body, html_path=None, placeholder=None, link=None):
 
     # formattazzione messaggio
     mime_msg = MIMEMultipart('alternative')

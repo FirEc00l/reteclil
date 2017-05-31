@@ -2,8 +2,8 @@
 manage.py
 @author: Nicholas Sollazzo
 @mail: sollsharp@gmail.com
-@version: 1.3.11
-@date: 26/05/17
+@version: 1.5
+@date: 31/05/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -27,13 +27,17 @@ import os
 import string
 
 from flask import abort, render_template, request
+from werkzeug.security import generate_password_hash
 
 import backend.clil_utils.db as utils
+import backend.clil_utils.pyMail as pm
 import backend.clil_utils.pyUser as pyu
 from backend.clil_utils.pyJson import pyJson as pj
 
 # Costants
 DATA = pj('data/data.json')
+CLIL_MAIL = 'reteclilpavia@gmail.com'
+CLIL_MAIL_PSW = 'robot1ca'
 # global
 RESULT = 'Success'
 
@@ -62,15 +66,13 @@ def manage(request, session):
         # print 'requestAction:', requestAction
         switcher = {
             'edit_description': edit_description,  # DONE
-            'create_user': create_user,  # TBT
-            'delete_user': delete_user,  # TBT
-            'update_user_password': update_user_password,  # TBT
+            'create_user': create_user,  # DONE
+            'delete_user': delete_user,  # DONE
             'create_link': create_link,  # DONE
             'delete_link': delete_link,  # DONE
             'create_section': create_section,  # TBT
             'delete_section': delete_section,  # TBT
             'change_file_section': change_file_section,  # TBT
-            'rename_file': rename_file,  # TBT
             'delete_file': delete_file  # TBT
         }
         initResult()
@@ -110,43 +112,38 @@ def manage(request, session):
         password = pyu.pswgen('0123456789ABCDEF', 5)
         user_type = request.form['user_type']
         email = request.form['email']
-        username = pyu.usergen(name, surname)
+        username = pyu.usrgen(name.lower(), surname.lower())
         in_use = False
 
-        query = ''' SELECT username FROM user; '''
+        print user_type
 
-        username_in_use = DB.query_db(query)
+        query = ''' SELECT email FROM user; '''
 
-        for item in username_in_use:
-            if item == username:
+        email_in_use = DB.query_db(query)
+
+        for item in email_in_use:
+            if item == email:
                 in_use = True
                 break
 
+        if in_use:
+            # TODO implementare in manage.html, cambiare con numeri
+            setResult('email_already_in_use')
+        else:
             query = '''INSERT INTO user
-			VALUES(NULL, "{name}", "{surname}", "{password}",
-			       "{user_type}", "{email}", "{username}", NULL);
-			'''.format(name, surname, password, user_type, email, username)
+			VALUES(NULL, "{}", "{}", "{}",
+			"{}", "{}", "{}", NULL);
+			'''.format(name, surname, generate_password_hash(password), user_type, email, username)
 
             DB.query_db(query)
             DB.close_db()
 
-            # setResult('user_created') # TODO implementare in manage.html, cambiare con numeri
+            email_subject = 'Registrazione rete CLIL pavia'
+            email_body = "Il tuo username e': {}\n la tua password e': {}".format(
+                username, password)
 
-        # TODO: send email
-
-    # XXX: 4
-    def update_user_password():
-        new_password = request.form['new_password']
-        username = request.form['username']
-
-        query = '''UPDATE user
-				   SET password = "{0}"
-				   WHERE username = "{1}";'''.format(new_password, username)
-
-        DB.query_db(query)
-        DB.close_db()
-
-        # setResult('password_updated') # TODO implementare in manage.html, cambiare con numeri
+            pm.send_email(CLIL_MAIL, CLIL_MAIL_PSW, email,
+                          email_subject, email_body)
 
     # XXX: 5
     def create_link():
@@ -224,20 +221,6 @@ def manage(request, session):
         DB.close_db()
 
         # setResult('changed_file_section') # TODO implementare in manage.html, cambiare con numeri
-
-    # XXX: 10
-    def rename_file():
-        id_file = request.form['id_file']
-        new_name = request.form['new_name']
-
-        query = '''UPDATE file
-				   SET name = "{0}"
-				   WHERE id_file = "{1}";'''.format(new_name, id_file)
-
-        DB.query_db(query)
-        DB.close_db()
-
-        # setResult('filename_changed') # TODO implementare in manage.html, cambiare con numeri
 
     # XXX: 11
     def delete_file():

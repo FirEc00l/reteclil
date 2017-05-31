@@ -95,6 +95,8 @@
 			</li>
 
 			<!-- COLLAPSIBLE: Modifica files -->
+
+			<!--
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_media</i>Files</div>
 				<div class="collapsible-body">
@@ -115,6 +117,7 @@
 					</span>
 				</div>
 			</li>
+			-->
 
 			<!-- COLLAPSIBLE: Aggiunta e modifica sezioni -->
 			<li>
@@ -122,18 +125,20 @@
 				<div class="collapsible-body">
 					<span>
 						<ul class="collapsible" data-collapsible="accordion">
-							<li>
-								<div class="collapsible-header"><i class="material-icons">label_outline</i>First</div>
-								<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-							</li>
-							<li>
-								<div class="collapsible-header"><i class="material-icons">label_outline</i>Second</div>
-								<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-							</li>
-							<li>
-								<div class="collapsible-header"><i class="material-icons">label_outline</i>Third</div>
-								<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-							</li>
+							{% for section in section_list %}
+								<li>
+									<div class="collapsible-header"><i class="material-icons">label_outline</i>{{section.name}}</div>
+									<div class="collapsible-body">
+										<ul class="collection">
+											{% for sub_section in section.list %}
+												{{sub_section[1]}} {{sub_section[0]}}
+												<li value="" class="collection-item">adsd</li>
+											{% endfor %}
+								    </ul>
+
+									</div>
+								</li>
+							{% endfor %}
 						</ul>
 					</span>
 				</div>
@@ -278,13 +283,15 @@
 	//Aggiunta user
 
 	$("#add_user").click(function (){
+		alert("ciao");
 		user_name = $("#user_name").val();
 		user_surname = $("#user_surname").val();
 		user_email = $("#user_email").val();
 		user_type = $("#user_type").val();
-		$.post("/manage", { action: "create_user", name: user_name, surname: user_surname, email: user_email, user_type: user_name}).done(function( result ) {
+		$.post("/manage", { action: "create_user", name: user_name, surname: user_surname, email: user_email, user_type: user_type}).done(function( result ) {
+			alert(result);
 			if (result == "Success"){
-				$("#table_users").append("");
+				//$("#table_users").append("");
 				$('#form_user').reset();
 			}else if (result == "title_already_in_use"){
 				alert("Titolo già in uso. Per favore scegliere un titolo diverso.");
