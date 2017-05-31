@@ -12,10 +12,11 @@ import backend.clil_utils.db as utils
 
 def thread (request, session, id_thread):
     if 'user_id' in session:
+        print 'nico'
         logged = session['user_type']
-        if request.method=='POST' :
+        if request.method=='POST':
            testo=request.form['textarea1']
-           print testo
+           print 'yolo',testo
            return render_template("thread.html")
      
         else:
@@ -27,22 +28,22 @@ def thread (request, session, id_thread):
             result = db.query_db(query)
             titolo=result[0][0]
 
-            query = """ SELECT *
+            query = """ SELECT post.*,user.username
                         FROM post
+                        NATURAL JOIN user
                         WHERE id_thread = '%s'
                         """ % id_thread
             result = db.query_db(query)
             post=result
 
+
             dict_files = []
             extension = []
-            for post in post:
-                id_post = post[0]
-                content = post[1]
-                date_post = post[2]
-                id_user = post[3]
-                dict_files.append({'post_id': post[0], 'post.text': post[1], 'post.data': post[2], 'post.author': post[3]})
+            print 'ciao'
+            for posts in post:
+                dict_files.append({'post_id': posts[0], 'post.text': posts[1], 'post.author': posts[6], 'post.data': posts[3]})
                 
+            print dict_files
             return render_template("thread.html",thread_title=titolo,  logged=logged,post=dict_files)
     else :
         abort(403)
