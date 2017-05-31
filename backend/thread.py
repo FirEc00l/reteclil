@@ -44,7 +44,7 @@ def thread (request, session, id_thread):
                 dict_files.append({'id': posts[0], 'text': posts[1], 'author': posts[6], 'date': posts[3]})
                 
             print dict_files
-            return render_template("thread.html",thread_title=titolo,  logged=logged,post=dict_files)
+            return render_template("thread.html",thread_title=titolo, id=id_thread,  logged=logged,post=dict_files)
     else :
         abort(403)
 
