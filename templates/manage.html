@@ -36,16 +36,15 @@
 					<span>
 						<ul class="collection with-header">
 							<li class="collection-item">
-								<div id="link_list">
+
+								<ul class="collection" id="link_list">
 									{% for link in links %}
-									<div class="row" id="row-link-{{ link.title }}">
-										<div class="input-field">
+										<li class="collection-item" id="row-link-{{ link.title }}">
 											<a target="_blank" href="{{ link.url }}">{{link.title}}</a>
-											<a title="{{ link.title }}" style='cursor:pointer' class="secondary-content delete_link"><i class="material-icons light-blue-text darken-3">delete</i></a>
-										</div>
-									</div>
+											<a title="{{ link.title }}" style='cursor:pointer' class="secondary-content delete_link"><i class="material-icons red-text accent-4">delete</i></a>
+										</li>
 									{% endfor %}
-								</div>
+								</ul>
 								<a href="#modal_link_add" class="btn-floating btn-medium light-blue darken-3"><i class="material-icons">add</i></a>
 							</li>
 						</ul>
@@ -80,7 +79,7 @@
 														<td>{{user.username}}</td>
 														<td>{{user_types[user.user_type | int - 1 ]}}</td>
 														<td>
-															<a username="{{ user.username }}" style='cursor:pointer' class="secondary-content delete_user"><i class="material-icons light-blue-text darken-3">delete</i></a>
+															<a username="{{ user.username }}" style='cursor:pointer' class="secondary-content delete_user"><i class="material-icons red-text accent-4">delete</i></a>
 														</td>
 													</div>
 											</tr>
@@ -94,31 +93,6 @@
 				</div>
 			</li>
 
-			<!-- COLLAPSIBLE: Modifica files -->
-
-			<!--
-			<li>
-				<div class="collapsible-header"><i class="medium material-icons">perm_media</i>Files</div>
-				<div class="collapsible-body">
-					<span>
-						<ul class="collection with-header">
-							<li class="collection-item">
-								{% if file_list %}
-									{% for file in file_list %}
-										<div class="inout-field">
-											{{file.file_name}}
-											<a id="delete_links" href="#!" class="secondary-content"><i class="material-icons light-blue-text darken-3">delete</i></a>
-											<a href="#modal_file" class="secondary-content"><i class="material-icons light-blue-text darken-3">mode_edit</i></a>
-										</div>
-									{% endfor %}
-								{% endif %}
-							</li>
-						</ul>
-					</span>
-				</div>
-			</li>
-			-->
-
 			<!-- COLLAPSIBLE: Aggiunta e modifica sezioni -->
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">subject</i>Sezioni Files</div>
@@ -131,15 +105,19 @@
 									<div class="collapsible-body">
 										<ul class="collection">
 											{% for sub_section in section.list %}
-												{{sub_section[1]}} {{sub_section[0]}}
-												<li value="" class="collection-item">adsd</li>
+												<li class="collection-item" sub="{{sub_section[1]}}"><div>{{sub_section[0]}}<a href="#!" class="secondary-content"><i class="material-icons red-text accent-4">delete</i></a></div></li>
 											{% endfor %}
+											<br>
+											<button class="waves-effect waves-light btn red darken-4">Elimina sezione</button>
+											<button class="waves-effect waves-light btn light-blue darken-3">Crea sotto-sezione</button>
+
 								    </ul>
 
 									</div>
 								</li>
 							{% endfor %}
 						</ul>
+						<button class="waves-effect waves-light btn green accent-4">Crea sezione</button>
 					</span>
 				</div>
 			</li>
@@ -178,38 +156,8 @@
 				</div>
 				<div class="row">
 					<div class="input-field col s6">
-						<button id="add_user" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
+						<button id="add_user" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
 					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
-
-<!-- MODAL: Modifica files -->
-<div id="modal_file" class="modal">
-	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #212121;">Modifica FILE</h4>
-		<div class="row">
-			<form class="col s12">
-				<div class="row">
-					<div class="input-field col s6">
-						<input id="testo_link" type="text" class="validate">
-						<label class="active" for="testo_link">Nome File</label>
-					</div>
-					<div class="input-field col s6">
-						<select>
-							<option value="" disabled selected>Scegli il tipo dell'file</option>
-							<option value="1">Commun</option>
-							<option value="2">Teacher</option>
-						</select>
-						<label>Tipo File</label><br>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s6">
-					<button id="mod_file" type="submit" class="waves-effect waves-light btn light-blue darken-3">modifica</button>
 				</div>
 			</div>
 		</form>
@@ -235,7 +183,7 @@
 			</div>
 			<div class="row">
 				<div class="input-field col s6">
-					<button id="create_link" type="button" class="waves-effect waves-light btn light-blue darken-3">add</button>
+					<button id="create_link" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
 				</div>
 			</div>
 	</div>
@@ -270,7 +218,7 @@
 		$.post("/manage", { action: "create_link", link_title: link_title, link_url: link_url}).done(function( data ) {
 			result = data
 			if (result == "Success"){
-				$("#link_list").append("<div class='row' id='row-link-"+ link_title +"'><div class='input-field'><a target='_blank' href='"+ link_url +"'>"+ link_title+"</a><a title='"+ link_title +"' style='cursor:pointer' class='secondary-content delete_link'><i class='material-icons light-blue-text darken-3'>delete</i></a></div></div>");
+				$("#link_list").append("<li class='collection-item' id='row-link-"+ link_title +"'><a target='_blank' href='"+ link_url +"'>"+ link_title +"</a><a title='"+ link_title +"' style='cursor:pointer' class='secondary-content delete_link'><i class='material-icons red-text accent-4'>delete</i></a></li>");
 				$('#modal_link_add').modal('close');
 				$("#link_title").val("");
 				$("#link_url").val("");
@@ -283,18 +231,14 @@
 	//Aggiunta user
 
 	$("#add_user").click(function (){
-		alert("ciao");
 		user_name = $("#user_name").val();
 		user_surname = $("#user_surname").val();
 		user_email = $("#user_email").val();
 		user_type = $("#user_type").val();
 		$.post("/manage", { action: "create_user", name: user_name, surname: user_surname, email: user_email, user_type: user_type}).done(function( result ) {
-			alert(result);
 			if (result == "Success"){
 				//$("#table_users").append("");
 				$('#form_user').reset();
-			}else if (result == "title_already_in_use"){
-				alert("Titolo già in uso. Per favore scegliere un titolo diverso.");
 			}
 	  });
 	});

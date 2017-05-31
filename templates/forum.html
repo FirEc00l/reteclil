@@ -25,6 +25,23 @@
 </style>
 
 <script>
+  function check(){
+    var title= document.getElementById("title");
+    if ((title == "") || (title == "undefined")) {
+     alert("Il campo Title è obbligatorio.");
+     console.log("prova");
+     document.getElementById("title").focus();
+     return false;
+   }
+   var content= document.getElementById("content");
+   if ((content == "") || (content == "undefined")) {
+     alert("Il campo Description è obbligatorio.");
+     document.getElementById("content").focus();
+     return false;
+   }
+ }
+
+
  $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
@@ -53,10 +70,11 @@
       {% if logged == 3 %}
       <!-- xhr jquery vins-->
       <form action="/forum" method="POST">
-      <a href="#!" type="submit" class="secondary-content"><i class="material-icons">delete</i></a>
-      <!--<button type="submit" class="waves-effect waves-light btn-floating btn-small btn red accent-4"><i class="material-icons">delete</i></button>-->
-      <input type="hidden" name="request" value="delete">
-      <input type="hidden" name="{{thread.id_thread}}" value="{{thread.id_thread}}">
+        <!--href="#!" da vedere soluzione da applicare a delete-->
+        <a href="/forum" type="submit" class="secondary-content"><i class="material-icons">delete</i></a>
+        <!--<button type="submit" class="right waves-effect waves-light btn-floating btn-small btn red accent-4"><i class="material-icons">delete</i></button>-->
+        <input type="hidden" name="request" value="delete">
+        <input type="hidden" name="{{thread.id_thread}}" value="{{thread.id_thread}}">
       </form>
       {% endif %}
     </li> 
@@ -66,7 +84,7 @@
   {% else %}
   <!--da vedere row e dimensione in col-->
   <div class="row" >
-    <div class="col m4 offset-m4"><p align="center">Attualmente non sono presenti discussioni.Puo crearne una nuova premento sul tasto dal simbolo "+" in basso a sinistra</p></div>
+    <div class="col m4 offset-m4"><p align="center">Attualmente non sono presenti discussioni.Puo crearne una nuova premento sul tasto dal simbolo "+" in basso a destra</p></div>
   </div>
   {% endif %}
   
@@ -86,8 +104,8 @@
        <form class="col s12" action="/forum" method="POST">
         <div class="row">
           <div class="input-field col s12">
-          <input placeholder="Title" type="text" id="title" name="title">
-            <label for="Title">Title</label>
+            <input placeholder="title" type="text" id="title" name="title">
+            <label for="title">Title</label>
           </div>
         </div>
         <div class="row">
@@ -96,10 +114,11 @@
             <label for="textarea1">Description</label>
           </div>
         </div>
+        <input type="hidden" name="request" value="prova">
         <br>
         <div class="row">
           <div class="center-align">
-            <button type="submit" class="waves-effect waves-light btn-small btn light-blue darken-3">Submit</button>
+            <button onclick="check()" type="submit" class="waves-effect waves-light btn-small btn light-blue darken-3">Submit</button>
           </div>
         </div>
       </form>
