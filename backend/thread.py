@@ -41,7 +41,7 @@ def thread (request, session, id_thread):
             extension = []
             print 'ciao'
             for posts in post:
-                dict_files.append({'post_id': posts[0], 'post.text': posts[1], 'post.author': posts[6], 'post.data': posts[3]})
+                dict_files.append({'id': posts[0], 'text': posts[1], 'author': posts[6], 'date': posts[3]})
                 
             print dict_files
             return render_template("thread.html",thread_title=titolo,  logged=logged,post=dict_files)
