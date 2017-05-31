@@ -174,6 +174,7 @@ def manage(request, session):
     # XXX: 6
     def create_section():
         section_name = request.form['section_name']
+        in_use = False
 
         query = ''' SELECT section_name FROM section; '''
 
