@@ -95,6 +95,8 @@
 			</li>
 
 			<!-- COLLAPSIBLE: Modifica files -->
+
+			<!--
 			<li>
 				<div class="collapsible-header"><i class="medium material-icons">perm_media</i>Files</div>
 				<div class="collapsible-body">
@@ -115,6 +117,7 @@
 					</span>
 				</div>
 			</li>
+			-->
 
 			<!-- COLLAPSIBLE: Aggiunta e modifica sezioni -->
 			<li>
@@ -278,13 +281,15 @@
 	//Aggiunta user
 
 	$("#add_user").click(function (){
+		alert("ciao");
 		user_name = $("#user_name").val();
 		user_surname = $("#user_surname").val();
 		user_email = $("#user_email").val();
 		user_type = $("#user_type").val();
 		$.post("/manage", { action: "create_user", name: user_name, surname: user_surname, email: user_email, user_type: user_name}).done(function( result ) {
+			alert(result);
 			if (result == "Success"){
-				$("#table_users").append("");
+				//$("#table_users").append("");
 				$('#form_user').reset();
 			}else if (result == "title_already_in_use"){
 				alert("Titolo già in uso. Per favore scegliere un titolo diverso.");
