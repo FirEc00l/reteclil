@@ -50,14 +50,12 @@ def forum(request, session):
 
     if request.method=='POST' :
 
-            db =  utils.pysqlite3()
-
             if  request.form['request'] == "delete" :
                 
                 print "richiesta di delete ricevuta"
 
                 query = """DELETE FROM thread
-                       WHERE id_thread=\"{}\" """.format(request.form['id_thread'])
+                       WHERE id_thread=\"{}\"""".format(request.form['id_thread'])
 
                 result1 = db.query_db(query)
 
@@ -129,5 +127,3 @@ cueri
         
         
 '''
-
-
