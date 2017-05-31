@@ -13,54 +13,17 @@ def forum(request, session):
 
     if 'user_id' in session:
 		logged = session['user_type']
-
     else:
         abort(403)
 
+    db =  utils.pysqlite3()
 
-    if request.method=='POST' :
 
-            print "dati probabilmente ricevuti"
 
-            db =  utils.pysqlite3()
+    def print_threads():
 
-            date = dt.datetime.now()
-
-            date = str(date.strftime("%d/%m/%y"))
-
-            print "worka sempre di piu' ed oggi e' il: " + date
-
-            print request.form['title'] + " " + request.form['content']
-        
-            query = """INSERT INTO thread
-                   VALUES (NULL, \"{}\", \"{}\")""".format(request.form['title'], session['user_id'])
-
-            result1 = db.query_db(query)
-
-            print result1
-
-            query = "SELECT id_thread FROM thread "
-
-            result2 = db.query_db(query)
-            
-            id_trd = str(result2[-1][-1])
-
-            print id_trd
-            
-            query = """INSERT INTO post
-                   VALUES (NULL, \"{}\", \"{}\", \"{}\", \"{}\", \"{}\")""".format(request.form['title'], request.form['content'], date, session['user_id'], id_trd)
-
-            result3 = db.query_db(query)
-
-            print result3
-
-            return render_template("forum.html/"+id_trd)
-            
-
-    else:	
         result_dict = []
 
-        db =  utils.pysqlite3()
         query = "SELECT id_thread, title, id_user, name, surname FROM thread NATURAL JOIN user"
         result = db.query_db(query)
 
@@ -83,6 +46,79 @@ def forum(request, session):
             print nthread
 
             return render_template("forum.html", logged=logged, threads=threads, nthread=nthread)
+
+
+    if request.method=='POST' :
+
+            db =  utils.pysqlite3()
+
+            if  request.form['request'] == "delete" :
+                
+                print "richiesta di delete ricevuta"
+
+                query = """DELETE FROM thread
+                       WHERE id_thread=\"{}\" """.format(request.form['id_thread'])
+
+                result1 = db.query_db(query)
+
+                print result1
+
+                query = """DELETE FROM post
+                       WHERE id_thread=\"{}\" """.format(request.form['id_thread'])
+                
+                result2 = db.query_db(query)
+
+                print result2
+
+                
+
+                rt = print_threads()
+
+                return rt
+            
+                
+            else: 
+
+                print "dati probabilmente ricevuti"
+
+                date = dt.datetime.now()
+
+                date = str(date.strftime("%d/%m/%y"))
+
+                print "worka sempre di piu' ed oggi e' il: " + date
+
+                print request.form['title'] + " " + request.form['content']
+            
+                query = """INSERT INTO thread
+                       VALUES (NULL, \"{}\", \"{}\")""".format(request.form['title'], session['user_id'])
+
+                result1 = db.query_db(query)
+
+                print result1
+
+                query = "SELECT id_thread FROM thread "
+
+                result2 = db.query_db(query)
+                
+                id_trd = str(result2[-1][-1])
+
+                print id_trd
+                
+                query = """INSERT INTO post
+                       VALUES (NULL, \"{}\", \"{}\", \"{}\", \"{}\", \"{}\")""".format(request.form['title'], request.form['content'], date, session['user_id'], id_trd)
+
+                result3 = db.query_db(query)
+
+                print result3
+
+                return render_template("thread.html/"+id_trd)
+            
+
+    else:	
+
+        rt = print_threads()
+
+        return rt
 
     
     
