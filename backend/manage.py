@@ -211,7 +211,8 @@ def manage(request, session):
     def delete_sub_section():
         sub_section_name = request.form['section_name']
 
-        query '''SELECT COUNT(id_file) FROM file WHERE id_sub = "{}" '''.format(sub_section_name)
+        query = '''SELECT COUNT(id_file) FROM file WHERE id_sub = "{}" '''.format(
+            sub_section_name)
 
         files = int(DB.query_db(query))
 
