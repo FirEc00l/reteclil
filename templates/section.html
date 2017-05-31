@@ -256,17 +256,20 @@
 
       <div class="sidenav">
         <ul>
+          {% if sections %}
+            {% for section in sections %}
 
-          {% for section in sections %}
-
-          <li><a class="parent" href="#"><i class="icon-meter""></i>{{section.name}}</a>
-            <ul class="submenu">
-            {% for sub_section in section.list %}
-              <li><a href="/section/{{sub_section[1]}}">{{sub_section[0]}}</a></li>
+            <li><a class="parent" href="#"><i class="icon-meter"></i>{{section.name}}</a>
+              <ul class="submenu">
+                {% if section.list%}
+                  {% for sub_section in section.list %}
+                    <li><a href="/section/{{sub_section[1]}}">{{sub_section[0]}}</a></li>
+                  {% endfor %}
+                {% endif %}
+              </ul>
+            </li>
             {% endfor %}
-            </ul>
-          </li>
-          {% endfor %}
+          {% endif %}
         </ul>
       </div>
   </div>
@@ -296,8 +299,8 @@
     <!-- Fine Modal -->
   {% endfor %}
 
-  
-  
+
+
     <div class="row">
   	 {% for item in card %}
     	    	<div class="col s4 offset-s2" id="{{item.id}}" style="position:relative;">

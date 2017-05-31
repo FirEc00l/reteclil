@@ -25,27 +25,16 @@
 </style>
 
 <script>
-  function check(){
-    var title= document.getElementById("title");
-    if ((title == "") || (title == "undefined")) {
-     alert("Il campo Title è obbligatorio.");
-     console.log("prova");
-     document.getElementById("title").focus();
-     return false;
-   }
-   var content= document.getElementById("content");
-   if ((content == "") || (content == "undefined")) {
-     alert("Il campo Description è obbligatorio.");
-     document.getElementById("content").focus();
-     return false;
-   }
- }
-
-
- $(document).ready(function(){
+$(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
     $('.btn').modal();
+
+    $("#check").click(function(){
+      if($('#title').is(":invalid") || $('#content').is(":invalid")){
+        $('#error-msg').css('display','inline');
+      }
+    });
   });         
 </script>
 <br>
@@ -53,84 +42,89 @@
 <h2 align="center">Forum</h2>
 <br>
 {% if threads %}
-<div class="input-field col s6 offset-m3">
-  <ul class="collection">
-    <!--da fixare nomi da jinja nome cognome titolo (togliere ultimo post)-->
+<ul class="collection">
+  <!--da fixare nomi da jinja nome cognome titolo (togliere ultimo post)-->
+  {% for thread in threads %}
+  <a href="/forum/{{thread.id_thread}}">
+    <li class="collection-item avatar">
+      <i class="material-icons circle blue">question_answer</i>
+      <span class="title Abbrevia">{{thread.title}}</span>
+      <p class="Abbrevia">Autore: {{thread.name}}  {{thread.surname}}.<br>
+        Numero di post: {{nthread}}
+      </p>
+    </a>
+    <!--da rendere hidden -->
+    {% if logged == 3 %}
+    <!-- xhr jquery vins-->
+    <form action="/forum" method="POST">
+      <!--href="#!" da vedere soluzione da applicare a delete-->
+      <!--<a href="/forum" type="submit" class="secondary-content"><i class="material-icons">delete</i></a>-->
+      <button type="submit" class="center btn-floating btn-small red accent-4"><i class="material-icons">delete</i></button>
+      <input type="hidden" name="request" value="delete">
+      <input type="hidden" name="{{thread.id_thread}}" value="{{thread.id_thread}}">
+    </form>
+    {% endif %}
+  </li> 
+  {% endfor %}
+</ul>
 
-    {% for thread in threads %}
-    <a href="/forum/{{thread.id_thread}}">
-      <li class="collection-item avatar">
-        <i class="material-icons circle blue">question_answer</i>
-        <span class="title Abbrevia">{{thread.title}}</span>
-        <p class="Abbrevia">Autore: {{thread.name}}  {{thread.surname}}.<br>
-          Numero di post: {{nthread}}
-        </p>
-      </a>
-      <!--da rendere hidden -->
-      {% if logged == 3 %}
-      <!-- xhr jquery vins-->
-      <form action="/forum" method="POST">
-        <!--href="#!" da vedere soluzione da applicare a delete-->
-        <a href="/forum" type="submit" class="secondary-content"><i class="material-icons">delete</i></a>
-        <!--<button type="submit" class="right waves-effect waves-light btn-floating btn-small btn red accent-4"><i class="material-icons">delete</i></button>-->
-        <input type="hidden" name="request" value="delete">
-        <input type="hidden" name="{{thread.id_thread}}" value="{{thread.id_thread}}">
-      </form>
-      {% endif %}
-    </li> 
-    {% endfor %}
-  </ul>
+{% else %}
+<!--da vedere row e dimensione in col-->
+<div class="row" >
+  <div class="col m4 offset-m4"><p align="center">Attualmente non sono presenti discussioni.Puo crearne una nuova premento sul tasto dal simbolo "+" in basso a destra</p></div>
+</div>
+{% endif %}
 
-  {% else %}
-  <!--da vedere row e dimensione in col-->
-  <div class="row" >
-    <div class="col m4 offset-m4"><p align="center">Attualmente non sono presenti discussioni.Puo crearne una nuova premento sul tasto dal simbolo "+" in basso a destra</p></div>
+<!-- Modal Trigger -->
+<div class="row">
+  <div class="col s1 offset-m11">
+    <a class="btn-floating btn-medium light-blue darken-3" href="#modal1"><i class="material-icons">add</i></a>
   </div>
-  {% endif %}
-  
-  <!-- Modal Trigger -->
-  <div class="row">
-    <div class="col s1 offset-m11">
-      <a class="btn-floating btn-medium light-blue darken-3" href="#modal1"><i class="material-icons">add</i></a>
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+   <div class="row">
+     <!--da modificare action-->
+     <form class="col s12" action="/forum" method="POST">
+      <div class="row">
+        <div class="input-field col s12">
+          <input  placeholder="title" type="text" id="title" name="title" pattern="[^ ][a-zA-Z\u00C0-\u017F0-9 ,.?!#@\\\^]*">
+          <label for="title">Title</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="text"  id="content" class="materialize-textarea" name="content" pattern="[^ ][a-zA-Z\u00C0-\u017F0-9 ,.?!#@\\\^]*"></input>
+          <label for="textarea">Description</label>
+        </div>
+      </div>
+      <input type="hidden" name="request" value="prova">
+      <br>
+      <div class="row">
+        <div class="center-align">
+          <button id="check" type="submit" class="waves-effect waves-light btn-small btn light-blue darken-3">Submit</button>
+        </div>
+      </div>
+    </form>
+    <div id="error-msg" class="row" style="display:none;">
+      <div class="col s6 offset-m3">
+        <div class="error" id="outerror">
+          <blockquote> <h5>ERRORE</h5> Formato non supportato </blockquote>
+        </div>
+      </div>
     </div>
   </div>
 
 
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-     <div class="row">
-       <!--da modificare action-->
-       <form class="col s12" action="/forum" method="POST">
-        <div class="row">
-          <div class="input-field col s12">
-            <input placeholder="title" type="text" id="title" name="title">
-            <label for="title">Title</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <textarea id="content" class="materialize-textarea" name="content"></textarea>
-            <label for="textarea1">Description</label>
-          </div>
-        </div>
-        <input type="hidden" name="request" value="prova">
-        <br>
-        <div class="row">
-          <div class="center-align">
-            <button onclick="check()" type="submit" class="waves-effect waves-light btn-small btn light-blue darken-3">Submit</button>
-          </div>
-        </div>
-      </form>
-    </div>
-
+</div>
+<div class="modal-footer">
+  <div class="row">     
 
   </div>
-  <div class="modal-footer">
-    <div class="row">     
-
-    </div>
-  </div>
+</div>
 </div>
 </div>
 
