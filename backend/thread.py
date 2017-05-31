@@ -12,12 +12,12 @@ import backend.clil_utils.db as utils
 
 def thread (request, session, id_thread):
     if 'user_id' in session:
-        print 'nico'
         logged = session['user_type']
         if request.method=='POST':
-           testo=request.form['textarea1']
-           print 'yolo',testo
-           return render_template("thread.html")
+            print 'nico'
+            testo=request.form['textarea1']
+            print 'yolo',testo
+            return render_template("thread.html")
      
         else:
             db =  utils.pysqlite3()
@@ -44,7 +44,7 @@ def thread (request, session, id_thread):
                 dict_files.append({'id': posts[0], 'text': posts[1], 'author': posts[6], 'date': posts[3]})
                 
             print dict_files
-            return render_template("thread.html",thread_title=titolo,  logged=logged,post=dict_files)
+            return render_template("thread.html",thread_title=titolo, id=id_thread,  logged=logged,post=dict_files)
     else :
         abort(403)
 

@@ -10,16 +10,15 @@
 			<div class="col s12 ">
 				<div class="card grey lighten-3">
 					<br>
-					<h6 style="margin-left: 1%; margin-top: -1%">{{item.date}}</h6>
+					<p style="margin-left: 1%; margin-top: -1%">{{item.author}} - {{item.date}}</p>
 					<div class="card-content white-text">
-						<span class="card-title black-text">{{item.author}}</span>
 						<p class="black-text">{{item.text}}</p>
 					</div>
 				</div>
 			</div>
 {% endfor %}
 			<div class="row">
-				<form action="/thread" method="POST" class="col s12">
+				<form action="forum/{{id}}" method="POST" class="col s12">
 					<div class="row">
 						<div class="input-field col s12">
 							<textarea name="textarea1" class="materialize-textarea"></textarea>
@@ -34,7 +33,7 @@
 <!--############################################################################################################################-->
 <div id="modal1" class="modal">
 	<div class="modal-content">
-		<h4>Grazie</h4>
+		<h4>Completato.</h4>
 		<h5>Il testo è stato aggiunto<h5>
 		</div>
 		<div class="modal-footer">
