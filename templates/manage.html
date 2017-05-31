@@ -45,7 +45,8 @@
 										</li>
 									{% endfor %}
 								</ul>
-								<a href="#modal_link_add" class="btn-floating btn-medium light-blue darken-3"><i class="material-icons">add</i></a>
+								<br>
+								<a href="#modal_link_add" class="waves-effect waves-light btn green accent-4">Nuovo link</a>
 							</li>
 						</ul>
 					</span>
@@ -87,7 +88,7 @@
 									{% endif %}
 								</table>
 								<br>
-								<a href="#modal_user" class="btn-floating btn-medium light-blue darken-3"><i class="material-icons">add</i></a>
+								<a href="#modal_user" class="waves-effect waves-light btn green accent-4">Nuovo utente</a>
 							</li>
 						</ul>
 				</div>
@@ -117,7 +118,7 @@
 								</li>
 							{% endfor %}
 						</ul>
-						<button class="waves-effect waves-light btn green accent-4">Crea sezione</button>
+						<a href="#modal_section_add" class="waves-effect waves-light btn green accent-4">Crea sezione</a>
 					</span>
 				</div>
 			</li>
@@ -168,7 +169,6 @@
 <div id="modal_link_add" class="modal">
 	<div class="modal-content">
 		<h4 style="margin-left: 33%; color: #212121;">Agiungi link</h4>
-			<input type="hidden" name="action" value="create_link">
 			<div class="row">
 				<div class="input-field col s12">
 					<input id="link_title" type="text" class="validate">
@@ -184,6 +184,25 @@
 			<div class="row">
 				<div class="input-field col s6">
 					<button id="create_link" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
+				</div>
+			</div>
+	</div>
+</div>
+
+<!-- MODAL: Inserimento sezione -->
+<div id="modal_section_add" class="modal">
+	<div class="modal-content">
+		<h4 style="margin-left: 33%; color: #212121;">Agiungi sezione</h4>
+			<input type="hidden" name="action" value="create_section">
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="section_name" type="text" class="validate">
+					<label class="active" >Nome sezione</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<button id="create_section" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
 				</div>
 			</div>
 	</div>
@@ -207,6 +226,18 @@
 		$.post("/manage", { action: "delete_link", title: link_title}).done(function( result ) {
 			if (result == "Success"){
 				$("#row-link-"+link_title).remove();
+			}
+	  });
+	});
+
+	//Aggiunta sezione
+	$("#create_section").click(function (){
+		section_name = $("#section_name").val();
+		$.post("/manage", { action: "create_section", section_name: section_name}).done(function( result ) {
+			if (result == "Success"){
+				location.reload();
+			}else if("section_name_already_in_use"){
+				alert("Nome sezione già in uso");
 			}
 	  });
 	});

@@ -65,15 +65,16 @@ def manage(request, session):
     def getAction(requestAction):
         # print 'requestAction:', requestAction
         switcher = {
-            'edit_description': edit_description,  # DONE
-            'create_user': create_user,  # DONE
-            'delete_user': delete_user,  # DONE
-            'create_link': create_link,  # DONE
-            'delete_link': delete_link,  # DONE
-            'create_section': create_section,  # TBT
-            'delete_section': delete_section,  # TBT
-            'change_file_section': change_file_section,  # TBT
-            'delete_file': delete_file  # TBT
+            'edit_description': edit_description,  # 1 DONE
+            'create_user': create_user,  # 2 DONE
+            'delete_user': delete_user,  # 3 DONE
+            'create_link': create_link,  # 4 DONE
+            'delete_link': delete_link,  # 5 DONE
+            'create_section': create_section,  # 6 TBT
+            'delete_section': delete_section,  # 7 TBT
+            'delete_sub_section': delete_sub_section,  # 8 DEV
+            'change_file_section': change_file_section,  # 9 TBT
+            'delete_file': delete_file  # 10 TBT
         }
         initResult()
         funAction = switcher[requestAction]
@@ -139,13 +140,13 @@ def manage(request, session):
             DB.close_db()
 
             email_subject = 'Registrazione rete CLIL pavia'
-            email_body = "Il tuo username e': {}\n la tua password e': {}".format(
+            email_body = "Ben Venuto nella rete clil di pavia!\nIl tuo username e': {}\nla tua password e': {}\nVI preghiamo di cambiare la password al primo accesso".format(
                 username, password)
 
             pm.send_email(CLIL_MAIL, CLIL_MAIL_PSW, email,
                           email_subject, email_body)
 
-    # XXX: 5
+    # XXX: 4
     def create_link():
         title = request.form['link_title']
         url = request.form['link_url']
@@ -163,16 +164,16 @@ def manage(request, session):
             # TODO implementare in manage.html, cambiare con numeri
             setResult('title_already_in_use')
 
-    # XXX: 6
+    # XXX: 5
     def delete_link():
         title = request.form['title']
         DATA.remove('links', title)
 
         # setResult('link_deleted') # TODO implementare in manage.html, cambiare con numeri
 
-    # XXX: 7
+    # XXX: 6
     def create_section():
-        section_name = requesr.form['section_name']
+        section_name = request.form['section_name']
 
         query = ''' SELECT section_name FROM section; '''
 
@@ -196,7 +197,7 @@ def manage(request, session):
 
             # setResult('section_created') # TODO implementare in manage.html, cambiare con numeri
 
-    # XXX: 8
+    # XXX: 7
     def delete_section():
         section_name = request.form['section_name']
 
@@ -206,7 +207,23 @@ def manage(request, session):
         DB.query_db(query)
         DB.close_db()
 
-        # setResult('section_deleted') # TODO implementare in manage.html, cambiare con numeri
+    # XXX: 8
+    def delete_sub_section():
+        sub_section_name = request.form['section_name']
+
+        query = '''SELECT COUNT(id_file) FROM file WHERE id_sub = "{}" '''.format(
+            sub_section_name)
+
+        files = int(DB.query_db(query))
+
+        if files > 0:
+            # TODO implementare in manage.html, cambiare con numeri
+            setResult('files')
+        else:
+            query = ''' DELETE sub_section WHERE sub_name = "{}"; '''.format(
+                sub_section_name)
+
+        DB.close_db()
 
     # XXX: 9
     def change_file_section():
@@ -222,7 +239,7 @@ def manage(request, session):
 
         # setResult('changed_file_section') # TODO implementare in manage.html, cambiare con numeri
 
-    # XXX: 11
+    # XXX: 10
     def delete_file():
         id_file = request.form['id_file']
 
