@@ -36,13 +36,17 @@
 								<div class="input-field col s12">
 									<select name='sub_sec'>
 										<option value="" disabled selected>Seleziona una sezione</option>
-										{% for section in sections %}
-										<optgroup label="{{section.name}}">
-											{% for sub_section in section.list %}
-											<option value="{{sub_section[1]}}">{{sub_section[0]}}</option>
+										{% if sections %}
+											{% for section in sections %}
+											<optgroup label="{{section.name}}">
+												{% if section.list %}
+													{% for sub_section in section.list %}
+													<option value="{{sub_section[1]}}">{{sub_section[0]}}</option>
+													{% endfor %}
+												{% endif %}
+											</optgroup>
 											{% endfor %}
-										</optgroup>
-										{% endfor %}
+										{% endif %}
 									</select>
 									<label>Sezione</label>
 								</div>
@@ -78,7 +82,7 @@
 										<blockquote  style="border-left: 5px solid #64b5f6"> <h5>Successo</h5> I dati sono stati caricati correttamente </blockquote>
 									</div>
 								</div>
-							</div>						
+							</div>
 						</form>
 					</span>
 				</div>
