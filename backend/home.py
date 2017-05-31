@@ -23,10 +23,8 @@ def home(session):
     db = utils.pysqlite3()
     c=strftime("%d-%m-%Y %H:%M", gmtime())
     query = "SELECT title, date, description, place, address FROM event WHERE date>'{}'".format(c)
-    print query
     
     result = db.query_db(query)
-    print result
     event = []
 
     if result:
