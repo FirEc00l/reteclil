@@ -12,12 +12,12 @@ import backend.clil_utils.db as utils
 
 def thread (request, session, id_thread):
     if 'user_id' in session:
-        print 'nico'
         logged = session['user_type']
         if request.method=='POST':
-           testo=request.form['textarea1']
-           print 'yolo',testo
-           return render_template("thread.html")
+            print 'nico'
+            testo=request.form['textarea1']
+            print 'yolo',testo
+            return render_template("thread.html")
      
         else:
             db =  utils.pysqlite3()
