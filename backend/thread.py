@@ -13,6 +13,10 @@ import backend.clil_utils.db as utils
 def thread (request, session, id_thread):
     if 'user_id' in session:
         logged = session['user_type']
+        print "test"
+
+        print request.method
+        
         if request.method=='POST':
             print 'nico'
             testo=request.form['textarea1']

@@ -115,9 +115,9 @@ def route_forum():
     return forum.forum(request, session)
 
 
-@app.route("/forum/<thread_id>", methods=['GET', 'POST'])
-def route_thread(thread_id):
-    return thread.thread(request, session, id_thread=thread_id)
+@app.route("/forum/<id_thread>", methods=['GET', 'POST'])
+def route_thread(id_thread):
+    return thread.thread(request, session, id_thread)
 
 
 @app.route("/search/<search_key>", methods=['GET', 'POST'])
