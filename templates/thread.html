@@ -17,16 +17,16 @@
 				</div>
 			</div>
 {% endfor %}
-		<form action="forum/{{id}}" method="POST" class="col s12">
+		<form action="/forum/{{id}}" method="post" class="col s12">
 			<div class="row">
 					<div class="row">
 						<div class="input-field col s12">
-							<textarea name="textarea1" class="materialize-textarea"></textarea>
+							<textarea name="textarea1" id="textarea1" class="materialize-textarea"></textarea>
 							<label for="textarea1">Inserisci Risposta</label>
 						</div>
 					</div>
 			</div>
-			<a name="btn1" id="threadAdd" type="submit" style="margin-left: 42%" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</a>
+			<a name="btn1" id="threadAdd" type="submit" value="aggiungi" style="margin-left: 42%" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</a>
 		</form>
 		</div>
 <!--############################################################################################################################-->
@@ -40,14 +40,18 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	$(document).ready(function(){
 		$('.modal').modal({
-      dismissible: true, // Modal can be dismissed by clicking outside of the modal
-      opacity: .5, // Opacity of modal background
-      inDuration: 300, // Transition in duration
-      outDuration: 200, // Transition out duration
-      startingTop: '4%', // Starting top style attribute
-      endingTop: '10%', // Ending top style attribute
-  }
-  );
-</script>
+	      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+	      opacity: .5, // Opacity of modal background
+	      inDuration: 300, // Transition in duration
+	      outDuration: 200, // Transition out duration
+	      startingTop: '4%', // Starting top style attribute
+	      endingTop: '10%', // Ending top style attribute
+  		});
+  		$('#threadAdd').click(function(){
+  			$.post('thread.py',$('#textarea1').html());
+  		});
+  	});
+	</script>
 {% endblock %}
