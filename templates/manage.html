@@ -108,12 +108,12 @@
 											<ul class="collection">
 												{% if section.list %}
 													{% for sub_section in section.list %}
-														<li class="collection-item" sub="{{sub_section[1]}}"><div>{{sub_section[0]}}<a href="#!" class="secondary-content"><i class="material-icons red-text accent-4">delete</i></a></div></li>
+														<li class="collection-item" sub="{{sub_section.id_section}}"><div>{{sub_section[0]}}<a href="#!" class="secondary-content"><i class="material-icons red-text accent-4">delete</i></a></div></li>
 													{% endfor %}
 												{% endif %}
 												<br>
 												<button name="{{section.id_section}}" class="waves-effect waves-light btn red darken-4 delete_section">Elimina sezione</button>
-												<button class="waves-effect waves-light btn light-blue darken-3">Crea sotto-sezione</button>
+												<a href="#modal_sub_section_add" class="waves-effect waves-light btn light-blue darken-3">Crea sotto-sezione</a>
 
 									    </ul>
 
@@ -196,7 +196,7 @@
 <!-- MODAL: Inserimento sezione -->
 <div id="modal_section_add" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #212121;">Agiungi sezione</h4>
+		<h4 style="margin-left: 33%; color: #212121;">Aggiungi sezione</h4>
 			<input type="hidden" name="action" value="create_section">
 			<div class="row">
 				<div class="input-field col s12">
@@ -213,14 +213,14 @@
 </div>
 
 <!-- MODAL: Inserimento sotto-sezione -->
-<div id="modal_section_add" class="modal">
+<div id="modal_sub_section_add" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #212121;">Agiungi sezione</h4>
+		<h4 style="margin-left: 33%; color: #212121;">Aggiungi sotto-sezione</h4>
 			<input type="hidden" name="action" value="create_section">
 			<div class="row">
 				<div class="input-field col s12">
 					<input id="section_name" type="text" class="validate">
-					<label class="active" >Nome sezione</label>
+					<label class="active" >Nome sotto-sezione</label>
 				</div>
 			</div>
 			<div class="row">
