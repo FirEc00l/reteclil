@@ -17,19 +17,18 @@
 				</div>
 			</div>
 {% endfor %}
+		<form action="forum/{{id}}" method="POST" class="col s12">
 			<div class="row">
-				<form action="forum/{{id}}" method="POST" class="col s12">
 					<div class="row">
 						<div class="input-field col s12">
 							<textarea name="textarea1" class="materialize-textarea"></textarea>
-							<label for="textarea1">TESTO</label>
+							<label for="textarea1">Inserisci Risposta</label>
 						</div>
 					</div>
-				</form>
 			</div>
-			<a id="threadAdd" href="#modal1" stype="submit" style="margin-left: 42%" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</a>
+			<a name="btn1" id="threadAdd" type="submit" style="margin-left: 42%" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</a>
+		</form>
 		</div>
-	</div>
 <!--############################################################################################################################-->
 <div id="modal1" class="modal">
 	<div class="modal-content">
