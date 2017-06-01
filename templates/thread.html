@@ -17,7 +17,7 @@
 				</div>
 			</div>
 {% endfor %}
-		<form action="/forum/{{id}}" method="post" class="col s12">
+		<form action="/forum/{{id}}" id="form1" method="post" class="col s12">
 			<div class="row">
 					<div class="row">
 						<div class="input-field col s12">
@@ -50,7 +50,7 @@
 	      endingTop: '10%', // Ending top style attribute
   		});
   		$('#threadAdd').click(function(){
-  			$.post('thread.py',$('#textarea1').html());
+  			$.post('thread.py',$('#form1').submit());
   		});
   	});
 	</script>
