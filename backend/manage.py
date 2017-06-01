@@ -2,7 +2,7 @@
 manage.py
 @author: Nicholas Sollazzo
 @mail: sollsharp@gmail.com
-@version: 1.5
+@version: 1.5.1
 @date: 31/05/17
 ===============================================
 manage(request):
@@ -200,28 +200,35 @@ def manage(request, session):
 
     # XXX: 7
     def delete_section():
-        section_name = request.form['section_name']
+        id_section = request.form['id_section']
 
-        query = ''' DELETE section WHERE section_name = "{}"; '''.format(
-            section_name)
+        query = '''SELECT COUNT(id_sub) FROM sub_section WHERE id_section = "{}" '''.format(
+            id_section)
 
-        DB.query_db(query)
-        DB.close_db()
+        subs = int(DB.query_db(query)[0][0])
+
+        if subs > 0:
+            setResult('subs')
+        else:
+            query = '''DELETE FROM section WHERE id_section = "{}"; '''.format(
+                id_section)
+
+            DB.query_db(query)
+            DB.close_db()
 
     # XXX: 8
     def delete_sub_section():
-        sub_section_name = request.form['section_name']
+        sub_section_name = request.form['sub_section_name']
 
         query = '''SELECT COUNT(id_file) FROM file WHERE id_sub = "{}" '''.format(
             sub_section_name)
 
-        files = int(DB.query_db(query))
+        files = int(DB.query_db(query)[0][0])
 
         if files > 0:
-            # TODO implementare in manage.html, cambiare con numeri
             setResult('files')
         else:
-            query = ''' DELETE sub_section WHERE sub_name = "{}"; '''.format(
+            query = '''DELETE FROM sub_section WHERE sub_name = "{}"; '''.format(
                 sub_section_name)
 
         DB.close_db()
@@ -315,7 +322,8 @@ def manage(request, session):
 				   FROM sub_section
 				WHERE id_section="{}" '''.format(str(section[1]))
         result = DB.query_db(query)
-        section_list.append({'name': section[0], 'list': result})
+        section_list.append(
+            {'name': section[0], 'list': result, 'id_section': section[1]})
 
     links = DATA.read('links')
     description = DATA.read('description')

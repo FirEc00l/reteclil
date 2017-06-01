@@ -21,6 +21,7 @@ import backend.search as search
 import backend.section as section
 import backend.thread as thread
 import backend.upload as upload
+import backend.credits as credits
 
 app = Flask("__name__")
 
@@ -63,6 +64,10 @@ def route_section_key(key):
 @app.route("/section", methods=['GET', 'POST'])
 def route_section():
     return section.section(request, session)
+
+@app.route("/credits")
+def route_credits():
+    return credits.credits(session)
 
 
 @app.route("/login", methods=['GET', 'POST'])

@@ -100,23 +100,27 @@
 				<div class="collapsible-body">
 					<span>
 						<ul class="collapsible" data-collapsible="accordion">
-							{% for section in section_list %}
-								<li>
-									<div class="collapsible-header"><i class="material-icons">label_outline</i>{{section.name}}</div>
-									<div class="collapsible-body">
-										<ul class="collection">
-											{% for sub_section in section.list %}
-												<li class="collection-item" sub="{{sub_section[1]}}"><div>{{sub_section[0]}}<a href="#!" class="secondary-content"><i class="material-icons red-text accent-4">delete</i></a></div></li>
-											{% endfor %}
-											<br>
-											<button class="waves-effect waves-light btn red darken-4">Elimina sezione</button>
-											<button class="waves-effect waves-light btn light-blue darken-3">Crea sotto-sezione</button>
+							{% if section_list  %}
+								{% for section in section_list %}
+									<li id="section-{{section.id_section}}">
+										<div class="collapsible-header"><i class="material-icons">label_outline</i>{{section.name}}</div>
+										<div class="collapsible-body">
+											<ul class="collection">
+												{% if section.list %}
+													{% for sub_section in section.list %}
+														<li class="collection-item" sub="{{sub_section[1]}}"><div>{{sub_section[0]}}<a href="#!" class="secondary-content"><i class="material-icons red-text accent-4">delete</i></a></div></li>
+													{% endfor %}
+												{% endif %}
+												<br>
+												<button name="{{section.id_section}}" class="waves-effect waves-light btn red darken-4 delete_section">Elimina sezione</button>
+												<button class="waves-effect waves-light btn light-blue darken-3">Crea sotto-sezione</button>
 
-								    </ul>
+									    </ul>
 
-									</div>
-								</li>
-							{% endfor %}
+										</div>
+									</li>
+								{% endfor %}
+							{% endif %}
 						</ul>
 						<a href="#modal_section_add" class="waves-effect waves-light btn green accent-4">Crea sezione</a>
 					</span>
@@ -208,6 +212,25 @@
 	</div>
 </div>
 
+<!-- MODAL: Inserimento sotto-sezione -->
+<div id="modal_section_add" class="modal">
+	<div class="modal-content">
+		<h4 style="margin-left: 33%; color: #212121;">Agiungi sezione</h4>
+			<input type="hidden" name="action" value="create_section">
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="section_name" type="text" class="validate">
+					<label class="active" >Nome sezione</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<button id="create_section" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
+				</div>
+			</div>
+	</div>
+</div>
+
 <script type="text/javascript">
 
 	//modifica descrizione
@@ -240,6 +263,18 @@
 				alert("Nome sezione già in uso");
 			}
 	  });
+	});
+
+	//Elimina sezione
+	$(document).on('click', '.delete_section', function (){
+		id_section = $(this).attr("name");
+		$.post("/manage", { action: "delete_section", id_section: id_section}).done(function( result ) {
+			if (result == "Success"){
+				$("#section-"+id_section).remove();
+			}else if("subs"){
+				alert("Impossibile eliminare la sezione: contiene sotto-sezioni");
+			}
+		});
 	});
 
 	//Aggiunta link
