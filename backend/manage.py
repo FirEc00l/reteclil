@@ -2,8 +2,8 @@
 manage.py
 @author: Nicholas Sollazzo
 @mail: sollsharp@gmail.com
-@version: 1.5.1
-@date: 31/05/17
+@version: 1.5.2
+@date: 2/06/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -66,15 +66,16 @@ def manage(request, session):
         # print 'requestAction:', requestAction
         switcher = {
             'edit_description': edit_description,  # 1 DONE
-            'create_user': create_user,  # 2 DONE
-            'delete_user': delete_user,  # 3 DONE
-            'create_link': create_link,  # 4 DONE
-            'delete_link': delete_link,  # 5 DONE
+            'create_link': create_link,  # 2 DONE
+            'delete_link': delete_link,  # 3 DONE
+            'create_user': create_user,  # 4 DONE
+            'delete_user': delete_user,  # 5 DONE
             'create_section': create_section,  # 6 TBT
             'delete_section': delete_section,  # 7 TBT
-            'delete_sub_section': delete_sub_section,  # 8 DEV
-            'change_file_section': change_file_section,  # 9 TBT
-            'delete_file': delete_file  # 10 TBT
+            'create_sub_section': create_sub_section  # 8 DEV
+            'delete_sub_section': delete_sub_section,  # 9 TBT
+            'change_file_section': change_file_section,  # 10 TBT
+            'delete_file': delete_file  # 11 TBT
         }
         initResult()
         funAction = switcher[requestAction]
@@ -84,15 +85,35 @@ def manage(request, session):
     def edit_description():
         DATA.edit('description', request.form['new_description'])
 
-        # setResult('file_edited') # TODO implementare in manage.html, cambiare con numeri
-
     # XXX: 2
+    def create_link():
+        title = request.form['link_title']
+        url = request.form['link_url']
+
+        in_use = False
+
+        for link in DATA.read('links'):
+            if title in link.values():
+                in_use = True
+
+        if not in_use:
+            new_link = {'title': title, 'url': url}
+            DATA.add('links', new_link)
+        else:
+            setResult('title_already_in_use')
+
+    # XXX: 3
+    def delete_link():
+        title = request.form['title']
+        DATA.remove('links', title)
+
+    # XXX: 4
     def delete_user():
         username = request.form['username']
 
         query = ''' SELECT id_user
 					FROM user
-					WHERE username = "{}" '''.format(username)
+					WHERE username = "{}"; '''.format(username)
 
         id_to_be_deleted = DB.query_db(query)
 
@@ -101,12 +122,12 @@ def manage(request, session):
             setResult('Error')
         else:
             query = '''DELETE FROM user
-			WHERE username = "{}";'''.format(username)
+					   WHERE username = "{}";'''.format(username)
 
             DB.query_db(query)
             DB.close_db()
 
-    # XXX: 3
+    # XXX: 5
     def create_user():
         name = request.form['name']
         surname = request.form['surname']
@@ -132,9 +153,8 @@ def manage(request, session):
             setResult('email_already_in_use')
         else:
             query = '''INSERT INTO user
-			VALUES(NULL, "{}", "{}", "{}",
-			"{}", "{}", "{}", NULL);
-			'''.format(name, surname, generate_password_hash(password), user_type, email, username)
+					   VALUES(NULL, "{}", "{}", "{}", "{}", "{}", "{}", NULL);
+						'''.format(name, surname, generate_password_hash(password), user_type, email, username)
 
             DB.query_db(query)
             DB.close_db()
@@ -145,31 +165,6 @@ def manage(request, session):
 
             pm.send_email(CLIL_MAIL, CLIL_MAIL_PSW, email,
                           email_subject, email_body)
-
-    # XXX: 4
-    def create_link():
-        title = request.form['link_title']
-        url = request.form['link_url']
-
-        in_use = False
-
-        for link in DATA.read('links'):
-            if title in link.values():
-                in_use = True
-
-        if not in_use:
-            new_link = {'title': title, 'url': url}
-            DATA.add('links', new_link)
-        else:
-            # TODO implementare in manage.html, cambiare con numeri
-            setResult('title_already_in_use')
-
-    # XXX: 5
-    def delete_link():
-        title = request.form['title']
-        DATA.remove('links', title)
-
-        # setResult('link_deleted') # TODO implementare in manage.html, cambiare con numeri
 
     # XXX: 6
     def create_section():
@@ -186,24 +181,22 @@ def manage(request, session):
                 break
 
         if in_use:
-            # TODO implementare in manage.html, cambiare con numeri
             setResult('section_name_already_in_use')
         else:
             query = '''INSERT INTO section
-					   VALUES(NULL, "{0}");
+					   VALUES(NULL, "{}");
 					'''.format(section_name)
 
             DB.query_db(query)
             DB.close_db()
 
-            # setResult('section_created') # TODO implementare in manage.html, cambiare con numeri
-
     # XXX: 7
     def delete_section():
         id_section = request.form['id_section']
 
-        query = '''SELECT COUNT(id_sub) FROM sub_section WHERE id_section = "{}" '''.format(
-            id_section)
+        query = '''SELECT COUNT(id_sub)
+				   FROM sub_section
+				   WHERE id_section = "{}"; '''.format(id_section)
 
         subs = int(DB.query_db(query)[0][0])
 
@@ -217,20 +210,33 @@ def manage(request, session):
             DB.close_db()
 
     # XXX: 8
-    def delete_sub_section():
+    def create_sub_section(arg):
         sub_section_name = request.form['sub_section_name']
+        id_section = request.form['id_section']
 
-        query = '''SELECT COUNT(id_file) FROM file WHERE id_sub = "{}" '''.format(
-            sub_section_name)
+        query = ''' INSERT INTO sub_section VALUES (NULL, "{}", "{}");'''.format(
+                sub_section_name, id_section)
+
+        DB.query_db(query)
+        DB.close_db()
+
+    # XXX: 8
+    def delete_sub_section():
+        sub_section_id = request.form['sub_section_id']
+
+        query = '''SELECT COUNT(id_file)
+				   FROM file
+				   WHERE id_sub = "{}"; '''.format(sub_section_id)
 
         files = int(DB.query_db(query)[0][0])
 
         if files > 0:
             setResult('files')
         else:
-            query = '''DELETE FROM sub_section WHERE sub_name = "{}"; '''.format(
-                sub_section_name)
+            query = '''DELETE FROM sub_section
+					   WHERE id_sub = "{}"; '''.format(sub_section_id)
 
+        DB.query_db(query)
         DB.close_db()
 
     # XXX: 9
@@ -239,24 +245,30 @@ def manage(request, session):
         new_id_sub = request.form['new_id_sub']
 
         query = '''UPDATE file
-				   SET id_sub = "{0}"
-				   WHERE id_file = "{1}";'''.format(new_id_sub, id_file)
+				   SET id_sub = "{}"
+				   WHERE id_file = "{}";'''.format(new_id_sub, id_file)
 
         DB.query_db(query)
         DB.close_db()
-
-        # setResult('changed_file_section') # TODO implementare in manage.html, cambiare con numeri
 
     # XXX: 10
     def delete_file():
         id_file = request.form['id_file']
 
-        query = ''' DELETE file WHERE id_file = "{}"; '''.format(id_file)
+        query = ''' SELECT name
+				 	FROM file
+					WHERE id_file = "{}"; '''.format(id_file)
+
+        path = '/static/' + DB.query_db(query)
+
+        query = ''' DELETE FROM file
+				 	WHERE id_file = "{}"; '''.format(id_file)
 
         DB.query_db(query)
-        DB.close_db()
 
-        # setResult('file_deleted') # TODO implementare in manage.html, cambiare con numeri
+        os.remove(path)
+
+        DB.close_db()
 
     # XXX: 0
     query = '''
@@ -269,11 +281,9 @@ def manage(request, session):
     user_list_dict = []
     for user in user_list:
 
-        query = '''
-		SELECT name, surname, username,email, user_type
-		FROM user
-		WHERE id_user="{}";
-		'''.format(str(user[0]))
+        query = '''SELECT name, surname, username,email, user_type
+				   FROM user
+				   WHERE id_user="{}";'''.format(str(user[0]))
         result = DB.query_db(query)
 
         user_list_dict.append({'name': result[0][0],
@@ -314,13 +324,14 @@ def manage(request, session):
     else:
         abort(403)
 
-    query = "SELECT section_name, id_section FROM section"
+    query = '''SELECT section_name, id_section
+			   FROM section;'''
     sections = DB.query_db(query)
 
     for section in sections:
         query = '''SELECT sub_name, id_sub
 				   FROM sub_section
-				WHERE id_section="{}" '''.format(str(section[1]))
+				   WHERE id_section="{}"; '''.format(str(section[1]))
         result = DB.query_db(query)
         section_list.append(
             {'name': section[0], 'list': result, 'id_section': section[1]})
