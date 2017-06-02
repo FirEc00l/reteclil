@@ -105,15 +105,15 @@
 									<li id="section-{{section.id_section}}">
 										<div class="collapsible-header"><i class="material-icons">label_outline</i>{{section.name}}</div>
 										<div class="collapsible-body">
-											<ul class="collection">
+											<ul class="collection" id="sub_sections">
 												{% if section.list %}
 													{% for sub_section in section.list %}
-														<li class="collection-item" sub="{{sub_section.id_section}}"><div>{{sub_section[0]}}<a href="#!" class="secondary-content"><i class="material-icons red-text accent-4">delete</i></a></div></li>
+														<li class="collection-item" id="sub_section-{{sub_section[1]}}"><div>{{sub_section[0]}}<a href="#!" sub="{{ sub_section[1] }}" class="secondary-content delete_sub_section"><i class="material-icons red-text accent-4">delete</i></a></div></li>
 													{% endfor %}
 												{% endif %}
 												<br>
 												<button name="{{section.id_section}}" class="waves-effect waves-light btn red darken-4 delete_section">Elimina sezione</button>
-												<a href="#modal_sub_section_add" class="waves-effect waves-light btn light-blue darken-3">Crea sotto-sezione</a>
+												<a href="#modal_sub_section_add" section="{{section.id_section}}" class="waves-effect waves-light btn light-blue darken-3 create_sub_section">Crea sotto-sezione</a>
 
 									    </ul>
 
@@ -133,7 +133,9 @@
 <!-- MODAL: Inserimento dati utente -->
 <div id="modal_user" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: ##212121;">Inserisci utente</h4>
+		<div class="center-align">
+			<h4 class="grey-text text-darken-4">Aggiungi utente</h4>
+		</div>
 		<form id="form_user">
 			<div class="row">
 				<div class="input-field col s6">
@@ -172,67 +174,72 @@
 <!-- MODAL: Inserimento links -->
 <div id="modal_link_add" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #212121;">Agiungi link</h4>
-			<div class="row">
-				<div class="input-field col s12">
-					<input id="link_title" type="text" class="validate">
-					<label class="active" for="testo_link">Titolo link</label>
-				</div>
+		<div class="center-align">
+			<h4 class="grey-text text-darken-4">Aggiungi link</h4>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input id="link_title" type="text" class="validate">
+				<label class="active" for="testo_link">Titolo link</label>
 			</div>
-			<div class="row">
-				<div class="input-field col s12">
-					<input id="link_url" type="text" class="validate">
-					<label class="active" for="new_link">URL</label>
-				</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input id="link_url" type="text" class="validate">
+				<label class="active" for="new_link">URL</label>
 			</div>
-			<div class="row">
-				<div class="input-field col s6">
-					<button id="create_link" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
-				</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<button id="create_link" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
 			</div>
+		</div>
 	</div>
 </div>
 
 <!-- MODAL: Inserimento sezione -->
 <div id="modal_section_add" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #212121;">Aggiungi sezione</h4>
-			<input type="hidden" name="action" value="create_section">
-			<div class="row">
-				<div class="input-field col s12">
-					<input id="section_name" type="text" class="validate">
-					<label class="active" >Nome sezione</label>
-				</div>
+		<div class="center-align">
+			<h4 class="grey-text text-darken-4">Aggiungi sezione</h4>
+		</div>
+		<input type="hidden" name="action" value="create_section">
+		<div class="row">
+			<div class="input-field col s12">
+				<input id="section_name" type="text" class="validate">
+				<label class="active" >Nome sezione</label>
 			</div>
-			<div class="row">
-				<div class="input-field col s6">
-					<button id="create_section" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
-				</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<button id="create_section" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
 			</div>
+		</div>
 	</div>
 </div>
 
 <!-- MODAL: Inserimento sotto-sezione -->
 <div id="modal_sub_section_add" class="modal">
 	<div class="modal-content">
-		<h4 style="margin-left: 33%; color: #212121;">Aggiungi sotto-sezione</h4>
-			<input type="hidden" name="action" value="create_section">
-			<div class="row">
-				<div class="input-field col s12">
-					<input id="section_name" type="text" class="validate">
-					<label class="active" >Nome sotto-sezione</label>
-				</div>
+		<div class="center-align">
+			<h4 class="grey-text text-darken-4">Aggiungi sotto-sezione</h4>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input id="sub_section_name" type="text" class="validate">
+				<label class="active" >Nome sotto-sezione</label>
 			</div>
-			<div class="row">
-				<div class="input-field col s6">
-					<button id="create_section" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
-				</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<button id="create_sub_section" type="button" class="waves-effect waves-light btn light-blue darken-3">Aggiungi</button>
 			</div>
+		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
-
+	var current_section = null;
 	//modifica descrizione
 	$("#mod_description").click(function (){
 		new_description = $("#description").val();
@@ -265,6 +272,24 @@
 	  });
 	});
 
+	//Aggiunta sotto-sezione
+	$("#create_sub_section").click(function (){
+		sub_section_name = $("#sub_section_name").val();
+		$.post("/manage", { action: "create_sub_section", id_section: current_section, sub_section_name}).done(function( result ) {
+			if (result == "Success"){
+				location.reload();
+			}else{
+				alert("Errore");
+			}
+	  });
+	});
+
+	//Click on create sub section
+	$(document).on('click', '.create_sub_section', function (){
+		current_section = $(this).attr("section");
+
+	});
+
 	//Elimina sezione
 	$(document).on('click', '.delete_section', function (){
 		id_section = $(this).attr("name");
@@ -273,6 +298,18 @@
 				$("#section-"+id_section).remove();
 			}else if("subs"){
 				alert("Impossibile eliminare la sezione: contiene sotto-sezioni");
+			}
+		});
+	});
+
+	//Elimina sotto-sezione
+	$(document).on('click', '.delete_sub_section', function (){
+		sub_section_id = $(this).attr("sub");
+		$.post("/manage", { action: "delete_sub_section", sub_section_id: sub_section_id}).done(function( result ) {
+			if (result == "Success"){
+				$("#sub_section-"+sub_section_id).remove();
+			}else{
+				alert("Errore");
 			}
 		});
 	});

@@ -72,7 +72,7 @@ def manage(request, session):
             'delete_user': delete_user,  # 5 DONE
             'create_section': create_section,  # 6 TBT
             'delete_section': delete_section,  # 7 TBT
-            'create_sub_section': create_sub_section  # 8 DEV
+            'create_sub_section': create_sub_section,  # 8 DEV
             'delete_sub_section': delete_sub_section,  # 9 TBT
             'change_file_section': change_file_section,  # 10 TBT
             'delete_file': delete_file  # 11 TBT
@@ -210,7 +210,7 @@ def manage(request, session):
             DB.close_db()
 
     # XXX: 8
-    def create_sub_section(arg):
+    def create_sub_section():
         sub_section_name = request.form['sub_section_name']
         id_section = request.form['id_section']
 
