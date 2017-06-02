@@ -50,7 +50,6 @@ def manage(request, session):
         global RESULT
         if RESULT != 'Success':
             RESULT = 'Success'
-        print 'RESULT:', RESULT
 
     def setResult(new_result):
         global RESULT
@@ -137,8 +136,6 @@ def manage(request, session):
         username = pyu.usrgen(name.lower(), surname.lower())
         in_use = False
 
-        print user_type
-
         query = ''' SELECT email FROM user; '''
 
         email_in_use = DB.query_db(query)
@@ -214,11 +211,20 @@ def manage(request, session):
         sub_section_name = request.form['sub_section_name']
         id_section = request.form['id_section']
 
-        query = ''' INSERT INTO sub_section VALUES (NULL, "{}", "{}");'''.format(
-                sub_section_name, id_section)
+        query = '''SELECT COUNT(id_sub)
+			       FROM sub_section
+			       WHERE sub_name = "{}";'''.format(sub_section_name)
 
-        DB.query_db(query)
-        DB.close_db()
+        sub_name = int(DB.query_db(query)[0][0])
+
+        if sub_name > 0:
+            setResult('name')
+        else:
+            query = '''INSERT INTO sub_section
+					   VALUES (NULL, "{}", "{}");'''.format(sub_section_name, id_section)
+
+            DB.query_db(query)
+            DB.close_db()
 
     # XXX: 8
     def delete_sub_section():
@@ -312,7 +318,7 @@ def manage(request, session):
         print 'file_list: Query returned no result'
 
     if file_list is None:
-        print('NONE')
+        print 'NONE'
 
     section_list = []
     description = None
