@@ -2,8 +2,8 @@
 {% block title %}ReteCLIL - Search{% endblock %}
 
 {% block content %}
-
-
+  <title>Rete CLIL - Documenti</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='section.css') }}"/>
   <style type="text/css">
   	.Abbrevia {
 	    -o-text-overflow: ellipsis;   /* Opera */
@@ -15,331 +15,144 @@
       margin: 0;
       padding: 0;
     }
-
-    a {
-      text-decoration: none;
-    }
-    i {
-      padding-right: 5px;
-    }
-    .sidenav {
-      width: 15%;
-      background: #FFFFFF;
-      height: 100%;
-      position: absolute;
-      margin-top: 1%;
-    }
-    .sidenav ul li {
-      /*padding: 4px;*/
-
-      font-size: .9em;
-      margin-left: 10px;
-      list-style: none;
-    }
-    .sidenav a {
-      padding: 10px 0 10px 10px;
-      color: #FFFFFF;
-      display: block;
-      width: 100%;
-      margin-left: -10px;
-      background-color: #1565c0;
-      transition: background 0.25s ease-in-out;
-      -webkit-transition: background 0.25s ease-in-out;
-      -moz-transition: background 0.25s ease-in-out;
-      -o-transition: background 0.25s ease-in-out;
-      -ms-transition: background 0.25s ease-in-out;
-    }
-    .sidenav a:hover {
-      background: #42a5f5;
-      color: #FFFFFF;
-    }
-    .submenu {
-      display: none;
-      background: #64b5f6 ;
-      border-top: 2px solid #90caf9 ;
-      border-bottom: 2px solid #90caf9 ;
-      width: 100%;
-
-      margin-left: -10px;
-      padding: 0 7px;
-    }
-    .submenu ul li {
-      margin: 0;
-    }
-    .submenu a {
-      color: #FFFFFF;
-      background: none !important;
-      padding-left: 25px;
-      transition: color 0.25s ease-in-out;
-      -webkit-transition: color 0.25s ease-in-out;
-      -moz-transition: color 0.25s ease-in-out;
-      -o-transition: color 0.25s ease-in-out;
-      -ms-transition: color 0.25s ease-in-out;
-    }
-    .submenu a:hover {
-      color: #1565c0;
-      background: none;
-    }
-    /***active state***/
-    .active {
-      position: relative;
-    }
-    .active a {
-      background: #1565c0;
-    }
-    /***arrow on active***/
-    li.active:after {
-      content: ' ';
-      position: absolute;
-      height: 0;
-      width: 0;
-      top: 6%;
-      left: 177px;
-      border: 10px solid;
-      border-color: #FFFFFF transparent transparent #FFFFFF;
-      -webkit-transform: rotate(-45deg);
-      /* Saf3.1+, Chrome */
-
-      -moz-transform: rotate(-45deg);
-      /* FF3.5+ */
-
-      -ms-transform: rotate(-45deg);
-      /* IE9 */
-
-      -o-transform: rotate(-45deg);
-      /* Opera 10.5 */
-
-      transform: rotate(-45deg);
-    }
-    li.active.hidden:after {
-      display: none;
-    }
-    li#collapse-menu {
-      margin-top: 20px;
-    }
-    li#collapse-menu a:hover {
-      background: none !important;
-      color: #FFFFFF;
-    }
-    /***collapsed sidenav**/
-    .sidenav-collapsed {
-      display: none;
-      width: 37px;
-      position: absolute;
-      height: 100%;
-      background: #1565c0;
-    }
-    .sidenav-collapsed ul li {
-      list-style: none;
-      /*margin-left: 10px;*/
-
-      margin: 10px 0 0;
-    }
-    .sidenav-collapsed a {
-      color: #f8f8f8;
-      /*padding: 8px;*/
-
-      padding: 1px 6px 1px 5px;
-      font-size: 1.3em;
-    }
-    .sidenav-collapsed a:hover {
-      background: #9daf25;
-    }
-    #expand-menu {
-      margin-top: 25px;
-    }
-    .collapsed-submenu {
-      display: none;
-      background: #FFFFFF;
-      position: absolute;
-      width: 200px;
-      height: auto;
-      left: 37px;
-      top: -1px;
-      /*padding: 0 0 10px 10px;*/
-
-    }
-    .collapsed-submenu a {
-      color: #FFFFFF;
-      font-size: 0.9em;
-      background: none !important;
-    }
-    .collapsed-submenu a:hover {
-      background: none !important;
-      color: #FFFFFF;
-    }
-    .collapsed-submenu:before {
-      content: ' ';
-      position: absolute;
-      width: 0;
-      height: 0;
-      top: 7px;
-      left: -5px;
-      border: 10px solid;
-      border-color: #FFFFFF transparent transparent #FFFFFF;
-      -webkit-transform: rotate(-45deg);
-      /* Saf3.1+, Chrome */
-
-      -moz-transform: rotate(-45deg);
-      /* FF3.5+ */
-
-      -ms-transform: rotate(-45deg);
-      /* IE9 */
-
-      -o-transform: rotate(-45deg);
-      /* Opera 10.5 */
-
-      transform: rotate(-45deg);
-    }
-
   </style>
 
 
-  <script>
-    var a=1;
+  <script type="text/javascript">
+    var card_colors = {
+      "pdf": "red lighten-1",
+      "jpg": "blue lighten-3",
+      "jpeg": "blue lighten-3",
+      "png": "blue lighten-3",
+      "mov": "purple lighten-2",
+      "mp3": "indigo lighten-2",
+      "m4a": "indigo lighten-2",
+      "wav": "indigo lighten-2",
+      "odp": "orange",
+      "ppt": "orange",
+      "pps": "orange",
+      "ods": "green",
+      "xls": "green",
+      "xml": "green"
+    }
+    var logged = {{ logged }};
+
+    //Recupero lista dei files
+    {% if card %}
+      var card_list ={list : {{card|replace("u'","'")|replace('u"', '"')|safe}}};
+    {% else  %}
+      var card = null;
+    {% endif %}
+
+    //Modal initialization
     $(document).ready(function() {
       $('.modal').modal({
-          dismissible: true, // Modal can be dismissed by clicking outside of the modal
-          opacity: .5, // Opacity of modal background
-          startingTop: '4%', // Starting top style attribute
-          endingTop: '10%', // Ending top style attribute
+          dismissible: true,
+          opacity: .5,
+          startingTop: '4%',
+          endingTop: '10%',
         });
-      $('.modal-trigger').modal();
-      $('.ShowButton').each(function(){
+
+
+      //Recupero dati del file e li inserisco nel modal
+      $('.showButton').each(function(){
           $(this).click(function(){
-              $('modalfor'+$(this).attr('name')).modal("open");
+              var id_card = $(this).attr("id_card");
+              $("#item_name").html(card_list.list[id_card].name);
+              $("#item_description").html(card_list.list[id_card].description);
+              $("#download").attr("href","/static/files/" + card_list.list[id_card].name);
+              $("#download").attr("download", card_list.list[id_card].name);
           });
       });
 
+      //Sidenav
       $('.parent').click(function(event) {
         event.preventDefault();
         $('li').removeClass('active');
         $(this).parent().addClass('active');
         $(this).parent().children("ul").slideToggle("slow");
       });
-
-      /***collapse menu***/
-      $('#collapse').click(function() {
-
-        $('.sidenav').hide('slide', {direction: 'left'}, 500);
-        $('.sidenav-collapsed').show();
-
-      });
-
-      $('.collapsed-parent').click(function(event) {
-        event.preventDefault();
-
-
-        $("ul.collapsed-submenu").hide().fadeOut();
-        $('li').removeClass('active');
-        $(this).parent().addClass('active');
-        $(this).parent().addClass('hidden');
-        $(this).parent().children("ul").fadeIn("slow");
-
-      });
-
-      /***expand menu***/
-      $('#expand-menu').click(function() {
-        if(a){
-          $('.sidenav-collapsed').hide('slide', {direction: 'left'}, 500);
-          a=!a;
-        }else{
-          $('.sidenav').show('slide', {direction: 'left'}, 500);
-          a=!a;
-        }
-      })
     });
+
   </script>
-  <title>Rete CLIL - Documenti</title>
 
+  <!-- Sidenav -->
   <div class="wrapper">
-
       <div class="sidenav">
         <ul>
           {% if sections %}
             {% for section in sections %}
-
-            <li><a class="parent" href="#"><i class="icon-meter"></i>{{section.name}}</a>
-              <ul class="submenu">
-                {% if section.list%}
-                  {% for sub_section in section.list %}
-                    <li><a href="/section/{{sub_section[1]}}">{{sub_section[0]}}</a></li>
-                  {% endfor %}
-                {% endif %}
-              </ul>
-            </li>
+              <li><a class="parent" href="#"><i class="icon-meter"></i>{{section.name}}</a>
+                <ul class="submenu">
+                  {% if section.list%}
+                    {% for sub_section in section.list %}
+                      <li><a href="/section/{{sub_section[1]}}">{{sub_section[0]}}</a></li>
+                    {% endfor %}
+                  {% endif %}
+                </ul>
+              </li>
             {% endfor %}
           {% endif %}
         </ul>
       </div>
   </div>
+
+  <!-- Cards -->
   {% if card %}
-  {% for item in card %}
-    <!-- Stampa dei modal -->
-      <div id="modalfor{{item.id}}" class="modal" style=" z-index: 1003; display: none; opacity: .5; transform: scaleX(0.7); top: 154.742px; ">
+    <!-- Modal -->
+      <div id="modalfor" class="modal" style=" z-index: 1003; display: none; opacity: .5; transform: scaleX(0.7); top: 154.742px; ">
         <div class="modal-content">
-          <h4>{{item.name}}</h4>
+          <h4 id="item_name"></h4>
           <hr>
-          {% if item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" or item.extension == "ico" %}
-            <img src="/static/files/{{item.name}}" style="max-height: 500px; max-width: 650px;" >
-            <hr>
-          {% endif %}
-          <p>{{item.description}}</p>
+          <!--
+              <img src="/static/files/" style="max-height: 500px; max-width: 650px;" >
+              <hr>
+          -->
+          <p id="item_description"></p>
           <br>
-          <form> <!-- Bottone -->
-            {% if logged %}
-              <a href="/static/files/{{item.name}}" class="btn-floating modal-trigger waves-effect waves-light blue right" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
-            {% else %}
-              <a href="/static/files/{{item.name}}" class="btn-floating modal-trigger waves-effect waves-light blue right disabled" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
-            {% endif %}
-          </form>
+          {% if logged %}
+            <a id="download" href="/static/files/" class="btn-floating waves-effect waves-light blue right" download=""><i class="material-icons">vertical_align_bottom</i></a>
+          {% endif %}
           <br>
         </div>
       </div>
     <!-- Fine Modal -->
-  {% endfor %}
-
-
 
     <div class="row">
-  	 {% for item in card %}
-    	    	<div class="col s4 offset-s2" id="{{item.id}}" style="position:relative;">
-    	            {% if item.extension == "pdf" %}
-    	            	 <div class="card red lighten-1">
-    	            {% elif item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" %}
-    	            	 <div class="card blue lighten-3">
-    	            {% elif item.extension == "mov" %}
-    	               <div class="card purple lighten-2">
-    	            {% elif item.extension == "mp3" or item.extension == "m4a" or item.extension == "wav"  %}
-    	               <div class="card indigo lighten-2">
-    	            {% elif item.extension == "zip" or item.extension == "rar" or item.extension == "7z"  %}
-    	               <div class="card amber lighten-2">
-    	            {% elif item.extension == "odp" or item.extension == "ppt" or item.extension == "pps"  %}
-    	               <div class="card orange">
-    	            {% elif item.extension == "ods" or item.extension == "xls" or item.extension == "xml"  %}
-    	               <div class="card green">
-    	            {% endif %}
-    			            <div class="card-content">
-                      {% if logged == 3 %}
-                        <a href="#!" class="right" style="margin-top: -5%; margin-right: -7%;"><i class="material-icons">delete</i></a>
-                      {% endif %}
-    			            	<span class="Abbrevia card-title">{{item.name}}</span>
-    			                <a name="{{item.id}}" class="ShowButton btn-floating waves-effect modal-trigger waves-light blue right" href="#modalfor{{item.id}}"><i class="material-icons" style="align:center;">&nbsp;perm_media</i></a>
-    			                <p class="Abbrevia">{{item.description}}</p>
-    			            </div>
-    	        	    </div>
-              <script>
-              if(a%2==0){
-                document.getElementById("{{item.id}}").classList.remove('offset-s2');
-                document.getElementById("{{item.id}}").classList.add('offset-s1');
-              }
-              a++;
-              </script>
-    	</div>
-  	{% endfor %}
+      <script type="text/javascript">
+
+        for (var item in card_list.list){
+          var id = item;
+          if(item%2==0){
+            var offset = "offset-m2";
+          }else{
+            var offset = "offset-m1";
+          }
+          item = card_list.list[id]
+          var delete_button = "";
+          if (logged == 3){
+            var delete_button = "<a href='#!' class='right' style='margin-top: -5%; margin-right: -7%;'><i class='material-icons'>delete</i></a>";
+          }
+          color = card_colors[item.extension];
+          var template_card = `
+          <div class="col s4 ${offset}" id="card-${item.id}" style="position:relative;">
+          	 <div class="card ${color}">
+              <div class="card-content">
+                ${delete_button}
+              	<span class="Abbrevia card-title">${item.name}</span>
+                  <a id_card="${id}" class="showButton btn-floating waves-effect modal-trigger waves-light blue right" href="#modalfor"><i class="material-icons" style="align:center;">&nbsp;perm_media</i></a>
+                  <p class="Abbrevia">${item.description}</p>
+              </div>
+            </div>
+          </div>
+          `;
+          document.write(template_card);
+        }
+      </script>
+  </div>
   {% else %}
-      <div class="row" >
-  		<div class="col m4 offset-m2"><p>All'interno della sezione scelta non sono presenti file. Scelga un'altra sezione.</p></div>
+    <div class="row" >
+  		<div class="col m4 offset-m2"><p>All'interno della sezione non sono presenti file. Selezionare un'altra sezione.</p></div>
   	</div>
   {% endif %}
 {% endblock %}
