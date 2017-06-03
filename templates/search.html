@@ -1,5 +1,5 @@
 <!--
-### 
+###
 ### Responsabile: Perini,Andronio
 ###
 -->
@@ -9,7 +9,7 @@
 
 {% block content %}
 	<title>Rete CLIL - Search</title>
-	<style>
+	<style type="text/css">
 		.Abbrevia {
 	    -o-text-overflow: ellipsis;   /* Opera */
 	    text-overflow:    ellipsis;   /* IE, Safari (WebKit) */
@@ -23,99 +23,131 @@
 	    	word-wrap: break-word;
 		}
 	</style>
-	<script>
+
+	<script type="text/javascript">
+
+			var card_colors = {
+	      "pdf": "red lighten-1",
+	      "jpg": "blue lighten-3",
+	      "jpeg": "blue lighten-3",
+	      "png": "blue lighten-3",
+	      "mov": "purple lighten-2",
+	      "mp3": "indigo lighten-2",
+	      "m4a": "indigo lighten-2",
+	      "wav": "indigo lighten-2",
+	      "odp": "orange",
+	      "ppt": "orange",
+	      "pps": "orange",
+	      "ods": "green",
+	      "xls": "green",
+	      "xml": "green"
+	    }
+	    var logged = {{ logged }};
+
+	    //Recupero lista dei files
+	    {% if dict_files %}
+	      var card_list ={list : {{dict_files|replace("u'","'")|replace('u"', '"')|safe}}};
+	    {% else  %}
+	      var card = null;
+	    {% endif %}
+
+
 		$(document).ready(function(){
-			$('.modalfor').modal({
-		      dismissible: true, // Modal can be dismissed by clicking outside of the modal
-		      opacity: .5, // Opacity of modal background
-		      inDuration: 300, // Transition in duration
-		      outDuration: 200, // Transition out duration
-		      startingTop: '4%', // Starting top style attribute
-		      endingTop: '10%', // Ending top style attribute
-		    });
-			$('.ShowButton').modal();
+			//Recupero dati del file e li inserisco nel modal
+      $('.showButton').each(function(){
+          $(this).click(function(){
+              var id_card = $(this).attr("id_card");
+              $("#item_name").html(card_list.list[id_card].name);
+              $("#item_description").html(card_list.list[id_card].description);
+              $("#download").attr("href","/static/files/" + card_list.list[id_card].name);
+              $("#download").attr("download", card_list.list[id_card].name);
+          });
+      });
+
+		$('.modal').modal({
+        dismissible: true,
+        opacity: .5,
+        startingTop: '4%',
+        endingTop: '10%',
+      });
+
 			$("#search_key").bind("enterKey",function(e){
 				if($("#search_key").is(':valid')){
 					a=$("#search_key").val(); // Prende il valore da search
 					$(location).attr('href', '/search/'+a); // Lo mette nella URL
 				}
 			});
-			$("#search_key").keyup(function(e){ // "Quando premi enter si attiva l'evento enter [Non saprei come spiegarlo meglio..]"
+
+			// "Quando premi enter si attiva l'evento enter [Non saprei come spiegarlo meglio..]"
+			$("#search_key").keyup(function(e){
 				if(e.keyCode == 13){
 				       $(this).trigger("enterKey");
 				}
 			});
+
 			$('.btn-floating').each(function(){
 		    	$(this).click(function(){
 		        	$('modalfor'+$(this).attr('name')).modal("open");
 			    });
 			});
-		});		     	
-	</script>		
+		});
+	</script>
 		<br>
 		<br>
 		<h2 align="center">Ricerca documenti</h2>
 		<br>
-		<div class="row"> <!-- Barra di ricerca -->
+		<!-- Barra di ricerca -->
+		<div class="row">
 			<div class="input-field col s6 offset-m3">
 				<i class="material-icons prefix">search</i>
 				<input required id="search_key" type="text" class="validate" pattern="[^ ][a-zA-Z\u00C0-\u017F0-9 ,.?!#@\\\^]*">
 				<label for="search_key">Ricerca</label>
-	    	</div>
 	    </div>
-		{% for item in dict_files %} <!-- Stampa dei modal -->
-			<div id="modalfor{{item.name}}" class="modalfor modal" style=" z-index: 1003; display: none; opacity: .5; transform: scaleX(0.7); top: 154.742px; ">
-          		<div class="modal-content">
-		            <h4>{{item.name}}</h4>
-		            <hr>
-		            {% if item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" or item.extension == "ico" %}
-		            	<img src="/static/files/{{item.name}}" style="max-height: 500px; max-width: 650px;" >
-		            	<hr>
-		            {% endif %}
-		            	<p>{{item.description}}</p>
-		            <br>
-		            <form> <!-- Bottone -->
-		            {% if logged %}
-		            	<a href="/static/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
-		            {% else %}
-		            	<a href="/static/files/{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right disabled" download="{{item.name}}"><i class="material-icons">vertical_align_bottom</i></a>
-		            {% endif %}
-		            </form>
-		            <br>
-          		</div>
-          	</div>
-          	<!-- Fine Modal -->
-        {% endfor %}
-		{% for item in dict_files %} <!-- Stampa delle carte -->
-			<div class="row"> 
-		       	<div class="col m4">
-		       	{% if item.extension == "pdf" %}
-			        <div class="card red lighten-1">
-			    {% elif item.extension == "jpg" or item.extension == "jpeg" or item.extension == "png" or item.extension == "ico" %}
-			        <div class="card blue lighten-3">
-			    {% elif item.extension == "mov" or item.extension == "mp4" %}
-			        <div class="card purple lighten-2">
-			    {% elif item.extension == "mp3" or item.extension == "m4a" or item.extension == "wav"  %}
-			        <div class="card indigo lighten-2">
-			    {% elif item.extension == "zip" or item.extension == "rar" or item.extension == "7z"  %}
-			        <div class="card amber lighten-2">
-			    {% elif item.extension == "odp" or item.extension == "ppt" or item.extension == "pps"  %}
-			        <div class="card orange">
-			    {% elif item.extension == "ods" or item.extension == "xls" or item.extension == "xml"  %}
-			        <div class="card green">
-				{% endif %}
-				        <form name="Carta" type="/POST" class="card-content">
-                      {% if logged == 3 %}
-                        <a href="#!" class="right" style="margin-top: -5%; margin-right: -7%;"><i class="material-icons">delete</i></a>
-                      {% endif %}
-				            <span class="Abbrevia card-title" id="{{item.name}}">{{item.name}}</span>
-				            <a name="{{item.name}}" id="ShowButton{{item.name}}" class="ShowButton btn-floating modal-trigger waves-effect waves-light blue right" href="#modalfor{{item.name}}"><i class="material-icons">perm_media</i></a>
-				            <p class="Abbrevia" id="{{item.description}}">{{item.description}}</p>
-				        </form>
-				    </div>
-		     	</div>
-		     	<!-- ### Prossima Carta ### -->
-		{% endfor %}
+	   </div>
+		 {% if dict_files %}
+ 		  <!-- Modal -->
+ 		    <div id="modalfor" class="modal" style=" z-index: 1003; display: none; opacity: .5; transform: scaleX(0.7); top: 154.742px; ">
+ 		      <div class="modal-content">
+ 		        <h4 id="item_name"></h4>
+ 		        <hr>
+ 		        <!--
+ 		            <img src="/static/files/" style="max-height: 500px; max-width: 650px;" >
+ 		            <hr>
+ 		        -->
+ 		        <p id="item_description"></p>
+ 		        <br>
+ 		        {% if logged %}
+ 		          <a id="download" href="/static/files/" class="btn-floating waves-effect waves-light blue right" download=""><i class="material-icons">vertical_align_bottom</i></a>
+ 		        {% endif %}
+ 		        <br>
+ 		      </div>
+ 		    </div>
+ 		  <!-- Fine Modal -->
+
+ 		  <div class="row">
+ 		    <script type="text/javascript">
+
+ 		      for (var item in card_list.list){
+ 		        var id = item;
+ 		        item = card_list.list[id]
+ 		        color = card_colors[item.extension];
+ 		        var template_card = `
+ 		        <div class="col m4" id="card-${item.id}" style="position:relative;">
+ 		           <div class="card ${color}">
+ 		            <div class="card-content">
+ 		              <span class="Abbrevia card-title">${item.name}</span>
+ 		                <a id_card="${id}" class="showButton btn-floating waves-effect modal-trigger waves-light blue right" href="#modalfor"><i class="material-icons" style="align:center;">&nbsp;perm_media</i></a>
+ 		                <p class="Abbrevia">${item.description}</p>
+ 		            </div>
+ 		          </div>
+ 		        </div>
+ 		        `;
+ 		        document.write(template_card);
+ 		      }
+
+ 		    </script>
+ 		</div>
+ 		{% endif %}
 		   	</div>
     	{% if error %}
 			<div class="row">
