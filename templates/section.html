@@ -17,7 +17,6 @@
     }
   </style>
 
-
   <script type="text/javascript">
     var card_colors = {
       "pdf": "red lighten-1",
@@ -35,7 +34,7 @@
       "xls": "green",
       "xml": "green"
     }
-    var logged = {{ logged }};
+    var logged = ("{{ logged }}").toLowerCase();;
 
     //Recupero lista dei files
     {% if card %}
@@ -52,7 +51,6 @@
           startingTop: '4%',
           endingTop: '10%',
         });
-
 
       //Recupero dati del file e li inserisco nel modal
       $('.showButton').each(function(){
@@ -131,7 +129,7 @@
           item = card_list.list[id]
           var delete_button = "";
           if (logged == 3){
-            var delete_button = "<a href='#!' class='right' style='margin-top: -5%; margin-right: -7%;'><i class='material-icons'>delete</i></a>";
+            var delete_button = "<a href='#!' id='" + item.id + "' class='right delete_file' style='margin-top: -5%; margin-right: -7%;'><i class='material-icons'>delete</i></a>";
           }
           color = card_colors[item.extension];
           var template_card = `
@@ -148,6 +146,23 @@
           `;
           document.write(template_card);
         }
+
+
+        //Delete file
+        $(".delete_file").click(function (){
+          if (confirm("Sicuro di voler eliminare il file?")){
+            id_file = $(this).attr("id");
+            $.post("/manage", { action: "delete_file", id_file: id_file}).done(function( result ) {
+        			if (result == "Success"){
+                alert("File eliminato con successo");
+        				location.reload();
+        			}else{
+        				alert("Errore");
+        			}
+        		});
+          }
+
+        });
       </script>
   </div>
   {% else %}
