@@ -2,8 +2,8 @@
 manage.py
 @author: Nicholas Sollazzo
 @mail: sollsharp@gmail.com
-@version: 1.5.2
-@date: 2/06/17
+@version: 1.5.3
+@date: 6/06/17
 ===============================================
 manage(request):
 renderizzare il template manage.html
@@ -265,7 +265,9 @@ def manage(request, session):
 				 	FROM file
 					WHERE id_file = "{}"; '''.format(id_file)
 
-        path = '/static/' + DB.query_db(query)
+        path = 'static/' + DB.query_db(query)[0][0]
+
+        print path
 
         query = ''' DELETE FROM file
 				 	WHERE id_file = "{}"; '''.format(id_file)
