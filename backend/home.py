@@ -4,8 +4,10 @@ home.py
 @version: 1.6
 @date: 8/05/17
 '''
+from time import gmtime, localtime, strftime
+
 from flask import render_template
-from time import gmtime, strftime
+
 import backend.clil_utils.db as utils
 from backend.clil_utils.pyJson import pyJson as pj
 
@@ -21,16 +23,23 @@ def home(session):
         logged = False
     # luogo, indirizzo, desc
     db = utils.pysqlite3()
-    c=strftime("%d-%m-%Y %H:%M", gmtime())
-    query = "SELECT title, date, description, place, address FROM event WHERE date>'{}'".format(c)
-    
+
+    query = '''SELECT ( julianday(date) - julianday(CURRENT_TIMESTAMP, 'LOCALTIME')) AS diff, title, date, description, place, address
+               FROM event
+               GROUP BY date
+               HAVING diff > 0
+               '''
+
     result = db.query_db(query)
+
+    print result
+
     event = []
 
     if result:
         for events in result:
-            event.append({'name': events[0], 'date': events[1],
-                          'desc': events[2], 'luogo': events[3], 'indirizzo': events[4]})
+            event.append({'name': events[1], 'date': events[2],
+                          'desc': events[3], 'luogo': events[4], 'indirizzo': events[5]})
 
     links = DATA.read('links')
     description = DATA.read('description')
